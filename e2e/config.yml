@@ -1,0 +1,11 @@
+auth:
+  auth-memory:
+    users:
+      test:
+        name: crystal-bot
+        password: pass1234
+store:
+  memory:
+    limit: 1000
+listen:
+  - localhost:13130
