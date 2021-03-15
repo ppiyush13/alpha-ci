@@ -1,12 +1,13 @@
 import { release } from './release';
 import { handleGlobalException } from './globalException';
 
-(async () => {
+export const run = async () => {
     try {
-        await release();
+        //await release();
+        console.log('run');
     }
     catch(ex) {
         /** log error and exit */
         handleGlobalException(ex);
     }
-})();
+};
