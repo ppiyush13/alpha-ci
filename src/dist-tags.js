@@ -11,7 +11,7 @@ export const fetchDistTags = async packageName => {
             prefixUrl: getRegistryUrl(),
             responseType: 'json',
         });
-        distTagsResult.result = response.body['dist-tags'];
+        distTagsResult.result = response.body;
     }
     catch(ex) {
         if(ex.response && ex.response.statusCode === 404)

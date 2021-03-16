@@ -4,7 +4,7 @@
     "description": "Robust, simple replacement for npm publish",
     "license": "MIT",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "jest",
         "local": "verdaccio --config ./e2e/config.yml"
     },
     "bin": {
@@ -41,6 +41,7 @@
         "npm-cli-login": "^0.1.1",
         "registry-url": "^5.1.0",
         "semver": "^7.3.4",
+        "server-destroy": "^1.0.1",
         "verdaccio": "^4.11.3",
         "verdaccio-auth-memory": "^9.7.2",
         "verdaccio-memory": "^9.7.2"
