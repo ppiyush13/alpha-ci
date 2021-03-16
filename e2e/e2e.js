@@ -3,26 +3,35 @@
 //const startServer = require('verdaccio');
 import npmLogin from 'npm-cli-login';
 import shell from 'shelljs';
+import mockedEnv from 'mocked-env';
+
+// {
+//     /** create demo-pkg */
+//     shell.cp('-r', 'test-pkg-template', 'demo-pkg');
+// }
 
 {
-    /** create demo-pkg */
-    shell.cp('-r', 'test-pkg-template', 'demo-pkg');
-}
-
-{
-    /**login and create token in .npmrc file */
-    const username = 'crystal-bot';
-    const password = 'pass1234';
+    const user = 'volte';
+    const pass = 'pass1234';
     const email = 'test@example.com';
     const registry = 'http://localhost:13130';
-    const scope = undefined;
-    const quotes = false;
     const configPath = './demo-pkg/.npmrc';
-
-    npmLogin(username, password, email, registry, scope, quotes, configPath);
-
+    shell.exec(`npx npm-cli-login -u ${user} -p ${pass} -e ${email} -r ${registry} --config-path=${configPath}`);
 }
 
+
+{
+    shell.cd('./demo-pkg');
+    //shell.exec('npm dist-tag demo-pkg');
+}
+
+{
+    mockedEnv({
+        BRANCH_NAME: 'main',
+        TAG_NAME: 'v1.0.0',
+    });
+    shell.exec('volte');
+}
 
 
 // const config = {

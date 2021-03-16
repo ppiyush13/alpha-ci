@@ -1,11 +1,21 @@
 auth:
   auth-memory:
     users:
-      test:
-        name: crystal-bot
+      volte:
+        name: volte
         password: pass1234
+
+uplinks:
+  npmjs:
+    url: https://registry.npmjs.org/
+
 store:
   memory:
     limit: 1000
 listen:
   - localhost:13130
+packages:
+   '**':
+    access: $anonymous
+    publish: $anonymous
+    unpublish: $anonymous

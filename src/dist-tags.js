@@ -7,7 +7,7 @@ const distTagsResult = {
 
 export const fetchDistTags = async packageName => {
     try {
-        const response = await got(packageName, {
+        const response = await got(`-/package/${packageName}/dist-tags`, {
             prefixUrl: getRegistryUrl(),
             responseType: 'json',
         });
