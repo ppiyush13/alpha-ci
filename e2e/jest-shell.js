@@ -1,5 +1,7 @@
 import shell from 'shelljs';
 
+debugger
+
 shell.config.silent = true;
 
 const normalizeStr = str => str.replace(/\s/g, '').toLowerCase();
@@ -24,7 +26,7 @@ const toMatchShellOutput = (shellOutput, expected) => {
 
 const toMatchShellError = (shellOutput, expected = '') => {
     const {stdout, stderr, code} = shellOutput;
-
+    debugger
     if(code === 0) {
         return {
             pass: false,

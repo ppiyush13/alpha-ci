@@ -1,6 +1,6 @@
 import shell from 'shelljs';
 import mockedEnv from 'mocked-env';
-import { start, stop } from './start-verda';
+import { start, stop } from './verdaccio';
 
 /** configure shellJs to throw error on command execution failure */
 shell.config.fatal = true;
@@ -262,7 +262,7 @@ shell.config.fatal = true;
 //     // TODO this must fail
 // }
 
-{
-    const out = shell.exec('npm dist-tag demo-pkg');
-    console.log(out);
-}
+// {
+//     const out = shell.exec('npm dist-tag demo-pkg');
+//     console.log(out);
+// }
