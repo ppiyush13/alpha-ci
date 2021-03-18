@@ -1,6 +1,6 @@
 import shell from 'shelljs';
 import './jest-shell';
-import { start, stop } from './start-verdaccio';
+import { start, stop } from './verdaccio';
 
 describe('testing shell output', () => {
 

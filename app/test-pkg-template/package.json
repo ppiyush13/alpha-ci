@@ -11,5 +11,8 @@
     "license": "ISC",
     "files": [
         "lib.js"
-    ]
+    ],
+    "devDependencies": {
+        "npm-cli-login": "^0.1.1"
+    }
 }

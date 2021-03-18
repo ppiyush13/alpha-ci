@@ -5,8 +5,9 @@
     "license": "MIT",
     "scripts": {
         "test": "jest",
-        "e2e": "jest --runInBand --testRunner jest-circus/runner --testEnvironment ./jest-env.js e2e.test.js",
-        "local": "verdaccio --config ./e2e/config.yml"
+        "e2e": "node -r esm ./e2e/e2e.main.js",
+        "local": "verdaccio --config ./verda-conf/config.yml",
+        "run": "node -r esm ./e2e/runner.js"
     },
     "bin": {
         "volte": "bin/volte.js"
@@ -30,13 +31,16 @@
     "devDependencies": {
         "@babel/core": "^7.13.10",
         "@babel/preset-env": "^7.13.10",
+        "app-root-path": "^3.0.0",
         "babel-jest": "^26.6.3",
         "before-after-hook": "^2.2.0",
         "chalk": "^2.4.2",
         "cli-spinner": "^0.2.10",
         "cli-step": "^1.0.2",
         "commander": "^3.0.2",
+        "delay": "^5.0.0",
         "esm": "^3.2.25",
+        "expect": "^26.6.2",
         "got": "^11.8.2",
         "jest": "^26.6.3",
         "jest-circus": "^26.6.3",
@@ -46,6 +50,7 @@
         "npm-cli-login": "^0.1.1",
         "pretty-ms": "^7.0.1",
         "registry-url": "^5.1.0",
+        "runfork": "^3.1.55",
         "semver": "^7.3.4",
         "server-destroy": "^1.0.1",
         "verdaccio": "^4.11.3",

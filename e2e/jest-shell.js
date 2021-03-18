@@ -1,18 +1,14 @@
-import shell from 'shelljs';
-
-debugger
-
-shell.config.silent = true;
+import expect from 'expect';
 
 const normalizeStr = str => str.replace(/\s/g, '').toLowerCase();
 
 const toMatchShellOutput = (shellOutput, expected) => {
     const {stdout, stderr, code} = shellOutput; 
+    debugger
 
     if(code !== 0) {
         throw new Error(stderr);
     }
-
     const got = normalizeStr(stdout);
     const exp = normalizeStr(expected);
     const expRegExp = new RegExp(exp, 'i');
@@ -26,7 +22,6 @@ const toMatchShellOutput = (shellOutput, expected) => {
 
 const toMatchShellError = (shellOutput, expected = '') => {
     const {stdout, stderr, code} = shellOutput;
-    debugger
     if(code === 0) {
         return {
             pass: false,

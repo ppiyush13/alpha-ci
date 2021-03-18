@@ -4,11 +4,9 @@ auth:
       volte:
         name: volte
         password: pass1234
-
 uplinks:
   npmjs:
     url: https://registry.npmjs.org/
-
 store:
   memory:
     limit: 1000
@@ -18,4 +16,4 @@ packages:
    '**':
     access: $anonymous
     publish: $anonymous
-    unpublish: $anonymous
+    unpublish: $authenticated

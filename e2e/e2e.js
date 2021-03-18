@@ -1,6 +1,6 @@
 import shell from 'shelljs';
 import mockedEnv from 'mocked-env';
-import { start, stop } from './verdaccio';
+import { start, stop } from './verdaccio-local/verdaccio';
 
 /** configure shellJs to throw error on command execution failure */
 shell.config.fatal = true;

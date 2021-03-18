@@ -1,4 +1,4 @@
-import CliSteps from 'cli-step';
+//import CliSteps from 'cli-step';
 import chalk from 'chalk';
 import prettyMs from 'pretty-ms';
 
@@ -18,7 +18,7 @@ class Steps {
     constructor(callback) {
         this.stepArray = [];
         callback(this.collect);
-        this.cliSteps = new CliSteps(this.stepArray.length, true);
+        //this.cliSteps = new CliSteps(this.stepArray.length, true);
     }
 
     collect = (desc, cb) => {
@@ -40,16 +40,18 @@ class Steps {
             if(done) break;
             const { desc, cb } = value;
 
-            const cliStep = this.cliSteps.advance(`  ${desc}`);
+            //const cliStep = this.cliSteps.advance(`  ${desc}`);
             try {
-                cliStep.start();
+               // cliStep.start();
                 const ms = await this.executeAndRecordExecutionTime(cb);
-                cliStep.success(`${this.SuccessChar} ${desc} (${ms})`);
+                console.log('%c %s (%s)', this.SuccessChar, desc, ms);
+                //cliStep.success(`${this.SuccessChar} ${desc} (${ms})`);
                 result.pass++;
             }
             catch(ex) {
                 result.exception = ex;
-                cliStep.success(`${this.ErrorChar} ${desc}`);
+                //cliStep.success(`${this.ErrorChar} ${desc}`);
+                console.log('%c %s', this.ErrorChar, desc);
                 break;
             }
         }
@@ -69,13 +71,14 @@ class Steps {
     }
 
     async executeAndRecordExecutionTime(cb) {
-        this.cliSteps.startRecording();
+        //this.cliSteps.startRecording();
         await cb();
-        const ns = this.cliSteps.stopRecording();
-        return prettyMs(
-            Math.round(ns / 1000 / 1000),
-            { secondsDecimalDigits: 3 },
-        );
+        //const ns = this.cliSteps.stopRecording();
+        // return prettyMs(
+        //     Math.round(ns / 1000 / 1000),
+        //     { secondsDecimalDigits: 3 },
+        // );
+        return '2 s';
     }
 }
 
@@ -108,5 +111,16 @@ export default async cb => {
     }
 };
 
-process.on('uncaughtException', callbacks.afterAll);
-process.on('unhandledRejection', callbacks.afterAll);
+const tearDown = async () => {
+    try {
+        await callbacks.afterAll();
+        process.exit(0);
+    }
+    catch(ex) {
+        console.log('Encountered error while test tear-down', ex);
+        process.exit(1);
+    }
+};
+
+process.on('uncaughtException', tearDown);
+process.on('unhandledRejection', tearDown);

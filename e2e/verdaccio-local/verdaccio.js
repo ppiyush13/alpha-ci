@@ -1,6 +1,9 @@
 import startServer from 'verdaccio';
+import delay from 'delay';
 import enableDestroy from 'server-destroy';
+
 import { version , name } from 'verdaccio/package.json';
+
 
 const config = {
     "auth": {
@@ -27,7 +30,8 @@ const config = {
         "**": {
             "access": "$anonymous",
             "publish": "$anonymous",
-            "unpublish": "$anonymous"
+            "unpublish": "$anonymous",
+            //"proxy": "npmjs",
         }
     }
 };
@@ -66,8 +70,9 @@ export const start = async (port) => {
         address.proto, address.host, address.port, pkgName, pkgVersion);
 };
 
-export const stop = () => {
-    if(webServerInstance.current){
+export const stop = async () => {
+    if(webServerInstance.current) {
+        await delay(100);
         console.log('Verdaccio attempting to stop');
         webServerInstance.current.destroy();
     }
