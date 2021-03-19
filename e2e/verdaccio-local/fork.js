@@ -10,15 +10,17 @@ const waitForMessage = expectedMessage => new Promise((resolve, reject) => {
 });
 
 export const start = async () => {
+    console.log('fork start');
     forkInstance = fork(__dirname + '/process-wrapped.js', null, { silent: true });
     forkInstance.send('start');
     await waitForMessage('started');
 };
 
 export const stop = async () => {
+    console.log('fork stop');
     if(forkInstance) {
         forkInstance.send('stop');
         await waitForMessage('stopped');
         forkInstance.kill();
-    }
+    }   
 };

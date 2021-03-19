@@ -1,12 +1,18 @@
 import shell from 'shelljs';
 import { path as rootPath } from 'app-root-path';
-import test, { setup, tear } from './life-cycle';
-import { start, stop } from './verdaccio-local/verdaccio';
+import expect from 'expect';
+import './jest-shell';
+import test, { setup, tear } from './test-runner';
+import { start, stop } from './verdaccio-local/fork';
 
 shell.config.silent = true;
 
-setup(() => start(13130));
+setup(async () => {
+    console.log('starting verdaccio');
+    await start();
+});
 tear(async () => {
+    console.log('stopping verdaccio');
     await stop();
     shell.cd(rootPath);
     shell.rm('-rf', './app/demo-pkg');
@@ -22,23 +28,32 @@ test(step => {
         shell.cd('./app/demo-pkg'); 
     });
 
-    // step('npm login test user', () => {
-    //     const user = 'volte';
-    //     const pass = 'pass1234';
-    //     const email = 'test@example.com';
-    //     const registry = 'http://localhost:13130';
-    //     const configPath = './demo-pkg/.npmrc';
-    //     shell.exec(`npx npm-cli-login -u ${user} -p ${pass} -e ${email} -r ${registry} --config-path=${configPath}`);
-    // });
-
-    step('exec dist-tag, should return package not found error',  () => {
-        const {stdout, stderr} = shell.exec('npm dist-tag');
-        //console.log(stdout, stderr);
+    step('npm login test user', () => {
+        const user = 'volte';
+        const pass = 'pass1234';
+        const email = 'test@example.com';
+        const registry = 'http://localhost:13130';
+        const configPath = './demo-pkg/.npmrc';
+        shell.exec(`npx npm-cli-login -u ${user} -p ${pass} -e ${email} -r ${registry} --config-path=${configPath}`);
     });
 
-    step('publish', () => {
-        const {stdout, stderr} = shell.exec('npm publish');
-        //console.log(stdout, stderr);
+    step('exec dist-tag, should return package not found error',  () => {
+        expect(shell.exec('npm dist-tag')).toMatchShellError(
+            `npm ERR! 404 Not Found - GET http://localhost:13130/-/package/demo-pkg/dist-tags - no such package available`
+        );
+    });
+
+    step('publish demo-pkg for first time', () => {
+        expect(shell.exec('npm publish')).toMatchShellOutput(
+            '+ demo-pkg@0.0.0'
+        );
+    });
+
+    step('exec dist-tag, must return 0.0.0', () => {
+        shell.exec('npm publish');
+        // expect(shell.exec('npm publish')).toMatchShellOutput(
+        //     'latest 0.0.0'
+        // );
     });
 
 });

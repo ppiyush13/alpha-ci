@@ -4,7 +4,6 @@ const normalizeStr = str => str.replace(/\s/g, '').toLowerCase();
 
 const toMatchShellOutput = (shellOutput, expected) => {
     const {stdout, stderr, code} = shellOutput; 
-    debugger
 
     if(code !== 0) {
         throw new Error(stderr);

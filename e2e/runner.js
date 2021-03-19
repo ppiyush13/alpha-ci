@@ -31,7 +31,7 @@ shell.config.silent = true;
         // );
         // {
         //     const { stderr, stdout } = shell.exec('npm publish');
-        //     console.log(stderr);
+        //     console.log(stderr); 
         // }
         // {
         //     const { stderr, stdout } = shell.exec('npm dist-tag demo-pkg');
