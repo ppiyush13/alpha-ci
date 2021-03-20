@@ -2,21 +2,22 @@ import shell from 'shelljs';
 import { path as rootPath } from 'app-root-path';
 import expect from 'expect';
 import './jest-shell';
-import test, { setup, tear } from './test-runner';
+import test from './test-runner';
 import { start, stop } from './verdaccio-local/fork';
 
 shell.config.silent = true;
 
-setup(async () => {
-    await start();
-});
-tear(async () => {
-    await stop();
-    shell.cd(rootPath);
-    shell.rm('-rf', './app/demo-pkg');
-});
+test('Testing alpha end-2-end', ({ step, setup, tear}) => {
 
-test(step => {
+    setup(async () => {
+        await start();
+    });
+
+    tear(async () => {
+        await stop();
+        shell.cd(rootPath);
+        shell.rm('-rf', './app/demo-pkg');
+    });
 
     step('create demo-pkg', () => {
         shell.cp('-r', './app/test-pkg-template', './app/demo-pkg');

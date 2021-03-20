@@ -1,10 +1,9 @@
 import { log } from './logger';
-import { setup, tear, register } from './life-cycle';
+import { executeTest } from './execute-test';
 
-export { setup, tear };
-export default async (cb) => {
+export default async (...args) => {
     try {
-        await register(cb);
+        await executeTest(...args);
         process.exit(0);
     }
     catch(ex) {

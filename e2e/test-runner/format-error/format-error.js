@@ -4,7 +4,8 @@ import { codeFrameColumns } from '@babel/code-frame';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import chalk from 'chalk';
-import indent from 'indent-string';
+import indentString from 'indent-string';
+import { IndentSize } from '../constants';
 
 export const formatError = error => {
     try {
@@ -12,7 +13,7 @@ export const formatError = error => {
         const errorCodeFrame = getCodeFrame(topFrame);
 
         const errorMessage = chalk.bold.cyan(error.message);
-        const errorTrace = indent(chalk.bold.red(trace), 2);
+        const errorTrace = indentString(chalk.bold.red(trace), IndentSize);
         return `\n${errorCodeFrame}\n\n${errorMessage}\n${errorTrace}`;
     }
     catch(ex) {
