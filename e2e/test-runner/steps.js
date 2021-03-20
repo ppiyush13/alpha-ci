@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import CliSteps from 'cli-step';
 import prettyMs from 'pretty-ms';
+import perf from 'execution-time';
 
 export default class Steps {
     SuccessChar = chalk.green('√');
@@ -63,11 +64,11 @@ export default class Steps {
     }
 
     async executeAndRecordExecutionTime(cb) {
-        this.cliSteps.startRecording();
+        perf.start();
         await cb();
-        const ns = this.cliSteps.stopRecording();
+        const { time } = perf.stop();
         return prettyMs(
-            Math.round(ns / 1000 / 1000),
+            Math.round(time / 1000 / 1000),
             { secondsDecimalDigits: 3 },
         );
     }

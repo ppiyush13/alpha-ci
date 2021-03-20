@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import Steps from './steps';
 import { log } from './logger';
-import { formatError } from './format-error';
+import { formatError } from './format-error/format-error';
 
 const lifeCycleCbs = {
     setup: undefined,
