@@ -9,6 +9,7 @@ export const verifyMainAndNextVersion = ({ tagName, branchName }) => {
         ? { errorKey: 'invalidNextTag', tag: Tag.next}
         : { errorKey: 'invalidMainTag', tag: Tag.latest};
     const latestVersion = getDistTagVersion(tag);
+    console.log(tagName, latestVersion, );
     if(latestVersion)
         return semverGt(tagName, latestVersion)
             ? true

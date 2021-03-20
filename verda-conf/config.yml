@@ -17,3 +17,4 @@ packages:
     access: $anonymous
     publish: $anonymous
     unpublish: $authenticated
+    proxy: npmjs

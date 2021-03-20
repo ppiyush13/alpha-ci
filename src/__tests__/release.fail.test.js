@@ -12,11 +12,11 @@ mockRegistry('http://npm-registry-url');
 
 const mockNpmLatestVersion = previousDistTags => {
     const response = previousDistTags
-        ? [ 200, { 'dist-tags': previousDistTags }]
+        ? [ 200, { ...previousDistTags }]
         : [ 404, { "error": "Not found" } ];
 
-    nock('http://npm-registry-url')
-        .get('/demo-package')
+    nock('http://npm-registry-url/-/')
+        .get('/package/demo-package/dist-tags')
         .reply(...response); 
 };
 
@@ -63,7 +63,7 @@ describe('testing branching and tag strategy', () => {
             previousDistTags: {
                 latest: '1.0.4',
                 next: '2.0.0',
-            }, 
+            },
             error: getError('invalidNextTag',['v2.0.0-rc.4', '2.0.0']),
             commands: [
                 `node -p "require('./package.json').name"`,
@@ -110,7 +110,7 @@ describe('testing branching and tag strategy', () => {
         },
     ])('Negative scenarios', async ({ branch, tag, previousDistTags, commands, error }) => {
         const restoreConsole = mockConsole();
-        mockedEnv({
+        const restoreEnv = mockedEnv({
             BRANCH_NAME: branch,
             TAG_NAME: tag,
         });
@@ -122,6 +122,7 @@ describe('testing branching and tag strategy', () => {
         await expect(release()).rejects.toEqual(error);
         expect(getCommandStack()).toEqual(commands);
         restoreConsole();
+        restoreEnv();
     });
 });
 
