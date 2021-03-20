@@ -26,9 +26,12 @@
     "dependencies": {
         "commander": "^7.1.0",
         "esm": "^3.2.25",
-        "shelljs": "^0.8.4"
+        "jest-message-util": "^26.6.2",
+        "shelljs": "^0.8.4",
+        "stack-utils": "^2.0.3"
     },
     "devDependencies": {
+        "@babel/code-frame": "^7.12.13",
         "@babel/core": "^7.13.10",
         "@babel/preset-env": "^7.13.10",
         "app-root-path": "^3.0.0",

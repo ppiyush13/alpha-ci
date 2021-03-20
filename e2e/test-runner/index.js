@@ -8,7 +8,8 @@ export default async (cb) => {
         process.exit(0);
     }
     catch(ex) {
-        log(ex);
+        const exMsg = ex.cleanTrace || ex;
+        log(exMsg);
         process.exit(1);
     }
 };

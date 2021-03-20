@@ -8,11 +8,9 @@ import { start, stop } from './verdaccio-local/fork';
 shell.config.silent = true;
 
 setup(async () => {
-    console.log('starting verdaccio');
     await start();
 });
 tear(async () => {
-    console.log('stopping verdaccio');
     await stop();
     shell.cd(rootPath);
     shell.rm('-rf', './app/demo-pkg');

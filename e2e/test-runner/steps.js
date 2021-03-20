@@ -1,3 +1,6 @@
+import chalk from 'chalk';
+import CliSteps from 'cli-step';
+import prettyMs from 'pretty-ms';
 
 export default class Steps {
     SuccessChar = chalk.green('√');

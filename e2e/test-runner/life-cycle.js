@@ -1,11 +1,14 @@
+import chalk from 'chalk';
 import Steps from './steps';
 import { log } from './logger';
+import { formatError } from './format-error';
 
 const lifeCycleCbs = {
     setup: undefined,
     tear: undefined,
 };
 
+const bold = chalk.bold;
 export const setup = cb => lifeCycleCbs.setup = cb;
 export const tear = cb => lifeCycleCbs.tear = cb;
 
@@ -17,12 +20,10 @@ export const register = async cb => {
         const { total, pass, skip, exception } = await steps.execute();
         log(`\nTests: ${bold.green('%i passed')}, ${bold.yellow('%i skipped')}, %i total`, pass, skip, total);
         if(exception) {
-            console.log('\nTest execution halted because of below error:');
-            throw exception
+            log('\nTest execution halted because of below error:');
+            exception.cleanTrace = formatError(exception);
+            throw exception;
         };
-    }
-    catch(ex) {
-        console.log(bold.red(ex.stack));
     }
     finally {
         await tear();
