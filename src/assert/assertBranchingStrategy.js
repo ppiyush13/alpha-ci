@@ -1,6 +1,6 @@
 import { MatchTag, Branch, LegacyBranch } from '../constants';
 import { throwError } from '../error';
-import { verifyMainAndNextVersion, verifyLegacyVersion } from './assertTagVersion';
+import { verifyMainVersion, verifyNextVersion, verifyLegacyVersion } from './assertTagVersion';
 
 export const assertBranchingStrategy = () => {
     const branchName = process.env.BRANCH_NAME.toLocaleLowerCase();
@@ -8,12 +8,12 @@ export const assertBranchingStrategy = () => {
 
     if([Branch.main, Branch.master].includes(branchName)) {
         return MatchTag.latest(tagName)
-            ? verifyMainAndNextVersion({ branchName, tagName })
+            ? verifyMainVersion({ branchName, tagName })
             : throwError('invalidMainTagFormat');
     }
     else if(branchName === Branch.next) {
         return MatchTag.next(tagName)
-            ? verifyMainAndNextVersion({ branchName, tagName })
+            ? verifyNextVersion({ branchName, tagName })
             : throwError('invalidNextTagFormat');
     }
     else if(LegacyBranch.matchVersion(branchName)) {

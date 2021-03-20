@@ -54,6 +54,28 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         );
     });
 
+    step('publish v1.0.0 from next branch, should throw error', () => {
+        mockedEnv({
+            BRANCH_NAME: 'next',
+            TAG_NAME: 'v1.0.0',
+        });
+
+        expect(shell.exec('npx volte')).toMatchShellError(
+            `next branch can only have tags in format vx.x.x-rc.x`
+        );
+    });
+
+    step('publish v1.0.0 from v1 branch, should throw error', () => {
+        mockedEnv({
+            BRANCH_NAME: 'v1',
+            TAG_NAME: 'v1.0.0',
+        });
+
+        expect(shell.exec('npx volte')).toMatchShellOutput(
+            `next branch can only have tags in format vx.x.x-rc.x`
+        );
+    });
+
     step('publish v1.0.0 from main branch', () => {
         mockedEnv({
             BRANCH_NAME: 'main',

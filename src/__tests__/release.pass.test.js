@@ -81,6 +81,7 @@ describe('testing branching strategy', () => {
                 `node -p "require('./package.json').name"`,
                 `node -p "require('./package.json').version"`,
                 "npm dist-tag add demo-package@3.0.0 next",
+                "npm dist-tag add demo-package@2.5.1 latest-1",
             ],
         },
         {
@@ -110,6 +111,7 @@ describe('testing branching strategy', () => {
                 `node -p "require('./package.json').name"`,
                 `node -p "require('./package.json').version"`,
                 "npm dist-tag add demo-package@5.0.0 next",
+                "npm dist-tag add demo-package@4.0.8 latest-4",
             ]
         },
         {

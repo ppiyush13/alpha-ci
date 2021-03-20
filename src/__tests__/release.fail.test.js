@@ -25,6 +25,24 @@ describe('testing branching and tag strategy', () => {
 
     it.each([
         {
+            branch: 'v1',
+            tag: 'v1.0.0',
+            previousDistTags: null,
+            error: getError('invalidFirstReleaseFromLegacyBranch', ['v1']),
+            commands: [
+                `node -p "require('./package.json').name"`,
+            ],
+        },
+        {
+            branch: 'next',
+            tag: 'v1.0.0-rc.0',
+            previousDistTags: null,
+            error: '',
+            commands: [
+                `node -p "require('./package.json').name"`,
+            ],
+        },
+        {
             branch: 'main',
             tag: 'v1.0.0-rc.4',
             previousDistTags: null,
@@ -108,6 +126,110 @@ describe('testing branching and tag strategy', () => {
                 `node -p "require('./package.json').name"`,
             ],
         },
+        {
+            branch: 'main',
+            tag: 'v3.0.0',
+            previousDistTags: {
+                latest: 'v1.2.0',
+            },
+            error: getError('invalidMajorVersion', ['v1.2.0', 'v3.0.0']),
+            commands: [
+                `node -p "require('./package.json').name"`,
+            ],
+        },
+        {
+            branch: 'next',
+            tag: 'v4.0.0-rc.0',
+            previousDistTags: {
+                latest: 'v1.2.0',
+                next: 'v1.2.0',
+            },
+            error: getError('invalidMajorVersion', ['v1.2.0', 'v4.0.0-rc.0']),
+            commands: [
+                `node -p "require('./package.json').name"`,
+            ],
+        },
+        {
+            branch: 'main',
+            tag: 'v1.3.6',
+            previousDistTags: {
+                latest: '1.4.0',
+            },
+            error: getError('invalidMainTag', ['v1.3.6', '1.4.0']),
+            commands: [
+                `node -p "require('./package.json').name"`,
+            ],
+        },
+        {
+            branch: 'next',
+            tag: 'v2.0.0-rc.5',
+            previousDistTags: {
+                latest: 'v2.0.0-rc.9',
+            },
+            error: getError('invalidNextTag', ['v2.0.0-rc.5', 'v2.0.0-rc.9']),
+            commands: [
+                `node -p "require('./package.json').name"`,
+            ],
+        },
+        {
+            branch: 'next',
+            tag: 'v2.0.0-rc.5',
+            previousDistTags: {
+                latest: 'v1.3.0',
+                next: 'v2.0.0-rc.9',
+            },
+            error: getError('invalidNextTag', ['v2.0.0-rc.5', 'v2.0.0-rc.9']),
+            commands: [
+                `node -p "require('./package.json').name"`,
+            ],
+        },
+        {
+            branch: 'v1',
+            tag: 'v1.2.0',
+            previousDistTags: {
+                latest: 'v2.1.0',
+                'latest-1': 'v1.2.5',
+            },
+            error: getError('invalidLegacyProceedingVersion', ['v1.2.0', 'v1.2.5']),
+            commands: [
+                `node -p "require('./package.json').name"`,
+            ],
+        },
+        {
+            branch: 'v9',
+            tag: 'v9.0.1',
+            previousDistTags: {
+                latest: 'v4.2.9',
+                next: 'v5.0.0-rc.4'
+            },
+            error: getError('invalidLegacyTagGreaterThanLatest', ['v9.0.1', 'v4.2.9']),
+            commands: [
+                `node -p "require('./package.json').name"`,
+            ],
+        },
+        {
+            branch: 'next',
+            tag: 'v1.3.6-rc.0',
+            previousDistTags: {
+                latest: '1.3.0',
+                next: '1.3.0',
+            },
+            error: '',
+            commands: [
+                `node -p "require('./package.json').name"`,
+            ],
+        },
+        {
+            branch: 'next',
+            tag: 'v1.3.6-rc.0',
+            previousDistTags: {
+                latest: '1.3.0',
+            },
+            error: '',
+            commands: [
+                `node -p "require('./package.json').name"`,
+            ],
+        }
     ])('Negative scenarios', async ({ branch, tag, previousDistTags, commands, error }) => {
         const restoreConsole = mockConsole();
         const restoreEnv = mockedEnv({
