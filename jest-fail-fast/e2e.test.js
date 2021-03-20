@@ -1,21 +1,25 @@
 import shell from 'shelljs';
 import { path as rootPath } from 'app-root-path';
-import './jest-shell';
-import { start, stop } from './verdaccio-local/fork';
+import '../e2e/jest-shell';
+import { start, stop } from '../e2e/verdaccio-local/fork';
 
-
+jest.setTimeout(1000 * 300);
 
 describe('testing shell output', () => {
 
-    beforeAll(async () => await start(13130));
+    beforeAll(async () => {
+        shell.cd(rootPath);
+        await start(13130)
+    });
     afterAll(async () => {
         console.log('stopping verdaccio');
         await stop();
         shell.cd(rootPath);
         shell.rm('-rf', './app/demo-pkg');
     });
-    
+
     it('create demo-pkg', () => {
+        console.log('create-demo-pkg');
         shell.cp('-r', './app/test-pkg-template', './app/demo-pkg');
     });
 
