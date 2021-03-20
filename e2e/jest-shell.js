@@ -24,7 +24,7 @@ const toMatchShellError = (shellOutput, expected = '') => {
     if(code === 0) {
         return {
             pass: false,
-            message: () => `Expected shell command to throw but passed with outcome:\n\n${stdout}`,
+            message: () => `Expected shell command to throw but passed with outcome:\n${stdout}`,
         };
     }
 
