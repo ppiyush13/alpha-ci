@@ -1,5 +1,5 @@
-import prettyMs from 'pretty-ms';
 import { StepSummary } from './step-summary';
+import { executionTime } from '../util';
 
 export class StepExecutor {
     error = undefined;
@@ -30,17 +30,16 @@ export class StepExecutor {
     }
 
     async executeStep(desc, cb) {
-        const start = Date.now();
+        const stop =executionTime();
         try {
             await cb();
         }
         catch(error) {
             this.error = error;
         }
-        const totalTime = Date.now() - start;
-        const ms = prettyMs(totalTime, { secondsDecimalDigits: 3 });
+        const totalTime = stop();
         this.error
-            ? this.summary.logFail(desc, ms)
-            : this.summary.logPass(desc, ms);
+            ? this.summary.logFail(desc, totalTime)
+            : this.summary.logPass(desc, totalTime);
     }
 }

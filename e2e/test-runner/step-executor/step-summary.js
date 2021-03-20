@@ -20,12 +20,12 @@ export class StepSummary {
 
     logPass(desc, ms) {
         this.pass++;
-        this.log(`${this.passChar} ${desc} (${ms} ms)`);
+        this.log(`${this.passChar} ${desc} (${ms})`);
     }
 
     logFail(desc, ms) {
         this.fail++;
-        this.log(`${this.failChar} ${chalk.bold.red(`${desc} (${ms} ms)`)}`);
+        this.log(`${this.failChar} ${chalk.bold.red(`${desc} (${ms})`)}`);
     }
 
     logSkip(desc){

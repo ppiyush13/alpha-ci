@@ -16,11 +16,11 @@ const config = {
             }
         }
     },
-    "uplinks": {
-        "npmjs": {
-            "url": "https://registry.npmjs.org/"
-        }
-    },
+    // "uplinks": {
+    //     "npmjs": {
+    //         "url": "https://registry.npmjs.org/"
+    //     }
+    // },
     "store": {
         "memory": {
             "limit": 1000
