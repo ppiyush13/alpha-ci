@@ -1,4 +1,3 @@
-//import memoize from 'memoizee';
 import { exec } from './shell/exec';
 
 /** branch */
@@ -22,8 +21,8 @@ export const TagAlreadyExistsError = (tagName, ex) => {
 
 /** branching strategy utils */
 export const MatchTag = {
-    latest: str => /^v[\d]+.[\d]+.[\d]+$/.test(str),
-    next: str => /^v[\d]+.[\d]+.[\d]+-rc.[\d]+$/.test(str),
+    isLatest: str => /^v[\d]+.[\d]+.[\d]+$/.test(str),
+    isNext: str => /^v[\d]+.[\d]+.[\d]+-rc.[\d]+$/.test(str),
 };
 export const LegacyBranch = {
     matchVersion: str => /^v[\d]+$/.test(str),
@@ -38,8 +37,4 @@ export const LegacyBranch = {
 export const pkgMetadata = {
     version: () => exec(`node -p "require('./package.json').version"`).trim(),
     name: () => exec(`node -p "require('./package.json').name"`).trim(),
-    // name: memoize(
-    //     () => exec(`node -p "require('./package.json').name"`).trim(), 
-    //     { length: 0 }
-    // ),
 };
