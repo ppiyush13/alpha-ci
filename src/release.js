@@ -18,7 +18,7 @@ export const release = async () => {
     npmVersion();
 
     /** run: npm publish */
-    npmPublish(publishDistTag);
+    npmPublish(publishDistTag.tag);
 
     /** run: npm dist-tag add */
     npmDistTags(otherDistTags);

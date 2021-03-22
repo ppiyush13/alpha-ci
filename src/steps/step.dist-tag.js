@@ -2,11 +2,15 @@ import { exec } from '../shell/exec';
 import { pkgMetadata } from '../constants';
 
 export const npmDistTags = distTags => {
-    const { name, version } = pkgMetadata;
+    if(distTags.length === 0) return;
+    
+    const { name } = pkgMetadata;
+    const packageName = name();
 
     try {
-        distTags.map(tag => {
-            const command = `npm dist-tag add ${name()}@${version()} ${tag}`;
+        console.log(distTags);
+        distTags.map(({ tag, version }) => {
+            const command = `npm dist-tag add ${packageName}@${version} ${tag}`;
             console.log(`Executing command: ${command}`);
             exec(command);
         });

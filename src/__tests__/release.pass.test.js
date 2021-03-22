@@ -32,7 +32,6 @@ describe('testing branching strategy', () => {
                 "npm version v1.0.0",
                 "npm publish --tag latest",
                 `node -p "require('./package.json').name"`,
-                `node -p "require('./package.json').version"`,
                 "npm dist-tag add demo-package@1.0.0 next",
             ],
         },
@@ -47,7 +46,6 @@ describe('testing branching strategy', () => {
                 "npm version v1.0.0",
                 "npm publish --tag latest",
                 `node -p "require('./package.json').name"`,
-                `node -p "require('./package.json').version"`,
                 "npm dist-tag add demo-package@1.0.0 next",
             ],
         },
@@ -63,7 +61,6 @@ describe('testing branching strategy', () => {
                 "npm version v2.5.1",
                 "npm publish --tag latest",
                 `node -p "require('./package.json').name"`,
-                `node -p "require('./package.json').version"`,
                 "npm dist-tag add demo-package@2.5.1 next",
             ],
         },
@@ -79,9 +76,8 @@ describe('testing branching strategy', () => {
                 "npm version v3.0.0",
                 "npm publish --tag latest",
                 `node -p "require('./package.json').name"`,
-                `node -p "require('./package.json').version"`,
                 "npm dist-tag add demo-package@3.0.0 next",
-                "npm dist-tag add demo-package@2.5.1 latest-1",
+                "npm dist-tag add demo-package@2.5.1 latest-2",
             ],
         },
         {
@@ -109,7 +105,6 @@ describe('testing branching strategy', () => {
                 "npm version v5.0.0",
                 "npm publish --tag latest",
                 `node -p "require('./package.json').name"`,
-                `node -p "require('./package.json').version"`,
                 "npm dist-tag add demo-package@5.0.0 next",
                 "npm dist-tag add demo-package@4.0.8 latest-4",
             ]
@@ -126,7 +121,6 @@ describe('testing branching strategy', () => {
                 "npm version v5.0.1",
                 "npm publish --tag latest",
                 `node -p "require('./package.json').name"`,
-                `node -p "require('./package.json').version"`,
                 "npm dist-tag add demo-package@5.0.1 next",
             ]
         },
@@ -154,6 +148,18 @@ describe('testing branching strategy', () => {
                 `node -p "require('./package.json').name"`,
                 "npm version v1.0.19",
                 "npm publish --tag latest-1",
+            ],
+        },
+        {
+            branch: 'next',
+            tag: 'v2.0.0-rc.0',
+            previousDistTags: {
+                latest: '1.0.19',
+            },
+            commands: [
+                `node -p "require('./package.json').name"`,
+                "npm version v2.0.0-rc.0",
+                "npm publish --tag next",
             ],
         },
     ])('Positive scenarios', async ({ branch, tag, previousDistTags, commands }) => {
