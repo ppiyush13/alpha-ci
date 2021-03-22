@@ -28,7 +28,7 @@ describe('testing branching and tag strategy', () => {
             branch: 'v1',
             tag: 'v1.0.0',
             previousDistTags: null,
-            error: getError('invalidFirstReleaseFromLegacyBranch', ['v1']),
+            error: 'First release must be published from main/master branch, but found legacy branch v1',
             commands: [
                 `node -p "require('./package.json').name"`,
             ],
@@ -37,7 +37,7 @@ describe('testing branching and tag strategy', () => {
             branch: 'next',
             tag: 'v1.0.0-rc.0',
             previousDistTags: null,
-            error: '',
+            error: new Error('First release must be published from main/master branch, but found [next]'),
             commands: [
                 `node -p "require('./package.json').name"`,
             ],
@@ -103,7 +103,7 @@ describe('testing branching and tag strategy', () => {
                 latest: '4.1.4',
                 next: '4.1.4'
             }, 
-            error: getError('invalidLegacyVersion', ['v3', '4']),
+            error: 'Legacy branch v3 cannot have tags with version v4.1.5',
             commands: [
                 `node -p "require('./package.json').name"`,
             ],
@@ -144,7 +144,7 @@ describe('testing branching and tag strategy', () => {
                 latest: 'v1.2.0',
                 next: 'v1.2.0',
             },
-            error: getError('invalidMajorVersion', ['v1.2.0', 'v4.0.0-rc.0']),
+            error: new Error('Major version after latest release v1.2.0 should be incremented by 1, but found v4.0.0-rc.0'),
             commands: [
                 `node -p "require('./package.json').name"`,
             ],
@@ -190,7 +190,7 @@ describe('testing branching and tag strategy', () => {
                 latest: 'v2.1.0',
                 'latest-1': 'v1.2.5',
             },
-            error: getError('invalidLegacyProceedingVersion', ['v1.2.0', 'v1.2.5']),
+            error: 'Legacy branch tag v1.2.0 must be greater than latest v1 published version v1.2.5',
             commands: [
                 `node -p "require('./package.json').name"`,
             ],
@@ -199,10 +199,10 @@ describe('testing branching and tag strategy', () => {
             branch: 'v9',
             tag: 'v9.0.1',
             previousDistTags: {
-                latest: 'v4.2.9',
-                next: 'v5.0.0-rc.4'
+                latest: '4.2.9',
+                next: '5.0.0-rc.4'
             },
-            error: getError('invalidLegacyTagGreaterThanLatest', ['v9.0.1', 'v4.2.9']),
+            error: 'Legacy branch tag v9.0.1 should be lesser than published latest package version 4.2.9',
             commands: [
                 `node -p "require('./package.json').name"`,
             ],
@@ -214,7 +214,7 @@ describe('testing branching and tag strategy', () => {
                 latest: '1.3.0',
                 next: '1.3.0',
             },
-            error: '',
+            error: new Error('Major version after latest release 1.3.0 should be incremented by 1, but found v1.3.6-rc.0'),
             commands: [
                 `node -p "require('./package.json').name"`,
             ],
@@ -225,12 +225,23 @@ describe('testing branching and tag strategy', () => {
             previousDistTags: {
                 latest: '1.3.0',
             },
-            error: '',
+            error: new Error('Major version after latest release 1.3.0 should be incremented by 1, but found v1.3.6-rc.0'),
             commands: [
                 `node -p "require('./package.json').name"`,
             ],
-        }
-    ])('Negative scenarios', async ({ branch, tag, previousDistTags, commands, error }) => {
+        },
+        {
+            branch: 'v1',
+            tag: 'v1.2.5',
+            previousDistTags: {
+                latest: '1.3.0',
+            },
+            error: 'Legacy branch v1 should be tracking versions lesser than current latest version 1.3.0',
+            commands: [
+                `node -p "require('./package.json').name"`,
+            ],
+        },
+    ])('must throw error for %p', async ({ branch, tag, previousDistTags, commands, error }) => {
         const restoreConsole = mockConsole();
         const restoreEnv = mockedEnv({
             BRANCH_NAME: branch,
@@ -241,10 +252,9 @@ describe('testing branching and tag strategy', () => {
             [`node -p "require('./package.json').version"`]: semverClean(tag),
         });
         mockNpmLatestVersion(previousDistTags);
-        await expect(release()).rejects.toEqual(error);
+        await expect(release()).rejects.toThrow(error);
         expect(getCommandStack()).toEqual(commands);
         restoreConsole();
         restoreEnv();
     });
 });
-

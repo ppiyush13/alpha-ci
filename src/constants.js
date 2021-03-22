@@ -27,7 +27,12 @@ export const MatchTag = {
 };
 export const LegacyBranch = {
     matchVersion: str => /^v[\d]+$/.test(str),
-    getVersion: str => str.match(/^v([\d]+)$/)[1],
+    getVersion: str => {
+        const regexResult = str.match(/^v([\d]+)$/);
+        if(regexResult && regexResult[1]) {
+            return parseInt(regexResult[1]);
+        }
+    },
 };
 
 export const pkgMetadata = {

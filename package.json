@@ -41,6 +41,7 @@
         "app-root-path": "^3.0.0",
         "babel-jest": "^26.6.3",
         "before-after-hook": "^2.2.0",
+        "chai": "^4.3.4",
         "chalk": "^2.4.2",
         "cli-spinner": "^0.2.10",
         "cli-step": "^1.0.2",
