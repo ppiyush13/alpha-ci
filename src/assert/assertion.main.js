@@ -1,8 +1,8 @@
+import { assert } from 'chai';
 import semverMajor from 'semver/functions/major';
 import semverGt from 'semver/functions/gt';
 import { MatchTag, Tag } from '../constants';
 import { getDistTagVersion } from '../dist-tags';
-import { assert } from 'chai';
 
 export const assertMainVersion = ({ tagName }) => {
     const latestVersion = getDistTagVersion(Tag.latest);

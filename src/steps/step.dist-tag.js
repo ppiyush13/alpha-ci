@@ -1,7 +1,7 @@
-import { exec } from './shell/exec';
-import { pkgMetadata } from './constants';
+import { exec } from '../shell/exec';
+import { pkgMetadata } from '../constants';
 
-export const applyDistTags = distTags => {
+export const npmDistTags = distTags => {
     const { name, version } = pkgMetadata;
 
     try {

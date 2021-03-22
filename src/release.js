@@ -1,8 +1,6 @@
 import { assertBranchingStrategy } from './assert/assertBranchingStrategy';
+import { npmVersion, npmPublish, npmDistTags } from './steps';
 import { resolveTagNames } from './resolveTagNames';
-import { npmVersion } from './step.npm-version';
-import { publish } from './step.publish';
-import { applyDistTags } from './step.dist-tag';
 import { fetchDistTags } from './dist-tags';
 import { pkgMetadata } from './constants';
 
@@ -20,8 +18,8 @@ export const release = async () => {
     npmVersion();
 
     /** run: npm publish */
-    publish(publishDistTag);
+    npmPublish(publishDistTag);
 
     /** run: npm dist-tag add */
-    applyDistTags(otherDistTags);
+    npmDistTags(otherDistTags);
 };

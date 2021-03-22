@@ -1,9 +1,9 @@
+import { assert } from 'chai';
 import semverMajor from 'semver/functions/major';
 import semverGt from 'semver/functions/gt';
 import semverLt from 'semver/functions/lt';
 import { MatchTag, LegacyBranch, Tag } from '../constants';
 import { getDistTagVersion } from '../dist-tags';
-import { assert } from 'chai';
 
 export const assertLegacyVersion = ({ branchName, tagName }) => {
     const branchVersion = LegacyBranch.getVersion(branchName); // v1 -> 1

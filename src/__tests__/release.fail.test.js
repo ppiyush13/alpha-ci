@@ -49,9 +49,6 @@ describe('testing branching and tag strategy', () => {
                 next: '1.0.4'
             }, 
             error: 'main/master branch tag v1.0.0 should be greater than published package latest version 1.0.4',
-            commands: [
-                `node -p "require('./package.json').name"`,
-            ],
         },
         {
             branch: 'next',
@@ -61,9 +58,6 @@ describe('testing branching and tag strategy', () => {
                 next: '1.0.4'
             }, 
             error: 'next branch can only have tags in format vx.x.x-rc.x but found tag v2.0.0',
-            commands: [
-                `node -p "require('./package.json').name"`,
-            ],
         },
         {
             branch: 'next',
@@ -73,18 +67,12 @@ describe('testing branching and tag strategy', () => {
                 next: '2.0.0',
             },
             error: 'Next branch tag v2.0.0-rc.4 should be greater than published next package version 2.0.0',
-            commands: [
-                `node -p "require('./package.json').name"`,
-            ],
         },
         {
             branch: 'v3',
             tag: 'v3.1.5-rc.4',
             previousDistTags: null, 
             error: 'Legacy branch can only have tags in format vx.x.x but found tag v3.1.5-rc.4',
-            commands: [
-                `node -p "require('./package.json').name"`,
-            ],
         },
         {
             branch: 'v3',
@@ -94,27 +82,18 @@ describe('testing branching and tag strategy', () => {
                 next: '4.1.4'
             }, 
             error: 'Legacy branch v3 cannot have tags with version v4.1.5',
-            commands: [
-                `node -p "require('./package.json').name"`,
-            ],
         },
         {
             branch: 'feature-branch',
             tag: 'v4.1.5',
             previousDistTags: null, 
             error: 'Branch feature-branch does not meet any branching format',
-            commands: [
-                `node -p "require('./package.json').name"`,
-            ],
         },
         {
             branch: 'main-pseudo',
             tag: 'v4.1.5',
             previousDistTags: null, 
             error: 'Branch main-pseudo does not meet any branching format',
-            commands: [
-                `node -p "require('./package.json').name"`,
-            ],
         },
         {
             branch: 'main',
@@ -123,9 +102,6 @@ describe('testing branching and tag strategy', () => {
                 latest: 'v1.2.0',
             },
             error: 'main/master branch tag v3.0.0 should have major version equal or greater than one of published package latest version v1.2.0',
-            commands: [
-                `node -p "require('./package.json').name"`,
-            ],
         },
         {
             branch: 'next',
@@ -135,9 +111,6 @@ describe('testing branching and tag strategy', () => {
                 next: 'v1.2.0',
             },
             error: 'Major version after latest release v1.2.0 should be incremented by 1, but found v4.0.0-rc.0',
-            commands: [
-                `node -p "require('./package.json').name"`,
-            ],
         },
         {
             branch: 'main',
@@ -146,9 +119,6 @@ describe('testing branching and tag strategy', () => {
                 latest: '1.4.0',
             },
             error: 'main/master branch tag v1.3.6 should be greater than published package latest version 1.4.0',
-            commands: [
-                `node -p "require('./package.json').name"`,
-            ],
         },
         {
             branch: 'next',
@@ -157,9 +127,6 @@ describe('testing branching and tag strategy', () => {
                 latest: 'v2.0.0-rc.9',
             },
             error: 'Major version after latest release v2.0.0-rc.9 should be incremented by 1, but found v2.0.0-rc.5',
-            commands: [
-                `node -p "require('./package.json').name"`,
-            ],
         },
         {
             branch: 'next',
@@ -169,9 +136,6 @@ describe('testing branching and tag strategy', () => {
                 next: 'v2.0.0-rc.9',
             },
             error: 'Next branch tag v2.0.0-rc.5 should be greater than published next package version v2.0.0-rc.9',
-            commands: [
-                `node -p "require('./package.json').name"`,
-            ],
         },
         {
             branch: 'v1',
@@ -181,9 +145,6 @@ describe('testing branching and tag strategy', () => {
                 'latest-1': 'v1.2.5',
             },
             error: 'Legacy branch tag v1.2.0 must be greater than latest v1 published version v1.2.5',
-            commands: [
-                `node -p "require('./package.json').name"`,
-            ],
         },
         {
             branch: 'v9',
@@ -193,9 +154,6 @@ describe('testing branching and tag strategy', () => {
                 next: '5.0.0-rc.4'
             },
             error: 'Legacy branch tag v9.0.1 should be lesser than published latest package version 4.2.9',
-            commands: [
-                `node -p "require('./package.json').name"`,
-            ],
         },
         {
             branch: 'next',
@@ -205,9 +163,6 @@ describe('testing branching and tag strategy', () => {
                 next: '1.3.0',
             },
             error: 'Major version after latest release 1.3.0 should be incremented by 1, but found v1.3.6-rc.0',
-            commands: [
-                `node -p "require('./package.json').name"`,
-            ],
         },
         {
             branch: 'next',
@@ -216,9 +171,6 @@ describe('testing branching and tag strategy', () => {
                 latest: '1.3.0',
             },
             error: 'Major version after latest release 1.3.0 should be incremented by 1, but found v1.3.6-rc.0',
-            commands: [
-                `node -p "require('./package.json').name"`,
-            ],
         },
         {
             branch: 'v1',
@@ -227,11 +179,8 @@ describe('testing branching and tag strategy', () => {
                 latest: '1.3.0',
             },
             error: 'Legacy branch v1 should be tracking versions lesser than current latest version 1.3.0',
-            commands: [
-                `node -p "require('./package.json').name"`,
-            ],
         },
-    ])('must throw error for %p', async ({ branch, tag, previousDistTags, commands, error }) => {
+    ])('must throw error for %p', async ({ branch, tag, previousDistTags, error }) => {
         const restoreConsole = mockConsole();
         const restoreEnv = mockedEnv({
             BRANCH_NAME: branch,

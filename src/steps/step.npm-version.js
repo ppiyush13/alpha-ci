@@ -1,5 +1,5 @@
-import { exec } from './shell/exec';
-import { TagAlreadyExistsError } from './constants';
+import { exec } from '../shell/exec';
+import { TagAlreadyExistsError } from '../constants';
 
 export const npmVersion = () => {
     const tagName = process.env.TAG_NAME;
