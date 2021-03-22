@@ -5,7 +5,7 @@
     "license": "MIT",
     "scripts": {
         "test": "jest",
-        "e2e": "node -r esm ./e2e/e2e.main.js",
+        "e2e": "node -r esm ./e2e/e2e.test.js",
         "e2e:coverage": "nyc npm run e2e",
         "local": "verdaccio --config ./verda-conf/config.yml",
         "run": "node -r esm ./e2e/runner.js"

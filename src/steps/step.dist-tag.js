@@ -8,7 +8,6 @@ export const npmDistTags = distTags => {
     const packageName = name();
 
     try {
-        console.log(distTags);
         distTags.map(({ tag, version }) => {
             const command = `npm dist-tag add ${packageName}@${version} ${tag}`;
             console.log(`Executing command: ${command}`);

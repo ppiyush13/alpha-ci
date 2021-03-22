@@ -33,7 +33,7 @@ describe('testing branching and tag strategy', () => {
             branch: 'next',
             tag: 'v1.0.0-rc.0',
             previousDistTags: null,
-            error: 'First release must be published from main/master branch, but found legacy branch next',
+            error: 'First release must be published from main/master branch, but found branch next',
         },
         {
             branch: 'main',

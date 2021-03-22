@@ -1,8 +1,9 @@
 import expect from 'expect';
 import regexEscape from 'regex-escape';
 
+const normalizeStr = str => str.replace(/\s/g, '').toLowerCase();
+
 const isSimilar = (str1, str2) => {
-    const normalizeStr = str => str.replace(/\s/g, '').toLowerCase();
     const got = normalizeStr(str1);
     const exp = normalizeStr(str2);
     const expRegExp = new RegExp(regexEscape(exp), 'i');
@@ -23,6 +24,20 @@ const toMatchShellOutput = (shellOutput, expected) => {
 
 };
 
+const toEqualShellOutput = (shellOutput, expected) => {
+    const {stdout, stderr, code} = shellOutput; 
+
+    if(code !== 0) {
+        throw new Error(stderr);
+    }
+    const received = stdout;
+
+    return normalizeStr(stdout) === normalizeStr(expected)
+        ? { pass: true, message: () => `Expected ${expected} to not be equal to ${received}` }
+        : { pass: false, message: () => `Expected ${expected} to be equal to ${received}` };
+
+};
+
 const toMatchShellError = (shellOutput, expected = '') => {
     const {stdout, stderr, code} = shellOutput;
     if(code === 0) {
@@ -40,6 +55,7 @@ const toMatchShellError = (shellOutput, expected = '') => {
 
 expect.extend({
     toMatchShellOutput,
+    toEqualShellOutput,
     toMatchShellError,
     toThrowOnShell: toMatchShellError,
 });

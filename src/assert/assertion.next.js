@@ -14,7 +14,7 @@ export const assertNextVersion = ({ tagName }) => {
     );
     assert.exists(
         latestVersion, 
-        `First release must be published from main/master branch, but found legacy branch next`,
+        `First release must be published from main/master branch, but found branch next`,
     );
     assert.strictEqual(
         semverMajor(tagName), semverMajor(latestVersion) + 1,
