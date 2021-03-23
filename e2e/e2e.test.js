@@ -8,6 +8,8 @@ import { start, stop } from './verdaccio-local/fork';
 
 test('Testing alpha end-2-end', ({ step, setup, tear}) => {
 
+    shell.config.silent = true;
+
     setup(async () => {
         await start();
     });
@@ -366,9 +368,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
             TAG_NAME: 'v1.4.0',
         });
 
-        
-
-        expect(await run()).toMatchShellOutput(
+        expect(shell.exec('npx volte')).toMatchShellOutput(
             `npm notice name:          demo-pkg
              npm notice version:       1.4.0
              npm notice filename:      demo-pkg-1.4.0.tgz`
@@ -384,6 +384,37 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         );
     });
 
-    shell.config.silent = true;
+    step('publish v3.0.1 from main branch', () => {
+        mockedEnv({
+            BRANCH_NAME: 'main',
+            TAG_NAME: 'v3.0.1',
+        });
+
+        expect(shell.exec('npx volte')).toMatchShellOutput(
+            `npm notice name:          demo-pkg
+             npm notice version:       3.0.1
+             npm notice filename:      demo-pkg-3.0.1.tgz`
+        );
+
+        expect(shell.exec('npm dist-tag')).toEqualShellOutput(
+            `
+                latest-1: 1.4.0
+                latest-2: 2.3.0
+                latest: 3.0.1
+                next: 3.0.1
+            `
+        );
+    });
+
+    step('publish v3.0.2-rc.4 from next branch, should throw error', () => {
+        mockedEnv({
+            BRANCH_NAME: 'next',
+            TAG_NAME: 'v3.0.2-rc.4',
+        });
+
+        expect(shell.exec('npx volte')).toMatchShellError(
+            `For next branch, major version after latest release 3.0.1 should be incremented by 1, but found v3.0.2-rc.4`,
+        );
+    });
 
 });

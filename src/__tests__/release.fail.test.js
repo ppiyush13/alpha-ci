@@ -110,7 +110,7 @@ describe('testing branching and tag strategy', () => {
                 latest: 'v1.2.0',
                 next: 'v1.2.0',
             },
-            error: 'Major version after latest release v1.2.0 should be incremented by 1, but found v4.0.0-rc.0',
+            error: 'For next branch, major version after latest release v1.2.0 should be incremented by 1, but found v4.0.0-rc.0',
         },
         {
             branch: 'main',
@@ -126,7 +126,7 @@ describe('testing branching and tag strategy', () => {
             previousDistTags: {
                 latest: 'v2.0.0-rc.9',
             },
-            error: 'Major version after latest release v2.0.0-rc.9 should be incremented by 1, but found v2.0.0-rc.5',
+            error: 'For next branch, major version after latest release v2.0.0-rc.9 should be incremented by 1, but found v2.0.0-rc.5',
         },
         {
             branch: 'next',
@@ -162,7 +162,7 @@ describe('testing branching and tag strategy', () => {
                 latest: '1.3.0',
                 next: '1.3.0',
             },
-            error: 'Major version after latest release 1.3.0 should be incremented by 1, but found v1.3.6-rc.0',
+            error: 'For next branch, major version after latest release 1.3.0 should be incremented by 1, but found v1.3.6-rc.0',
         },
         {
             branch: 'next',
@@ -170,7 +170,7 @@ describe('testing branching and tag strategy', () => {
             previousDistTags: {
                 latest: '1.3.0',
             },
-            error: 'Major version after latest release 1.3.0 should be incremented by 1, but found v1.3.6-rc.0',
+            error: 'For next branch, major version after latest release 1.3.0 should be incremented by 1, but found v1.3.6-rc.0',
         },
         {
             branch: 'v1',

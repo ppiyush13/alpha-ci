@@ -18,7 +18,7 @@ export const assertNextVersion = ({ tagName }) => {
     );
     assert.strictEqual(
         semverMajor(tagName), semverMajor(latestVersion) + 1,
-        `Major version after latest release ${latestVersion} should be incremented by 1, but found ${tagName}`,
+        `For next branch, major version after latest release ${latestVersion} should be incremented by 1, but found ${tagName}`,
     );
 
     if(nextVersion) {
