@@ -1,4 +1,4 @@
-import { exec } from './shell/exec';
+import escapeStringRegex from 'escape-string-regexp';
 
 /** branch */
 export const Branch = {
@@ -15,8 +15,7 @@ export const Tag = {
 
 /** error */
 export const TagAlreadyExistsError = (tagName, ex) => {
-    return new RegExp(`npm ERR! fatal: tag '${tagName}' already exists`)
-        .test(ex);
+    return new RegExp(escapeStringRegex(`npm ERR! fatal: tag '${tagName}' already exists`)).test(ex);
 };
 
 /** branching strategy utils */
@@ -28,13 +27,6 @@ export const LegacyBranch = {
     matchVersion: str => /^v[\d]+$/.test(str),
     getVersion: str => {
         const regexResult = str.match(/^v([\d]+)$/);
-        if(regexResult && regexResult[1]) {
-            return parseInt(regexResult[1]);
-        }
+        return parseInt(regexResult[1]);
     },
-};
-
-export const pkgMetadata = {
-    version: () => exec(`node -p "require('./package.json').version"`).trim(),
-    name: () => exec(`node -p "require('./package.json').name"`).trim(),
 };

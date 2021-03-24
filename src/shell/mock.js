@@ -6,7 +6,7 @@ const execMock = shell.exec = jest.fn();
 /** clear mocks after every test case */
 afterEach(() => execMock.mockClear());
 
-export const mockShell = (mocks) => {
+export const mockShell = (mocks = {}) => {
     execMock.mockImplementation((command) => {
         return mocks[command] || '';
     });

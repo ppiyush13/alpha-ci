@@ -2,10 +2,14 @@ import { assertBranchingStrategy } from './assert/assertBranchingStrategy';
 import { npmVersion, npmPublish, npmDistTags } from './steps';
 import { resolveTagNames } from './resolveTagNames';
 import { fetchDistTags } from './dist-tags';
-import { pkgMetadata } from './constants';
+import { readPkgContent, getPkgMetadata } from './pkgMetadata';
 
 export const release = async () => {
-    const packageName = pkgMetadata.name();
+    /** initializers */
+    await readPkgContent();
+
+    /** perform steps */
+    const { name: packageName } = getPkgMetadata();
     await fetchDistTags(packageName);
 
     /** verify branching strategy */

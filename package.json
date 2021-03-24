@@ -26,10 +26,10 @@
     },
     "dependencies": {
         "commander": "^7.1.0",
+        "escape-string-regexp": "^1.0.5",
         "indent-string": "^4.0.0",
         "jest-message-util": "^26.6.2",
         "performance-now": "^2.1.0",
-        "regex-escape": "^3.4.10",
         "shelljs": "^0.8.4",
         "stack-utils": "^2.0.3"
     },

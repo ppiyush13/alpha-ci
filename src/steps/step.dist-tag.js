@@ -1,11 +1,10 @@
 import { exec } from '../shell/exec';
-import { pkgMetadata } from '../constants';
+import { getPkgMetadata } from '../pkgMetadata';
 
 export const npmDistTags = distTags => {
     if(distTags.length === 0) return;
     
-    const { name } = pkgMetadata;
-    const packageName = name();
+    const { name: packageName } = getPkgMetadata();
 
     try {
         distTags.map(({ tag, version }) => {

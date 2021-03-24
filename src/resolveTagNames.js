@@ -1,7 +1,7 @@
 import semverGt from 'semver/functions/gt';
 import semverClean from 'semver/functions/clean';
 import semverMajor from 'semver/functions/major';
-import { Branch, Tag, LegacyBranch } from './constants';
+import { Branch, Tag } from './constants';
 import { getDistTagVersion } from './dist-tags';
 
 export const resolveTagNames = () => {
@@ -11,6 +11,8 @@ export const resolveTagNames = () => {
     const tags = [];
 
     if([Branch.main, Branch.master].includes(branchName)) {
+
+        /** main/master branch */
         const distTagOfLatest =  getDistTagVersion(Tag.latest);
         const distTagOfNext = getDistTagVersion(Tag.next);
 
@@ -40,12 +42,15 @@ export const resolveTagNames = () => {
         }
     }
     else if(branchName === Branch.next) {
+
+        /** next branch */
         tags.push({
             tag: Tag.next,
             version: pkgVersion,
         });
     }
-    else if(LegacyBranch.matchVersion(branchName)) {
+    else {
+        /** legacy branch */
         tags.push(getLegacyTag(pkgVersion));
     }
 

@@ -1,9 +1,8 @@
 import nock from 'nock';
 import mockedEnv from 'mocked-env';
 import mockConsole from "jest-mock-console";
-import semverClean from 'semver/functions/clean';
-import { mockRegistry } from '../registry/mock';
 import { mockShell } from '../shell/mock';
+import { mockRegistry } from '../registry/mock';
 import { release } from '../release';
 
 nock.disableNetConnect()
@@ -182,19 +181,14 @@ describe('testing branching and tag strategy', () => {
         },
     ])('must throw error for %p', async ({ branch, tag, previousDistTags, error }) => {
         const restoreConsole = mockConsole();
+        const getCommandStack = mockShell();
         const restoreEnv = mockedEnv({
             BRANCH_NAME: branch,
             TAG_NAME: tag,
         });
-        const getCommandStack = mockShell({
-            [`node -p "require('./package.json').name"`]: 'demo-package',
-            [`node -p "require('./package.json').version"`]: semverClean(tag),
-        });
         mockNpmLatestVersion(previousDistTags);
         await expect(release()).rejects.toThrow(error);
-        expect(getCommandStack()).toEqual([
-            `node -p "require('./package.json').name"`,
-        ]);
+        expect(getCommandStack()).toEqual([]);
         restoreConsole();
         restoreEnv();
     });

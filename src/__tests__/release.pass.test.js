@@ -1,7 +1,6 @@
 import nock from 'nock';
 import mockedEnv from 'mocked-env';
 import mockConsole from "jest-mock-console";
-import semverClean from 'semver/functions/clean';
 import { mockShell } from '../shell/mock';
 import { mockRegistry } from '../registry/mock';
 import { release } from '../release';
@@ -28,10 +27,8 @@ describe('testing branching strategy', () => {
             tag: 'v1.0.0',
             previousDistTags: null,
             commands: [
-                `node -p "require('./package.json').name"`,
                 "npm version v1.0.0",
                 "npm publish --tag latest",
-                `node -p "require('./package.json').name"`,
                 "npm dist-tag add demo-package@1.0.0 next",
             ],
         },
@@ -42,10 +39,10 @@ describe('testing branching strategy', () => {
                 latest: '1.0.0-rc.5',
             },
             commands: [
-                `node -p "require('./package.json').name"`,
+                
                 "npm version v1.0.0",
                 "npm publish --tag latest",
-                `node -p "require('./package.json').name"`,
+                
                 "npm dist-tag add demo-package@1.0.0 next",
             ],
         },
@@ -57,10 +54,10 @@ describe('testing branching strategy', () => {
                 next: '2.5.0',
             },
             commands: [
-                `node -p "require('./package.json').name"`,
+                
                 "npm version v2.5.1",
                 "npm publish --tag latest",
-                `node -p "require('./package.json').name"`,
+                
                 "npm dist-tag add demo-package@2.5.1 next",
             ],
         },
@@ -72,10 +69,10 @@ describe('testing branching strategy', () => {
                 next: '2.5.1',
             },
             commands: [
-                `node -p "require('./package.json').name"`,
+                
                 "npm version v3.0.0",
                 "npm publish --tag latest",
-                `node -p "require('./package.json').name"`,
+                
                 "npm dist-tag add demo-package@3.0.0 next",
                 "npm dist-tag add demo-package@2.5.1 latest-2",
             ],
@@ -88,7 +85,7 @@ describe('testing branching strategy', () => {
                 next: '4.0.0-rc.4',
             },
             commands: [
-                `node -p "require('./package.json').name"`,
+                
                 "npm version v3.5.2",
                 "npm publish --tag latest",
             ],
@@ -101,10 +98,10 @@ describe('testing branching strategy', () => {
                 next: '5.0.0-rc.2',
             },
             commands: [
-                `node -p "require('./package.json').name"`,
+                
                 "npm version v5.0.0",
                 "npm publish --tag latest",
-                `node -p "require('./package.json').name"`,
+                
                 "npm dist-tag add demo-package@5.0.0 next",
                 "npm dist-tag add demo-package@4.0.8 latest-4",
             ]
@@ -117,10 +114,10 @@ describe('testing branching strategy', () => {
                 next: '5.0.0-rc.2',
             },
             commands: [
-                `node -p "require('./package.json').name"`,
+                
                 "npm version v5.0.1",
                 "npm publish --tag latest",
-                `node -p "require('./package.json').name"`,
+                
                 "npm dist-tag add demo-package@5.0.1 next",
             ]
         },
@@ -132,7 +129,7 @@ describe('testing branching strategy', () => {
                 next: '2.5.1',
             },
             commands: [
-                `node -p "require('./package.json').name"`,
+                
                 "npm version v3.0.0-rc.0",
                 "npm publish --tag next",
             ],
@@ -145,7 +142,7 @@ describe('testing branching strategy', () => {
                 next: 'v3.0.0-rc.0',
             },
             commands: [
-                `node -p "require('./package.json').name"`,
+                
                 "npm version v1.0.19",
                 "npm publish --tag latest-1",
             ],
@@ -157,20 +154,17 @@ describe('testing branching strategy', () => {
                 latest: '1.0.19',
             },
             commands: [
-                `node -p "require('./package.json').name"`,
+                
                 "npm version v2.0.0-rc.0",
                 "npm publish --tag next",
             ],
         },
     ])('Positive scenarios', async ({ branch, tag, previousDistTags, commands }) => {
         const restoreConsole = mockConsole();
+        const getCommandStack = mockShell();
         const restoreEnv = mockedEnv({
             BRANCH_NAME: branch,
             TAG_NAME: tag,
-        });
-        const getCommandStack = mockShell({
-            [`node -p "require('./package.json').name"`]: 'demo-package',
-            [`node -p "require('./package.json').version"`]: semverClean(tag),
         });
         mockNpmLatestVersion(previousDistTags);
         await release();

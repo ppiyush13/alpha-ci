@@ -1,12 +1,12 @@
 import expect from 'expect';
-import regexEscape from 'regex-escape';
+import escapeStringRegex from 'escape-string-regexp';
 
 const normalizeStr = str => str.replace(/\s/g, '').toLowerCase();
 
 const isSimilar = (str1, str2) => {
     const got = normalizeStr(str1);
     const exp = normalizeStr(str2);
-    const expRegExp = new RegExp(regexEscape(exp), 'i');
+    const expRegExp = new RegExp(escapeStringRegex(exp), 'i');
     return expRegExp.test(got);
 };
 
@@ -21,7 +21,6 @@ const toMatchShellOutput = (shellOutput, expected) => {
     return isSimilar(received, expected)
         ? { pass: true, message: () => `Expected ${expected} to not be similar to ${received}` }
         : { pass: false, message: () => `Expected ${expected} to be similar to ${received}` };
-
 };
 
 const toEqualShellOutput = (shellOutput, expected) => {
