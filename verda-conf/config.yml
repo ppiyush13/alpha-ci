@@ -15,6 +15,6 @@ listen:
 packages:
    '**':
     access: $anonymous
-    publish: $anonymous
+    publish: $authenticated
     unpublish: $authenticated
     proxy: npmjs

@@ -44,8 +44,10 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         const pass = 'pass1234';
         const email = 'test@example.com';
         const registry = 'http://localhost:13130';
-        const configPath = './demo-pkg/.npmrc';
-        shell.exec(`npx npm-cli-login -u ${user} -p ${pass} -e ${email} -r ${registry} --config-path=${configPath}`);
+        const configPath = '.npmrc';
+        expect(shell.exec(`npx npm-cli-login -u ${user} -p ${pass} -e ${email} -r ${registry} --config-path ${configPath}`)).toMatchShellOutput(
+            `http 201 http://localhost:13130/-/user/org.couchdb.user:volte`,
+        );
     });
 
     step('exec dist-tag, should return package not found error',  () => {

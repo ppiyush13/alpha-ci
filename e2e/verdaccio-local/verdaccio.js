@@ -1,7 +1,6 @@
 import startServer from 'verdaccio';
 import delay from 'delay';
 import enableDestroy from 'server-destroy';
-
 import { version , name } from 'verdaccio/package.json';
 
 
@@ -16,23 +15,29 @@ const config = {
             }
         }
     },
-    // "uplinks": {
-    //     "npmjs": {
-    //         "url": "https://registry.npmjs.org/"
-    //     }
-    // },
+    "uplinks": {
+        "npmjs": {
+            "url": "https://registry.npmjs.org/"
+        }
+    },
     "store": {
         "memory": {
             "limit": 1000
         }
     },
     "packages": {
-        "**": {
-            "access": "$anonymous",
+        volte: {
             "publish": "$anonymous",
-            "unpublish": "$anonymous",
-            //"proxy": "npmjs",
-        }
+        },
+        'npm-cli-login': {
+            "access": "$anonymous",
+            "proxy": "npmjs"
+        },
+        "**": {
+            "access": "$all",
+            "publish": "$authenticated",
+            "unpublish": "$authenticated",
+        },
     }
 };
 

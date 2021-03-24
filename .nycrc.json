@@ -8,5 +8,8 @@
     "exclude": [
         "**/*.test.js",
         "node_modules"
+    ],
+    "require": [
+        "esm"
     ]
 }
