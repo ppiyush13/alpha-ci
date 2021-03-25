@@ -2,44 +2,7 @@ import startServer from 'verdaccio';
 import delay from 'delay';
 import enableDestroy from 'server-destroy';
 import { version , name } from 'verdaccio/package.json';
-
-
-const config = {
-    "auth": {
-        "auth-memory": {
-            "users": {
-                "volte": {
-                    "name": "volte",
-                    "password": "pass1234"
-                }
-            }
-        }
-    },
-    "uplinks": {
-        "npmjs": {
-            "url": "https://registry.npmjs.org/"
-        }
-    },
-    "store": {
-        "memory": {
-            "limit": 1000
-        }
-    },
-    "packages": {
-        volte: {
-            "publish": "$anonymous",
-        },
-        'npm-cli-login': {
-            "access": "$anonymous",
-            "proxy": "npmjs"
-        },
-        "**": {
-            "access": "$all",
-            "publish": "$authenticated",
-            "unpublish": "$authenticated",
-        },
-    }
-};
+import verdaccioConfig from './verdaccio-config';
 
 const verdaccioStart = (config, port) => new Promise((resolve) => {
     startServer(config, port, undefined, version, name, (...args) => resolve(args));
@@ -59,7 +22,7 @@ export const start = async (port) => {
 
     /** try to start web server */
     console.log('trying to start');
-    const [webServer, address, pkgName, pkgVersion] =  await verdaccioStart(config, port);
+    const [webServer, address, pkgName, pkgVersion] =  await verdaccioStart(verdaccioConfig, port);
 
     /** register destroy middleware */
     enableDestroy(webServer);

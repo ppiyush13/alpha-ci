@@ -1,4 +1,5 @@
 node_modules
 coverage
-.nyc_output
+coverage-unit
 coverage-e2e
+.nyc_output

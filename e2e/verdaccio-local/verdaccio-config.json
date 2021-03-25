@@ -1,0 +1,38 @@
+
+{
+    "auth": {
+        "auth-memory": {
+            "users": {
+                "volte": {
+                    "name": "volte",
+                    "password": "pass1234"
+                }
+            }
+        }
+    },
+    "uplinks": {
+        "npmjs": {
+            "url": "https://registry.npmjs.org/"
+        }
+    },
+    "listen": "localhost:13130",
+    "store": {
+        "memory": {
+            "limit": 1000
+        }
+    },
+    "packages": {
+        "volte": {
+            "publish": "$anonymous"
+        },
+        "npm-cli-login": {
+            "access": "$anonymous",
+            "proxy": "npmjs"
+        },
+        "**": {
+            "access": "$all",
+            "publish": "$authenticated",
+            "unpublish": "$authenticated"
+        }
+    }
+}

@@ -5,9 +5,13 @@
     "license": "MIT",
     "scripts": {
         "test": "jest",
+        "e": "node -r @babel/register ./e2e/e2e.test.js",
+        "et": "nyc npm run e",
         "e2e": "node -r esm ./e2e/e2e.test.js",
-        "e2e:coverage": "nyc npm run e2e",
+        "e2e:coverage": "nyc --cache false npm run e2e",
+        "e2e8": "c8 npm run e2e",
         "local": "verdaccio --config ./verda-conf/config.yml",
+        "server": "verdaccio --config ./e2e/verdaccio-local/verdaccio-config.json",
         "run": "node -r esm ./e2e/runner.js"
     },
     "bin": {
@@ -25,6 +29,8 @@
         "url": "https://github.com/ppiyush13/volte/issues"
     },
     "dependencies": {
+        "@babel/plugin-proposal-class-properties": "^7.13.0",
+        "@istanbuljs/nyc-config-babel": "^3.0.0",
         "commander": "^7.1.0",
         "escape-string-regexp": "^1.0.5",
         "indent-string": "^4.0.0",
@@ -36,17 +42,18 @@
     "devDependencies": {
         "@babel/code-frame": "^7.12.13",
         "@babel/core": "^7.13.10",
-        "@babel/preset-env": "^7.13.10",
+        "@babel/preset-env": "^7.13.12",
+        "@babel/register": "^7.13.8",
         "app-root-path": "^3.0.0",
         "babel-jest": "^26.6.3",
         "before-after-hook": "^2.2.0",
+        "c8": "^7.6.0",
         "chai": "^4.3.4",
         "chalk": "^2.4.2",
         "cli-spinner": "^0.2.10",
         "cli-step": "^1.0.2",
         "commander": "^3.0.2",
         "delay": "^5.0.0",
-        "esm": "3.2.20",
         "expect": "^26.6.2",
         "got": "^11.8.2",
         "jest": "^26.6.3",

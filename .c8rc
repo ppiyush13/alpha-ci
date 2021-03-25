@@ -1,15 +1,11 @@
 {
+    "reporter": "html",
     "all": true,
-    "reporter": "lcov",
-    "report-dir": "./coverage-e2e",
     "include": [
         "src/**/*.js"
     ],
     "exclude": [
         "**/*.test.js",
         "node_modules"
-    ],
-    "require": [
-        "esm"
     ]
 }
