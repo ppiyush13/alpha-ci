@@ -1,3 +1,4 @@
+
 module.exports = {
     "coverageDirectory": "./coverage-unit",
     "coverageReporters": [
@@ -5,7 +6,8 @@ module.exports = {
         "lcov"
     ],
     "testMatch": [
-        "**/src/__tests__/*test.js"
+        "**/src/__tests__/*.test.js",
+        //"**/e2e/e2e.jest.test.js"
     ],
     "collectCoverageFrom": [
         "src/**/*.{js,ts}",

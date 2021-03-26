@@ -5,14 +5,14 @@
     "license": "MIT",
     "scripts": {
         "test": "run-s test:*",
-        "test:coverage": "run-s test:*:coverage",
+        "test:coverage": "run-s test:*:coverage merge:coverage",
         "test:unit": "jest",
         "test:e2e": "node -r @babel/register ./e2e/e2e.test.js",
         "test:unit:coverage": "run-s 'test:unit -- --coverage --watchAll=false'",
-        "test:e2e:coverage": "nyc run-s test:e2e",
+        "test:e2e:coverage": "c8 run-s test:e2e",
         "local": "verdaccio --config ./verda-conf/config.yml",
         "server": "verdaccio --config ./e2e/verdaccio-local/verdaccio-config.json",
-        "merge": "node -r @babel/register scripts/merge-coverage.js"
+        "merge:coverage": "node -r @babel/register scripts/merge-coverage.js"
     },
     "bin": {
         "volte": "bin/volte.js"
@@ -34,6 +34,7 @@
         "commander": "^7.1.0",
         "escape-string-regexp": "^1.0.5",
         "indent-string": "^4.0.0",
+        "istanbul-lib-report": "^3.0.0",
         "jest-message-util": "^26.6.2",
         "performance-now": "^2.1.0",
         "shelljs": "^0.8.4",
@@ -55,6 +56,8 @@
         "delay": "^5.0.0",
         "expect": "^26.6.2",
         "got": "^11.8.2",
+        "istanbul-api": "^3.0.0",
+        "istanbul-reports": "^3.0.2",
         "jest": "^26.6.3",
         "jest-circus": "^26.6.3",
         "jest-mock-console": "^1.0.1",

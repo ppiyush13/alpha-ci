@@ -3,7 +3,8 @@
     "report-dir": "./coverage-e2e",
     "reporter": [
         "lcov", 
-        "json"
+        "json",
+        "text"
     ],
     "include": [
         "src/**/*.js"
