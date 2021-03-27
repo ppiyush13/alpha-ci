@@ -3,6 +3,7 @@
     "version": "0.0.0",
     "description": "Robust, simple replacement for npm publish",
     "license": "MIT",
+    "main": "dist/volte.js",
     "scripts": {
         "test": "run-s test:*",
         "test:coverage": "run-s test:unit:coverage",
@@ -10,7 +11,10 @@
         "test:e2e": "node -r @babel/register ./e2e/e2e.test.js",
         "test:unit:coverage": "run-s 'test:unit -- --coverage --watchAll=false'",
         "verdaccio:demo": "verdaccio --config ./verdaccio-configs/demo.config.json",
-        "verdaccio:e2e": "verdaccio --config ./verdaccio-configs/e2e.config.json"
+        "verdaccio:e2e": "verdaccio --config ./verdaccio-configs/e2e.config.json",
+        "build": "run-s build:*",
+        "build:clean": "rimraf dist",
+        "build:bundle": "microbundle --no-compress --format cjs --target node --no-sourcemap"
     },
     "bin": {
         "volte": "bin/volte.js"
@@ -58,6 +62,7 @@
         "npm-cli-login": "^0.1.1",
         "npm-run-all": "^4.1.5",
         "pretty-ms": "^7.0.1",
+        "rimraf": "^3.0.2",
         "runfork": "^3.1.55",
         "stack-utils": "^2.0.3",
         "tick-promise": "^1.0.0",
