@@ -1,0 +1,33 @@
+{
+    "auth": {
+        "auth-memory": {
+            "users": {
+                "volte": {
+                    "name": "volte",
+                    "password": "pass1234"
+                }
+            }
+        }
+    },
+    "uplinks": {
+        "npmjs": {
+            "url": "https://registry.npmjs.org/"
+        }
+    },
+    "store": {
+        "memory": {
+            "limit": 1000
+        }
+    },
+    "listen": [
+        "localhost:13130"
+    ],
+    "packages": {
+        "**": {
+            "access": "$anonymous",
+            "publish": "$authenticated",
+            "unpublish": "$authenticated",
+            "proxy": "npmjs"
+        }
+    }
+}

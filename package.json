@@ -9,8 +9,8 @@
         "test:unit": "jest",
         "test:e2e": "node -r @babel/register ./e2e/e2e.test.js",
         "test:unit:coverage": "run-s 'test:unit -- --coverage --watchAll=false'",
-        "local": "verdaccio --config ./verda-conf/config.yml",
-        "server": "verdaccio --config ./e2e/verdaccio-local/verdaccio-config.json"
+        "verdaccio:demo": "verdaccio --config ./verdaccio-configs/demo.config.json",
+        "verdaccio:e2e": "verdaccio --config ./verdaccio-configs/e2e.config.json"
     },
     "bin": {
         "volte": "bin/volte.js"
