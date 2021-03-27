@@ -5,11 +5,10 @@ import expect from 'expect';
 import { setup as setupServer, teardown as teardownServer } from 'jest-dev-server';
 import './jest-matchers/match-shell';
 import test from './test-runner';
-//import { start, stop } from './verdaccio-local/fork';
 
 test('Testing alpha end-2-end', ({ step, setup, tear}) => {
 
-    //shell.config.silent = true;
+    shell.config.silent = true;
 
     setup(async () => {
         await setupServer({
@@ -25,6 +24,10 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
 
     step('cd to rootDir', () => {
         shell.cd(rootPath);
+    });
+
+    step('build volte',() => {
+        shell.exec('npm run build');
     });
 
     step('publish volte', () => {

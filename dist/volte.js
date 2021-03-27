@@ -212,7 +212,6 @@ const readPackageContent = async () => {
     default: packageContent
   } = await Promise.resolve().then(function () { return /*#__PURE__*/_interopNamespace(require(packageJsonPath)); });
   result.packageContent = packageContent;
-  debugger;
 };
 /** getter */
 

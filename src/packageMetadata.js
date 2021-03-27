@@ -12,7 +12,6 @@ export const readPackageContent = async () => {
     const packageJsonPath = resolve(process.cwd(), 'package.json');
     const { default: packageContent } = await import(packageJsonPath);
     result.packageContent = packageContent;
-    debugger
 };
 
 /** getter */
