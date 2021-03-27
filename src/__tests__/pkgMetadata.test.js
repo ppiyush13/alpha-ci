@@ -16,6 +16,7 @@ describe('testing pkgMetadata module', () => {
 
         /** assert over getPackageMetadata function */
         expect(getPackageMetadata()).toEqual(alphaPackage);
+        expect(getPackageMetadata().name).toEqual('volte');
     });
 
 });

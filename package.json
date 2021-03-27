@@ -6,10 +6,10 @@
     "source": "src/index.js",
     "main": "dist/volte.js",
     "scripts": {
-        "test": "run-s test:*",
-        "test:coverage": "run-s test:unit:coverage",
+        "test": "run-s test:unit test:e2e",
+        "test:coverage": "run-s test:unit:coverage test:e2e",
         "test:unit": "jest",
-        "test:e2e": "node -r @babel/register ./e2e/e2e.test.js",
+        "test:e2e": "cross-env NODE_ENV=test node -r @babel/register ./e2e/e2e.test.js",
         "test:unit:coverage": "run-s 'test:unit -- --coverage --watchAll=false'",
         "verdaccio:demo": "verdaccio --config ./verdaccio-configs/demo.config.json",
         "verdaccio:e2e": "verdaccio --config ./verdaccio-configs/e2e.config.json",
@@ -32,7 +32,6 @@
         "url": "https://github.com/ppiyush13/volte/issues"
     },
     "dependencies": {
-        "@babel/plugin-proposal-class-properties": "^7.13.0",
         "chai": "^4.3.4",
         "commander": "^7.1.0",
         "escape-string-regexp": "^1.0.5",
@@ -44,12 +43,15 @@
     "devDependencies": {
         "@babel/code-frame": "^7.12.13",
         "@babel/core": "^7.13.10",
+        "@babel/plugin-proposal-class-properties": "^7.13.0",
         "@babel/preset-env": "^7.13.12",
         "@babel/register": "^7.13.8",
         "app-root-path": "^3.0.0",
         "babel-jest": "^26.6.3",
         "chalk": "^2.4.2",
+        "cross-env": "^7.0.3",
         "delay": "^5.0.0",
+        "esm": "^3.2.25",
         "expect": "^26.6.2",
         "get-bin-path": "^5.1.0",
         "indent-string": "^4.0.0",
