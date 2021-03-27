@@ -8,7 +8,7 @@ import { start, stop } from './verdaccio-local/fork';
 
 test('Testing alpha end-2-end', ({ step, setup, tear}) => {
 
-    shell.config.silent = true;
+    //shell.config.silent = true;
 
     setup(async () => {
         await start();
@@ -17,7 +17,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
     tear(async () => {
         await stop();
         shell.cd(rootPath);
-        shell.rm('-rf', './app/demo-pkg');
+        //shell.rm('-rf', './app/demo-pkg');
     });
 
     step('cd to rootDir', () => {
@@ -29,6 +29,10 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
             `npm notice === Tarball Details ===
              npm notice name: volte`
         );
+    });
+
+    step('remove demo-pkg, if exits already', () => {
+        shell.rm('-rf', './app/demo-pkg');
     });
 
     step('create demo-pkg', () => {
@@ -48,6 +52,10 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         expect(shell.exec(`npx npm-cli-login -u ${user} -p ${pass} -e ${email} -r ${registry} --config-path ${configPath}`)).toMatchShellOutput(
             `http 201 http://localhost:13130/-/user/org.couchdb.user:volte`,
         );
+    });
+
+    step('install volte', () => {
+        shell.exec('npm i volte');
     });
 
     step('exec dist-tag, should return package not found error',  () => {

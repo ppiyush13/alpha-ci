@@ -1,25 +1,11 @@
-import nock from 'nock';
 import mockedEnv from 'mocked-env';
 import mockConsole from "jest-mock-console";
-import { mockShell } from '../shell/mock';
-import { mockRegistry } from '../registry/mock';
+import { mockShell } from '../shell/mockShell.testUtil';
+import { mockFetchDistTags } from './testUtils/mockFetchDistTags.testUtil';
 import { release } from '../release';
 
-nock.disableNetConnect()
-mockRegistry('http://npm-registry-url');
-
-const mockNpmLatestVersion = previousDistTags => {
-    const response = previousDistTags
-        ? [ 200, { ...previousDistTags }]
-        : [ 404, { "error": "Not found" } ];
-
-    nock('http://npm-registry-url/-/')
-        .get('/package/demo-package/dist-tags')
-        .reply(...response); 
-};
 
 describe('testing branching strategy', () => {
-    afterEach(() => nock.cleanAll()); 
 
     it.each([
         {
@@ -160,15 +146,23 @@ describe('testing branching strategy', () => {
             ],
         },
     ])('Positive scenarios', async ({ branch, tag, previousDistTags, commands }) => {
+
+        /** mock */
+        mockFetchDistTags(previousDistTags);
         const restoreConsole = mockConsole();
         const getCommandStack = mockShell();
         const restoreEnv = mockedEnv({
             BRANCH_NAME: branch,
             TAG_NAME: tag,
         });
-        mockNpmLatestVersion(previousDistTags);
+
+        /** trigger release */
         await release();
+
+        /** assert exact commands executed with sequence  */
         expect(getCommandStack()).toEqual(commands);
+        
+        /** restore mocks */
         restoreConsole();
         restoreEnv();
     });

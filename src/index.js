@@ -1,7 +1,7 @@
 import { release } from './release';
 import { handleGlobalException } from './globalException';
 
-export const run = async () => {
+export const executeAlpha = async () => {
     try {
         await release();
     }

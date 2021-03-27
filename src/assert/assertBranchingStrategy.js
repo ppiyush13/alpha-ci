@@ -4,6 +4,7 @@ import { assertLegacyVersion } from './assertion.legacy';
 import { Branch, LegacyBranch } from '../constants';
 
 export const assertBranchingStrategy = () => {
+    
     const branchName = process.env.BRANCH_NAME.toLocaleLowerCase();
     const tagName = process.env.TAG_NAME.toLocaleLowerCase();
 

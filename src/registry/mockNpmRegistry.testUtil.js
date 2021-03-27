@@ -2,6 +2,6 @@ import * as dependency from 'registry-url';
 
 jest.mock('registry-url');
 
-export const mockRegistry = mockUrl => {
+export const mockNpmRegistry = mockUrl => {
     dependency.default.mockImplementation(() => mockUrl);
 };

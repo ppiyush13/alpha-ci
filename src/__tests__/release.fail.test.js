@@ -1,26 +1,11 @@
-import nock from 'nock';
 import mockedEnv from 'mocked-env';
 import mockConsole from "jest-mock-console";
-import { mockShell } from '../shell/mock';
-import { mockRegistry } from '../registry/mock';
+import { mockShell } from '../shell/mockShell.testUtil';
+import { mockFetchDistTags } from './testUtils/mockFetchDistTags.testUtil';
 import { release } from '../release';
 
-nock.disableNetConnect()
-mockRegistry('http://npm-registry-url');
-
-const mockNpmLatestVersion = previousDistTags => {
-    const response = previousDistTags
-        ? [ 200, { ...previousDistTags }]
-        : [ 404, { "error": "Not found" } ];
-
-    nock('http://npm-registry-url/-/')
-        .get('/package/demo-package/dist-tags')
-        .reply(...response); 
-};
-
 describe('testing branching and tag strategy', () => {
-    afterEach(() => nock.cleanAll()); 
-
+    
     it.each([
         {
             branch: 'v1',
@@ -180,15 +165,23 @@ describe('testing branching and tag strategy', () => {
             error: 'Legacy branch v1 should be tracking versions lesser than current latest version 1.3.0',
         },
     ])('must throw error for %p', async ({ branch, tag, previousDistTags, error }) => {
+
+        /** mocks */
+        mockFetchDistTags(previousDistTags);
         const restoreConsole = mockConsole();
         const getCommandStack = mockShell();
         const restoreEnv = mockedEnv({
             BRANCH_NAME: branch,
             TAG_NAME: tag,
         });
-        mockNpmLatestVersion(previousDistTags);
+        
+        /** trigger release */
         await expect(release()).rejects.toThrow(error);
+        
+        /** assert exact commands executed with sequence  */
         expect(getCommandStack()).toEqual([]);
+
+        /** restore mocks */
         restoreConsole();
         restoreEnv();
     });

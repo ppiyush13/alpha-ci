@@ -1,10 +1,10 @@
-const ParentEnvironment = require('jest-environment-node');
+const NodeEnvironment = require('jest-environment-node');
 
-module.exports = class JestEnvironmentFailFast extends ParentEnvironment {
+module.exports = class JestEnvironmentFailFast extends NodeEnvironment {
     failedTest = false;
     
     async handleTestEvent(event, state) {
-        console.log(event);
+        //console.log(event);
         if (event.name === 'hook_failure' || event.name === 'test_fn_failure') {
             this.failedTest = true;
         } else if (this.failedTest && event.name === 'test_start') {

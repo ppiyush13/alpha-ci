@@ -2,19 +2,19 @@ import shell from 'shelljs';
 import mockedEnv from 'mocked-env';
 import { path as rootPath } from 'app-root-path';
 import './jest-matchers/match-shell';
-//import { start, stop } from '../e2e/verdaccio-local/fork';
 import { setup as setupDevServer, teardown as teardownDevServer } from 'jest-dev-server';
 
 jest.setTimeout(300 * 1000);
 
 describe('Testing Alpha', () => {
 
-    //shell.config.silent = true;
+    shell.config.silent = true;
 
     beforeAll(async () => {
         await setupDevServer({
             command: 'npm run server',
         });
+        //await start();
         console.log('beforeAll - completed');
     });
 
@@ -22,7 +22,7 @@ describe('Testing Alpha', () => {
         //await stop();
         await teardownDevServer();
         shell.cd(rootPath);
-        //shell.rm('-rf', './app/demo-pkg');
+        shell.rm('-rf', './app/demo-pkg');
     });
 
     it('cd to rootDir', () => {
@@ -47,6 +47,10 @@ describe('Testing Alpha', () => {
     it('cd to demo-pkg', () => {
         shell.cd('./app/demo-pkg'); 
     });
+    
+    it('link volte into demo-pkg', () => {
+        shell.ln('-s', '../../..', 'node_modules/volte');
+    });
 
     it('npm login test user', () => {
         const user = 'volte';
@@ -65,17 +69,13 @@ describe('Testing Alpha', () => {
         );
     });
 
-    it('link volte into demo-pkg', () => {
-        shell.ln('-s', '../../..', 'node_modules/volte');
-    });
-
     it('publish v1.0.0 from next branch, should throw error', () => {
         mockedEnv({
             BRANCH_NAME: 'next',
             TAG_NAME: 'v1.0.0-rc.0',
         });
 
-        expect(shell.exec('nyc node node_modules/volte/bin/volte.js')).toMatchShellError(
+        expect(shell.exec('npx volte')).toMatchShellError(
             `First release must be published from main/master branch, but found branch next`
         );
     });
@@ -86,7 +86,7 @@ describe('Testing Alpha', () => {
             TAG_NAME: 'v1.0.0',
         });
 
-        expect(shell.exec('nyc node node_modules/volte/bin/volte.js')).toMatchShellError(
+        expect(shell.exec('npx volte')).toMatchShellError(
             `First release must be published from main/master branch, but found legacy branch v1`
         );
     });
@@ -97,7 +97,7 @@ describe('Testing Alpha', () => {
             TAG_NAME: 'v1.0.0',
         });
 
-        expect(shell.exec('nyc node node_modules/volte/bin/volte.js')).toMatchShellOutput(
+        expect(shell.exec('npx volte')).toMatchShellOutput(
             `npm notice name:          demo-pkg
              npm notice version:       1.0.0
              npm notice filename:      demo-pkg-1.0.0.tgz`
@@ -117,7 +117,7 @@ describe('Testing Alpha', () => {
             TAG_NAME: 'v1.0.1',
         });
 
-        expect(shell.exec('nyc node node_modules/volte/bin/volte.js')).toMatchShellOutput(
+        expect(shell.exec('npx volte')).toMatchShellOutput(
             `npm notice name:          demo-pkg
              npm notice version:       1.0.1
              npm notice filename:      demo-pkg-1.0.1.tgz`
@@ -138,7 +138,7 @@ describe('Testing Alpha', () => {
             TAG_NAME: 'v1.1.0',
         });
 
-        expect(shell.exec('nyc node node_modules/volte/bin/volte.js')).toMatchShellOutput(
+        expect(shell.exec('npx volte')).toMatchShellOutput(
             `npm notice name:          demo-pkg
              npm notice version:       1.1.0
              npm notice filename:      demo-pkg-1.1.0.tgz`
@@ -159,7 +159,7 @@ describe('Testing Alpha', () => {
             TAG_NAME: 'v2.0.0-rc.0',
         });
 
-        expect(shell.exec('nyc node node_modules/volte/bin/volte.js')).toMatchShellError(
+        expect(shell.exec('npx volte')).toMatchShellError(
             `main/master branch can only have tags in format vx.x.x but found tag v2.0.0-rc.0`
         );
 
@@ -171,7 +171,7 @@ describe('Testing Alpha', () => {
             TAG_NAME: 'v2.0.0-rc.0',
         });
 
-        expect(shell.exec('nyc node node_modules/volte/bin/volte.js')).toMatchShellOutput(
+        expect(shell.exec('npx volte')).toMatchShellOutput(
             `npm notice name:          demo-pkg
              npm notice version:       2.0.0-rc.0
              npm notice filename:      demo-pkg-2.0.0-rc.0.tgz`
@@ -191,7 +191,7 @@ describe('Testing Alpha', () => {
             TAG_NAME: 'v1.2.0',
         });
 
-        expect(shell.exec('nyc node node_modules/volte/bin/volte.js')).toMatchShellOutput(
+        expect(shell.exec('npx volte')).toMatchShellOutput(
             `npm notice name:          demo-pkg
              npm notice version:       1.2.0
              npm notice filename:      demo-pkg-1.2.0.tgz`
@@ -211,7 +211,7 @@ describe('Testing Alpha', () => {
             TAG_NAME: 'v1.1.5',
         });
 
-        expect(shell.exec('nyc node node_modules/volte/bin/volte.js')).toMatchShellError(
+        expect(shell.exec('npx volte')).toMatchShellError(
             `main/master branch tag v1.1.5 should be greater than published package latest version 1.2.0`
         );
 
@@ -223,7 +223,7 @@ describe('Testing Alpha', () => {
             TAG_NAME: 'v2.0.0',
         });
 
-        expect(shell.exec('nyc node node_modules/volte/bin/volte.js')).toMatchShellOutput(
+        expect(shell.exec('npx volte')).toMatchShellOutput(
             `npm notice name:          demo-pkg
              npm notice version:       2.0.0
              npm notice filename:      demo-pkg-2.0.0.tgz`
@@ -244,7 +244,7 @@ describe('Testing Alpha', () => {
             TAG_NAME: 'v2.0.1',
         });
 
-        expect(shell.exec('nyc node node_modules/volte/bin/volte.js')).toMatchShellOutput(
+        expect(shell.exec('npx volte')).toMatchShellOutput(
             `npm notice name:          demo-pkg
              npm notice version:       2.0.1
              npm notice filename:      demo-pkg-2.0.1.tgz`
@@ -265,7 +265,7 @@ describe('Testing Alpha', () => {
             TAG_NAME: 'v1.3.0',
         });
 
-        expect(shell.exec('nyc node node_modules/volte/bin/volte.js')).toMatchShellOutput(
+        expect(shell.exec('npx volte')).toMatchShellOutput(
             `npm notice name:          demo-pkg
              npm notice version:       1.3.0
              npm notice filename:      demo-pkg-1.3.0.tgz`
@@ -286,7 +286,7 @@ describe('Testing Alpha', () => {
             TAG_NAME: 'v2.1.0',
         });
 
-        expect(shell.exec('nyc node node_modules/volte/bin/volte.js')).toMatchShellOutput(
+        expect(shell.exec('npx volte')).toMatchShellOutput(
             `npm notice name:          demo-pkg
              npm notice version:       2.1.0
              npm notice filename:      demo-pkg-2.1.0.tgz`
@@ -307,7 +307,7 @@ describe('Testing Alpha', () => {
             TAG_NAME: 'v2.2.0',
         });
 
-        expect(shell.exec('nyc node node_modules/volte/bin/volte.js')).toMatchShellOutput(
+        expect(shell.exec('npx volte')).toMatchShellOutput(
             `npm notice name:          demo-pkg
              npm notice version:       2.2.0
              npm notice filename:      demo-pkg-2.2.0.tgz`
@@ -328,7 +328,7 @@ describe('Testing Alpha', () => {
             TAG_NAME: 'v3.3.0',
         });
 
-        expect(shell.exec('nyc node node_modules/volte/bin/volte.js')).toMatchShellError(
+        expect(shell.exec('npx volte')).toMatchShellError(
             `Legacy branch tag v3.3.0 should be lesser than published latest package version 2.2.0`,
         );
     });
@@ -339,7 +339,7 @@ describe('Testing Alpha', () => {
             TAG_NAME: 'v3.0.0',
         });
 
-        expect(shell.exec('nyc node node_modules/volte/bin/volte.js')).toMatchShellOutput(
+        expect(shell.exec('npx volte')).toMatchShellOutput(
             `npm notice name:          demo-pkg
              npm notice version:       3.0.0
              npm notice filename:      demo-pkg-3.0.0.tgz`
@@ -361,7 +361,7 @@ describe('Testing Alpha', () => {
             TAG_NAME: 'v2.3.0',
         });
 
-        expect(shell.exec('nyc node node_modules/volte/bin/volte.js')).toMatchShellOutput(
+        expect(shell.exec('npx volte')).toMatchShellOutput(
             `npm notice name:          demo-pkg
              npm notice version:       2.3.0
              npm notice filename:      demo-pkg-2.3.0.tgz`
@@ -383,7 +383,7 @@ describe('Testing Alpha', () => {
             TAG_NAME: 'v1.4.0',
         });
 
-        expect(shell.exec('nyc node node_modules/volte/bin/volte.js')).toMatchShellOutput(
+        expect(shell.exec('npx volte')).toMatchShellOutput(
             `npm notice name:          demo-pkg
              npm notice version:       1.4.0
              npm notice filename:      demo-pkg-1.4.0.tgz`
@@ -405,7 +405,7 @@ describe('Testing Alpha', () => {
             TAG_NAME: 'v3.0.1',
         });
 
-        expect(shell.exec('nyc node node_modules/volte/bin/volte.js')).toMatchShellOutput(
+        expect(shell.exec('npx volte')).toMatchShellOutput(
             `npm notice name:          demo-pkg
              npm notice version:       3.0.1
              npm notice filename:      demo-pkg-3.0.1.tgz`
@@ -427,7 +427,7 @@ describe('Testing Alpha', () => {
             TAG_NAME: 'v3.0.2-rc.4',
         });
 
-        expect(shell.exec('nyc node node_modules/volte/bin/volte.js')).toMatchShellError(
+        expect(shell.exec('npx volte')).toMatchShellError(
             `For next branch, major version after latest release 3.0.1 should be incremented by 1, but found v3.0.2-rc.4`,
         );
     });

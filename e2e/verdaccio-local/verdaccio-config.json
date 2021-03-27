@@ -23,16 +23,22 @@
     },
     "packages": {
         "volte": {
-            "publish": "$anonymous"
+            "publish": "$anonymous",
+            "access": "$anonymous"
         },
         "npm-cli-login": {
             "access": "$anonymous",
             "proxy": "npmjs"
         },
+        "demo-pkg": {
+            "access": "$anonymous",
+            "publish": "$authenticated"
+        },
         "**": {
             "access": "$all",
             "publish": "$authenticated",
-            "unpublish": "$authenticated"
+            "unpublish": "$authenticated",
+            "proxy": "npmjs"
         }
     }
 }

@@ -1,10 +1,10 @@
 import { program } from 'commander';
 import pkg from '../package.json';
-import { run } from '../src/runner';
+import { executeAlpha } from '../src';
 
 program
   .version(pkg.version)
-  .action(() => run());
+  .action(() => executeAlpha());
 
 export const createCli = () => {
     program.parse(process.argv);

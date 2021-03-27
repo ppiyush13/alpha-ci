@@ -2,17 +2,17 @@
 module.exports = {
     "coverageDirectory": "./coverage-unit",
     "coverageReporters": [
-        "json",
-        "lcov"
+        "lcov", 
+        "text"
     ],
     "testMatch": [
         "**/src/__tests__/*.test.js",
-        //"**/e2e/e2e.jest.test.js"
     ],
     "collectCoverageFrom": [
         "src/**/*.{js,ts}",
         "!<rootDir>/node_modules/",
-        "!<rootDir>/src/setupTests.js"
+        "!<rootDir>/src/setupTests.js",
+        "!<rootDir>/src/**/*.testUtil.js",
     ],
     "setupFiles": [
         "<rootDir>/src/setupTests.js"
