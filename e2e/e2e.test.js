@@ -2,22 +2,25 @@ import shell from 'shelljs';
 import mockedEnv from 'mocked-env';
 import { path as rootPath } from 'app-root-path';
 import expect from 'expect';
+import { setup as setupServer, teardown as teardownServer } from 'jest-dev-server';
 import './jest-matchers/match-shell';
 import test from './test-runner';
-import { start, stop } from './verdaccio-local/fork';
+//import { start, stop } from './verdaccio-local/fork';
 
 test('Testing alpha end-2-end', ({ step, setup, tear}) => {
 
     //shell.config.silent = true;
 
     setup(async () => {
-        await start();
+        await setupServer({
+            command: 'npm run verdaccio:e2e',
+        });
     });
 
     tear(async () => {
-        await stop();
+        await teardownServer();
         shell.cd(rootPath);
-        //shell.rm('-rf', './app/demo-pkg');
+        shell.rm('-rf', './app/demo-pkg');
     });
 
     step('cd to rootDir', () => {
