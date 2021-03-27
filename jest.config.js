@@ -1,8 +1,7 @@
 
 module.exports = {
-    "coverageDirectory": "./coverage-unit",
     "coverageReporters": [
-        "lcov", 
+        "html", 
         "text"
     ],
     "testMatch": [
@@ -12,7 +11,7 @@ module.exports = {
         "src/**/*.{js,ts}",
         "!<rootDir>/node_modules/",
         "!<rootDir>/src/setupTests.js",
-        "!<rootDir>/src/**/*.testUtil.js",
+        "!<rootDir>/src/testUtils",
     ],
     "setupFiles": [
         "<rootDir>/src/setupTests.js"

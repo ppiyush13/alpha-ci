@@ -5,16 +5,12 @@
     "license": "MIT",
     "scripts": {
         "test": "run-s test:*",
-        "test:coverage": "run-s test:*:coverage merge:coverage map:coverage",
+        "test:coverage": "run-s test:unit:coverage",
         "test:unit": "jest",
         "test:e2e": "node -r @babel/register ./e2e/e2e.test.js",
         "test:unit:coverage": "run-s 'test:unit -- --coverage --watchAll=false'",
-        "test:e2e:coverage": "c8 run-s test:e2e",
         "local": "verdaccio --config ./verda-conf/config.yml",
-        "server": "verdaccio --config ./e2e/verdaccio-local/verdaccio-config.json",
-        "merge:coverage": "node -r @babel/register scripts/merge-coverage.js",
-        "map:coverage": "node -r  @babel/register scripts/map-coverage.js",
-        "test:c8": "nyc jest --watchAll=false"
+        "server": "verdaccio --config ./e2e/verdaccio-local/verdaccio-config.json"
     },
     "bin": {
         "volte": "bin/volte.js"
