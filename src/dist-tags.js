@@ -1,17 +1,24 @@
 import got from "got";
-import { getRegistryUrl } from './registry';
+import getRegistryUrl from 'registry-url';
 
-const distTagsResult = {
-    result: {},
+/** dist-tags holder */
+const result = {
+    distTags: {},
 };
 
+/** getter */
+export const getDistTagVersion = distTag => (
+    result.distTags[distTag]
+); 
+
+/** init */
 export const fetchDistTags = async packageName => {
     try {
         const response = await got(`-/package/${packageName}/dist-tags`, {
             prefixUrl: getRegistryUrl(),
             responseType: 'json',
         });
-        distTagsResult.result = response.body;
+        result.distTags = response.body;
     }
     catch(ex) {
         if(ex.response && ex.response.statusCode === 404)
@@ -19,5 +26,3 @@ export const fetchDistTags = async packageName => {
         throw ex;
     }
 };
-
-export const getDistTagVersion = distTag => distTagsResult.result[distTag]; 

@@ -76,6 +76,7 @@
         "runfork": "^3.1.55",
         "semver": "^7.3.4",
         "server-destroy": "^1.0.1",
+        "tick-promise": "^1.0.0",
         "verdaccio": "^4.11.3",
         "verdaccio-auth-memory": "^9.7.2",
         "verdaccio-memory": "^9.7.2"

@@ -1,7 +1,7 @@
 import mockedEnv from 'mocked-env';
 import mockConsole from "jest-mock-console";
-import { mockShell } from '../shell/mockShell.testUtil';
-import { mockFetchDistTags } from './testUtils/mockFetchDistTags.testUtil';
+import { mockShell } from '../testUtils/mockShell';
+import { mockFetchDistTags } from '../testUtils/mockFetchDistTags';
 import { release } from '../release';
 
 

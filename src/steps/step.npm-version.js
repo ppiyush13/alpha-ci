@@ -1,4 +1,4 @@
-import { exec } from '../shell/exec';
+import { exec } from '../execShell';
 import { TagAlreadyExistsError } from '../constants';
 
 export const npmVersion = () => {

@@ -1,11 +1,12 @@
 import nock from 'nock';
-import { mockNpmRegistry } from '../../registry/mockNpmRegistry.testUtil';
+import getRegistryUrlMock from 'registry-url';
+
+/** mock npm-registry */
+jest.mock('registry-url');
+getRegistryUrlMock.mockReturnValue('http://npm-registry-url');
 
 /** disable net so all the un-mocked calls throw error */
-nock.disableNetConnect()
-
-/** mock npm registry */
-mockNpmRegistry('http://npm-registry-url');
+nock.disableNetConnect();
 
 /** clear nock mocks after every test case */
 afterEach(() => nock.cleanAll()); 

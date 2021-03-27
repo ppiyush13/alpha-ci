@@ -1,5 +1,4 @@
 
-
 export const mockArgv = (mockedArgs = []) => {
 
     const oldArgv = process.argv;
