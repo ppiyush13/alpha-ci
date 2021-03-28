@@ -3,15 +3,13 @@ import mockedEnv from 'mocked-env';
 import { path as rootPath } from 'app-root-path';
 import expect from 'expect';
 import { setupVerdaccio, teardownVerdaccio } from '../scripts/verdaccio-e2e';
-import { addNpmUser } from '../scripts/npm-addUser';
-import { fakeNpmrc } from '../scripts/npm-fake-npmrc';
+import { getTestUserAuthToken } from '../scripts/verdaccio-user-token';
 import './jest-matchers/match-shell';
 import test from './test-runner';
-import fs from 'fs';
 
 test('Testing alpha end-2-end', ({ step, setup, tear}) => {
 
-    let registry, authToken;
+    let registry;
     shell.config.silent = true;
 
     setup(async () => {
@@ -19,7 +17,6 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         registry = `http://localhost:${allotedPort}`;
         console.log('Npm registry:', registry);
         shell.env['npm_config_registry'] = registry;
-        //shell.env['REGISTRY_HOST'] = new URL(registry).host;
     });
 
     tear(async () => {
@@ -28,41 +25,25 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         shell.rm('-rf', './app/demo-pkg');
     });
 
-    step('add test npm user', async () => {
-        shell.env['npm_config__auth'] = 'dm9sdGU6cGFzczEyMzQ=';
-        // const { ok, token } = await addNpmUser(registry, {
-        //     username: 'volte',
-        //     password: 'pass1234',
-        //     email: 'test@example.com',
-        // });
+    step('set npm _auth config', async () => {
+        shell.env['npm_config__auth'] = getTestUserAuthToken();
 
-        // expect(ok).toEqual(`user 'volte' created`);
-        // authToken = token;
-        //shell.env[`npm_config_//${new URL(registry).host}/:_authToken`] = token;
-        //shell.env['USER_TOKEN'] = token;
-
-        //shell.exec('npm config ls');
+        expect(shell.exec('npm config get registry')).toEqualShellOutput(
+            `${registry}/`,
+        );
+        expect(shell.exec('npm config ls')).toMatchShellOutput(
+            `; "env" config from environment
+             _auth = (protected)
+            `
+        );
     });
 
     step('create demo-pkg', () => {
         shell.cp('-r', './app/test-pkg-template', './app/demo-pkg');
     });
 
-    // step('fake .npmrc files', () => {
-
-    //     fakeNpmrc({
-    //         registry, authToken,
-    //         filePaths: [
-    //             './.npmrc',
-    //             './app/demo-pkg/.npmrc',
-    //         ],
-    //     });
-
-    // });
-
     step('cd to rootDir', () => {
         shell.cd(rootPath);
-        console.log('npmrc content:', fs.readFileSync('.npmrc', 'utf-8'));
     });
  
     step('build volte',() => {
