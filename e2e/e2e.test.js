@@ -2,8 +2,8 @@ import shell from 'shelljs';
 import mockedEnv from 'mocked-env';
 import { path as rootPath } from 'app-root-path';
 import expect from 'expect';
-import { setupVerdaccio, teardownVerdaccio } from '../scripts/verdaccio-e2e';
-import { getTestUserAuthToken } from '../scripts/verdaccio-user-token';
+import { setupVerdaccio, teardownVerdaccio } from './scripts/verdaccio-e2e';
+import { getTestUserAuthToken } from './scripts/verdaccio-user-token';
 import './jest-matchers/match-shell';
 import test from './test-runner';
 
