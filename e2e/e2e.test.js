@@ -1,4 +1,5 @@
 import shell from 'shelljs';
+import { URL } from 'url';
 import mockedEnv from 'mocked-env';
 import { path as rootPath } from 'app-root-path';
 import expect from 'expect';
@@ -8,6 +9,7 @@ import test from './test-runner';
 
 test('Testing alpha end-2-end', ({ step, setup, tear}) => {
 
+    let registry = 'http://localhost:13130';
     shell.config.silent = true;
 
     setup(async () => {
@@ -31,7 +33,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
     });
 
     step('publish volte', () => {
-        expect(shell.exec('npm publish --registry http://localhost:13130/')).toMatchShellOutput(
+        expect(shell.exec(`npm publish --registry ${registry}`)).toMatchShellOutput(
             `npm notice === Tarball Details ===
              npm notice name: volte`
         );
@@ -53,10 +55,22 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         const user = 'volte';
         const pass = 'pass1234';
         const email = 'test@example.com';
-        const registry = 'http://localhost:13130';
         const configPath = '.npmrc';
         expect(shell.exec(`npx npm-cli-login -u ${user} -p ${pass} -e ${email} -r ${registry} --config-path ${configPath}`)).toMatchShellOutput(
-            `http 201 http://localhost:13130/-/user/org.couchdb.user:volte`,
+            `http 201 ${registry}/-/user/org.couchdb.user:volte`,
+        );
+
+        /** assert that user auth token is set */
+        expect(shell.exec(`npm config get //${new URL(registry).host}/:_authToken`).stdout)
+            .toContain('==');
+    });
+
+    step('set registry config in .npmrc', () => {
+        shell.ShellString(`\nregistry=${registry}\n`).toEnd('.npmrc');
+
+        /** assert that registry is configured */
+        expect(shell.exec('npm config get registry')).toEqualShellOutput(
+            `${registry}/`
         );
     });
 
@@ -66,7 +80,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
 
     step('exec dist-tag, should return package not found error',  () => {
         expect(shell.exec('npm dist-tag demo-pkg')).toMatchShellError(
-            `npm ERR! 404 Not Found - GET http://localhost:13130/-/package/demo-pkg/dist-tags - no such package available`
+            `npm ERR! 404 Not Found - GET ${registry}/-/package/demo-pkg/dist-tags - no such package available`
         );
     });
 
