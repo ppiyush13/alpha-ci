@@ -15,16 +15,22 @@
             "url": "https://registry.npmjs.org/"
         }
     },
-    "listen": "localhost:13130",
     "store": {
         "memory": {
             "limit": 1000
         }
     },
+    "logs": [
+        {
+            "type": "stdout", 
+            "format": "pretty",
+            "level": "debug"
+        }
+    ],
     "packages": {
         "volte": {
-            "publish": "$anonymous",
-            "access": "$anonymous"
+            "publish": "$authenticated",
+            "access": "$authenticated"
         },
         "npm-cli-login": {
             "access": "$anonymous",

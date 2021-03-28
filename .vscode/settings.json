@@ -1,5 +1,8 @@
 {
     "cSpell.words": [
-        "npmjs"
+        "adduser",
+        "memfs",
+        "npmjs",
+        "unionfs"
     ]
 }
