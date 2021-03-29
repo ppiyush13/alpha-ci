@@ -58,7 +58,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
     });
 
     step('create demo-pkg', () => {
-        shell.cp('-r', './app/test-pkg-template/*', testDirPath);
+        shell.cp('-r', './e2e/demo-pkg/*', testDirPath);
     });
 
     step('cd to demo-pkg', () => {
