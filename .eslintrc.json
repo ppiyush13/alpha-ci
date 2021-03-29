@@ -16,7 +16,6 @@
     ],
     "rules": {
         "indent": ["error", 4],
-        "linebreak-style": ["error", "windows"],
         "import/prefer-default-export": "off",
         "array-bracket-spacing": ["error", "always"],
         "brace-style": ["error", "stroustrup", { 
