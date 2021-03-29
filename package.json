@@ -35,7 +35,7 @@
         "build:clean": "rimraf dist",
         "build:bundle": "microbundle --no-compress --format cjs --target node --no-sourcemap",
         "lint": "run-s lint:**",
-        "lint:code": "eslint --ext . --fix",
+        "lint:code": "eslint . --fix",
         "lint:ls": "ls-lint",
         "lint:package:json": "sort-package-json e2e/**/package.json package.json"
     },
@@ -63,7 +63,6 @@
         "cross-env": "^7.0.3",
         "eslint": "^7.23.0",
         "eslint-config-airbnb-base": "^14.2.1",
-        "eslint-plugin-filenames": "^1.3.2",
         "eslint-plugin-node": "^11.1.0",
         "expect": "^26.6.2",
         "get-bin-path": "^5.1.0",

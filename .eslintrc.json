@@ -4,9 +4,6 @@
         "airbnb-base",
         "plugin:node/recommended"
     ],
-    "plugins": [
-        "filenames"
-    ],
     "parserOptions": {
         "sourceType": "module",
         "allowImportExportEverywhere": true
@@ -40,9 +37,6 @@
                 "modules",
                 "dynamicImport"
             ]
-        }],
-        "filenames/match-regex": "off",
-        "filenames/match-exported": "off",
-        "filenames/no-index": "off"
+        }]
     }
 }
