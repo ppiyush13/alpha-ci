@@ -1,7 +1,9 @@
 import chalk from 'chalk';
 import indentString from 'indent-string';
 import { IndentSize } from '../constants';
+import { log } from '../logger';
 
+const indentAndLog = (str) => log(indentString(str, IndentSize));
 export class StepSummary {
     passChar = chalk.green('√');
     failChar = chalk.bold.red('×');
@@ -15,23 +17,19 @@ export class StepSummary {
         this.total = total;
     }
 
-    log(str) {
-        console.log(indentString(str, IndentSize));
-    }
-
     logPass(desc, ms) {
-        this.pass++;
-        this.log(`${this.passChar} ${desc} (${ms})`);
+        this.pass += 1;
+        indentAndLog(`${this.passChar} ${desc} (${ms})`);
     }
 
     logFail(desc, ms) {
-        this.fail++;
-        this.log(`${this.failChar} ${chalk.bold.red(`${desc} (${ms})`)}`);
+        this.fail += 1;
+        indentAndLog(`${this.failChar} ${chalk.bold.red(`${desc} (${ms})`)}`);
     }
 
     logSkip(desc) {
-        this.skip++;
-        this.log(`${this.skipChar} ${chalk.grey(`skipped: ${desc}`)}`);
+        this.skip += 1;
+        indentAndLog(`${this.skipChar} ${chalk.grey(`skipped: ${desc}`)}`);
     }
 
     getSummary() {
