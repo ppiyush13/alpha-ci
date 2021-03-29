@@ -4,12 +4,13 @@ import { path as rootPath } from 'app-root-path';
 import expect from 'expect';
 import { setupVerdaccio, teardownVerdaccio } from './scripts/verdaccio-e2e';
 import { getTestUserAuthToken } from './scripts/verdaccio-user-token';
+import { setupTestDir } from './scripts/setup-test-dir';
 import './jest-matchers/match-shell';
 import test from './test-runner';
 
 test('Testing alpha end-2-end', ({ step, setup, tear}) => {
 
-    let registry;
+    let registry, testDirPath;
     shell.config.silent = true;
 
     setup(async () => {
@@ -17,12 +18,15 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         registry = `http://localhost:${allotedPort}`;
         console.log('Npm registry:', registry);
         shell.env['npm_config_registry'] = registry;
+
+        testDirPath = setupTestDir();
+        console.log('Test directory:', testDirPath);
     });
 
     tear(async () => {
         await teardownVerdaccio();
         shell.cd(rootPath);
-        shell.rm('-rf', './app/demo-pkg');
+        shell.rm('-rf', testDirPath);
     });
 
     step('set npm _auth config', async () => {
@@ -36,10 +40,6 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
              _auth = (protected)
             `
         );
-    });
-
-    step('create demo-pkg', () => {
-        shell.cp('-r', './app/test-pkg-template', './app/demo-pkg');
     });
 
     step('cd to rootDir', () => {
@@ -57,20 +57,16 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         );
     });
 
-    step('remove demo-pkg, if exits already', () => {
-        shell.rm('-rf', './app/demo-pkg');
-    });
-
     step('create demo-pkg', () => {
-        shell.cp('-r', './app/test-pkg-template', './app/demo-pkg');
+        shell.cp('-r', './app/test-pkg-template', testDirPath);
     });
 
     step('cd to demo-pkg', () => {
-        shell.cd('./app/demo-pkg'); 
+        shell.cd(testDirPath); 
     });
 
     step('install volte', () => {
-        shell.exec('npm i volte');
+        shell.exec('npm i volte ');
     });
 
     step('exec dist-tag, should return package not found error',  () => {

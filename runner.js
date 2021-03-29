@@ -1,11 +1,29 @@
-
-import getAuthToken from 'registry-auth-token';
+import tmp from 'tmp';
 import shell from 'shelljs';
-import { getTestUserAuthToken } from './scripts/verdaccio-user-token';
+import exitHook from 'exit-hook';
 
-shell.config.verbose = true;
+(async () => {
+    const delay = ms => new Promise(resolve => setTimeout(resolve,ms));
 
-process.env['npm_config__auth'] = getTestUserAuthToken();
-//getAuthToken();
+    // const tmpObj = tmp.dirSync({ prefix: 'demo-pkg', unsafeCleanup: true });
+    // console.log("Dir: ", tmpObj);
 
-shell.exec('npm config ls ');
+    exitHook(() => {
+        //tmpObj.removeCallback();
+        console.log('exiting');
+        //await delay (2 * 1000);
+        console.log('exit');
+    });
+
+
+    shell.cd('/');
+    console.log(shell.pwd().stdout);
+    // shell.cp('-r', './app/test-pkg-template/*', tmpObj.name);
+    // shell.cd(tmpObj.name);
+    //shell.exec('npm i');
+    //shell.cd('..');
+
+    await delay(10 * 1000);
+
+})();
+

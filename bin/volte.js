@@ -2,9 +2,16 @@
 
 const { program } = require('commander');
 const { version, main: entryPath } = require('../package.json');
-const { require: rootRequire } = require('app-root-path');
-const { executeAlpha } = rootRequire(entryPath);
+const pkgDir = require('pkg-dir'); 
+const path = require('path');
 
+/** derive absolute path of package entry */
+const alphaEntryPath = path.resolve(pkgDir.sync(__dirname), entryPath);
+
+/** require entry point module */
+const { executeAlpha } = require(alphaEntryPath);
+
+/** compose options using commander */
 program
     .version(version, '-v, --version', 'version')
     .action(() => executeAlpha())
