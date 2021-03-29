@@ -1,10 +1,10 @@
 {
     "parser": "babel-eslint",
     "extends": [
-        "airbnb-base"
+        "airbnb-base",
+        "plugin:node/recommended"
     ],
     "plugins": [
-        "node",
         "filenames"
     ],
     "parserOptions": {

@@ -2,9 +2,27 @@
     "name": "volte",
     "version": "0.0.0",
     "description": "Robust, simple replacement for npm publish",
+    "bugs": {
+        "url": "https://github.com/ppiyush13/volte/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ppiyush13/volte.git"
+    },
     "license": "MIT",
-    "source": "src/index.js",
+    "author": {
+        "name": "Piyush Lodaya",
+        "email": "ppiyush13@gmail.com"
+    },
     "main": "dist/volte.js",
+    "source": "src/index.js",
+    "bin": {
+        "volte": "bin/volte.js"
+    },
+    "files": [
+        "dist",
+        "bin"
+    ],
     "scripts": {
         "test": "run-s test:unit test:e2e",
         "test:coverage": "run-s test:unit:coverage test:e2e",
@@ -17,32 +35,10 @@
         "build:clean": "rimraf dist",
         "build:bundle": "microbundle --no-compress --format cjs --target node --no-sourcemap",
         "lint": "run-s lint:*",
-        "lint:code": "eslint . --fix",
+        "lint:code": "eslint --ext . --fix",
         "lint:ls": "ls-lint"
     },
-    "engines": {
-        "node": ">=8.0.0"
-    },
-    "bin": {
-        "volte": "bin/volte.js"
-    },
-    "author": {
-        "name": "Piyush Lodaya",
-        "email": "ppiyush13@gmail.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/ppiyush13/volte.git"
-    },
-    "bugs": {
-        "url": "https://github.com/ppiyush13/volte/issues"
-    },
-    "files": [
-        "dist",
-        "bin"
-    ],
     "dependencies": {
-        "@ls-lint/ls-lint": "^1.9.2",
         "chai": "^4.3.4",
         "commander": "^7.1.0",
         "escape-string-regexp": "^1.0.5",
@@ -58,6 +54,7 @@
         "@babel/plugin-proposal-class-properties": "^7.13.0",
         "@babel/preset-env": "^7.13.12",
         "@babel/register": "^7.13.8",
+        "@ls-lint/ls-lint": "^1.9.2",
         "app-root-path": "^3.0.0",
         "babel-eslint": "^10.1.0",
         "babel-jest": "^26.6.3",
@@ -90,5 +87,8 @@
         "verdaccio": "^4.11.3",
         "verdaccio-auth-memory": "^9.7.2",
         "verdaccio-memory": "^9.7.2"
+    },
+    "engines": {
+        "node": ">=8.0.0"
     }
 }
