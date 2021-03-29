@@ -34,9 +34,10 @@
         "build": "run-s build:*",
         "build:clean": "rimraf dist",
         "build:bundle": "microbundle --no-compress --format cjs --target node --no-sourcemap",
-        "lint": "run-s lint:*",
+        "lint": "run-s lint:**",
         "lint:code": "eslint --ext . --fix",
-        "lint:ls": "ls-lint"
+        "lint:ls": "ls-lint",
+        "lint:package:json": "sort-package-json e2e/**/package.json package.json"
     },
     "dependencies": {
         "chai": "^4.3.4",
@@ -80,6 +81,7 @@
         "p-waterfall": "^2.1.1",
         "pretty-ms": "^7.0.1",
         "rimraf": "^3.0.2",
+        "sort-package-json": "^1.49.0",
         "stack-utils": "^2.0.3",
         "tick-promise": "^1.0.0",
         "tmp": "^0.2.1",
