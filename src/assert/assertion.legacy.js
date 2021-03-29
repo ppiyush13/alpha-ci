@@ -4,6 +4,7 @@ import semverGt from 'semver/functions/gt';
 import semverLt from 'semver/functions/lt';
 import { MatchTag, LegacyBranch, Tag } from '../constants';
 import { getDistTagVersion } from '../dist-tags';
+import { log } from '../logger';
 
 export const assertLegacyVersion = ({ branchName, tagName }) => {
     const branchVersion = LegacyBranch.getVersion(branchName); // v1 -> 1
@@ -38,6 +39,6 @@ export const assertLegacyVersion = ({ branchName, tagName }) => {
         );
     }
     else {
-        console.log(`Seems like first time deployment from legacy branch ${branchName}`);
+        log(`Seems like first time deployment from legacy branch ${branchName}`);
     }
 };

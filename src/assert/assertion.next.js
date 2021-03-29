@@ -3,6 +3,7 @@ import semverMajor from 'semver/functions/major';
 import semverGt from 'semver/functions/gt';
 import { MatchTag, Tag } from '../constants';
 import { getDistTagVersion } from '../dist-tags';
+import { log } from '../logger';
 
 export const assertNextVersion = ({ tagName }) => {
     const nextVersion = getDistTagVersion(Tag.next);
@@ -28,6 +29,6 @@ export const assertNextVersion = ({ tagName }) => {
         );
     }
     else {
-        console.log('Seems like first release from next branch in a while');
+        log('Seems like first release from next branch in a while');
     }
 };

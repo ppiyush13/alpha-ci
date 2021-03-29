@@ -1,6 +1,8 @@
+import { error } from './logger';
+
 export const handleGlobalException = (ex) => {
-    console.error('Global exception');
-    console.error(ex);
+    error('Global exception');
+    error(ex);
     process.exit(1);
 };
 

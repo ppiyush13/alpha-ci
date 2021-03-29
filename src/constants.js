@@ -25,6 +25,6 @@ export const LegacyBranch = {
     matchVersion: (str) => /^v[\d]+$/.test(str),
     getVersion: (str) => {
         const regexResult = str.match(/^v([\d]+)$/);
-        return parseInt(regexResult[1]);
+        return parseInt(regexResult[1], 10);
     },
 };

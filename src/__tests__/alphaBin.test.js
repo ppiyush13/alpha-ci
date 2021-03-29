@@ -1,6 +1,11 @@
+/*
+    eslint-disable import/no-dynamic-require, global-require
+*/
+
 import { getBinPathSync } from 'get-bin-path';
 import { mockProcessExit } from 'jest-mock-process';
 import mockConsole from 'jest-mock-console';
+import console from 'console';
 import nextTick from 'tick-promise';
 import { mockArgv } from '../testUtils/mockArgv';
 import { release as releaseMock } from '../release';

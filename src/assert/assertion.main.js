@@ -3,6 +3,7 @@ import semverMajor from 'semver/functions/major';
 import semverGt from 'semver/functions/gt';
 import { MatchTag, Tag } from '../constants';
 import { getDistTagVersion } from '../dist-tags';
+import { log } from '../logger';
 
 export const assertMainVersion = ({ tagName }) => {
     const latestVersion = getDistTagVersion(Tag.latest);
@@ -24,6 +25,6 @@ export const assertMainVersion = ({ tagName }) => {
         );
     }
     else {
-        console.log('Seems like first time publish !!');
+        log('Seems like first time publish !!');
     }
 };
