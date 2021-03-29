@@ -8,7 +8,7 @@ export const npmVersion = () => {
     }
     catch (ex) {
         if (TagAlreadyExistsError(tagName, ex.message)) {
-
+            /** tag already exists, proceed ahead */
         }
         else {
             throw ex;

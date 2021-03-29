@@ -14,6 +14,6 @@ export const readPackageContent = async () => {
 };
 
 /** getter */
-export const getPackageMetadata = (metadataKey) => (
+export const getPackageMetadata = () => (
     result.packageContent
 );

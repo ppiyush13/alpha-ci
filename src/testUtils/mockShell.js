@@ -1,7 +1,8 @@
 import shell from 'shelljs';
 
 /** replace actual fn with mock functions */
-const execMock = shell.exec = jest.fn();
+const execMock = jest.fn();
+shell.exec = execMock;
 
 /** clear mocks after every test case */
 afterEach(() => execMock.mockClear());
