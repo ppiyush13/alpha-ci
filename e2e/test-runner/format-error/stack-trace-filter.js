@@ -2,7 +2,7 @@ import { nodeInternals } from 'stack-utils';
 
 export default [
     ...nodeInternals(),
-    /^\s+at(?:(?:.jasmine\-)|\s+jasmine\.buildExpectationResult)/,
+    /^\s+at(?:(?:.jasmine-)|\s+jasmine\.buildExpectationResult)/,
     /^\s+at.*?jest(-.*?)?(\/|\\)(build|node_modules|packages)(\/|\\)/,
     /^\s+at.*?test-runner/,
     /(\/|\\)node_modules(\/|\\)/,

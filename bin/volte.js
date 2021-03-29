@@ -9,6 +9,7 @@ const { version, main: entryPath } = require('../package.json');
 const alphaEntryPath = path.resolve(pkgDir.sync(__dirname), entryPath);
 
 /** require entry point module */
+// eslint-disable-next-line import/no-dynamic-require
 const { executeAlpha } = require(alphaEntryPath);
 
 /** compose options using commander */

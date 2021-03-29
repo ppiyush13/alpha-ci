@@ -2,6 +2,7 @@ import shell from 'shelljs';
 import mockedEnv from 'mocked-env';
 import { path as rootPath } from 'app-root-path';
 import expect from 'expect';
+import { log } from 'console';
 import { setupVerdaccio, teardownVerdaccio } from './scripts/verdaccio-e2e';
 import { getTestUserAuthToken } from './scripts/verdaccio-user-token';
 import { setupTestDir } from './scripts/setup-test-dir';
@@ -20,14 +21,14 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
     setup(async () => {
         const allotedPort = await setupVerdaccio();
         registry = `http://localhost:${allotedPort}`;
-        console.log('Npm registry:', registry);
+        log('Npm registry:', registry);
         shell.env.npm_config_registry = registry;
     });
 
     /** setup test dir */
     setup(() => {
         testDirPath = setupTestDir();
-        console.log('Test directory:', testDirPath);
+        log('Test directory:', testDirPath);
         shell.cp('-r', './e2e/__fixtures__/demo-pkg/*', testDirPath);
     });
 

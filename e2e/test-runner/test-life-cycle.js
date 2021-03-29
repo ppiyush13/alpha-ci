@@ -2,15 +2,16 @@ import waterfall from 'p-waterfall';
 
 export class TestLifeCycle {
     /** hooks holder */
+
     stepHooks = new Set();
     setupHooks = new Set();
     tearHooks = new Set();
 
     constructor(testCallback) {
-        testCallback({ 
+        testCallback({
             step: this.step.bind(this),
             setup: this.setup.bind(this),
-            tear: this.tear.bind(this), 
+            tear: this.tear.bind(this),
         });
     }
 
@@ -38,6 +39,6 @@ export class TestLifeCycle {
 
     /** getters */
     getSteps() {
-        return [...this.stepHooks];
+        return this.stepHooks;
     }
 }

@@ -6,20 +6,7 @@ import chalk from 'chalk';
 import indentString from 'indent-string';
 import stackTraceFilter from './stack-trace-filter';
 import { IndentSize } from '../constants';
-
-export const formatError = (error) => {
-    try {
-        const { topFrame, trace } = formatStack(error.stack);
-        const errorCodeFrame = getCodeFrame(topFrame);
-
-        const errorMessage = chalk.bold.cyan(error.message);
-        const errorTrace = indentString(chalk.bold.red(trace), IndentSize);
-        return `\n${errorCodeFrame}\n\n${errorMessage}\n${errorTrace}`;
-    }
-    catch (ex) {
-        console.log('Encountered error in formatError module', ex);
-    }
-};
+import { log } from '../logger';
 
 const formatStack = (stack) => {
     const stackUtils = new StackUtils({
@@ -45,4 +32,19 @@ const getCodeFrame = ({ file, line, column }) => {
     return codeFrameColumns(fileContent,
         { start: { line, column } },
         { highlightCode: true });
+};
+
+export const formatError = (error) => {
+    try {
+        const { topFrame, trace } = formatStack(error.stack);
+        const errorCodeFrame = getCodeFrame(topFrame);
+
+        const errorMessage = chalk.bold.cyan(error.message);
+        const errorTrace = indentString(chalk.bold.red(trace), IndentSize);
+        return `\n${errorCodeFrame}\n\n${errorMessage}\n${errorTrace}`;
+    }
+    catch (ex) {
+        log('Encountered error in formatError module', ex);
+        return '';
+    }
 };

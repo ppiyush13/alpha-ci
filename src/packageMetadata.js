@@ -7,7 +7,6 @@ const result = {
 
 /** read package content */
 export const readPackageContent = async () => {
-    
     /** process.cwd is always set to the calling directory */
     const packageJsonPath = resolve(process.cwd(), 'package.json');
     const { default: packageContent } = await import(packageJsonPath);

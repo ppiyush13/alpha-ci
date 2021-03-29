@@ -6,13 +6,14 @@ export class StepSummary {
     passChar = chalk.green('√');
     failChar = chalk.bold.red('×');
     skipChar = chalk.bold.yellow('○');
-    
     total = 0;
     pass = 0;
     fail = 0;
     skip = 0;
 
-    constructor(total) { this.total = total; }
+    constructor(total) {
+        this.total = total;
+    }
 
     log(str) {
         console.log(indentString(str, IndentSize));
@@ -28,13 +29,13 @@ export class StepSummary {
         this.log(`${this.failChar} ${chalk.bold.red(`${desc} (${ms})`)}`);
     }
 
-    logSkip(desc){
+    logSkip(desc) {
         this.skip++;
         this.log(`${this.skipChar} ${chalk.grey(`skipped: ${desc}`)}`);
     }
 
     getSummary() {
-        return { 
+        return {
             pass: this.pass,
             fail: this.fail,
             skip: this.skip,

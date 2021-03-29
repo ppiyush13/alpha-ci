@@ -10,18 +10,31 @@ export class StepExecutor {
     }
 
     async execute() {
-        while(true) {
+        /** execute steps sequentially */
+        const next = async () => {
             const { done, value } = this.stepsIterator.next();
-            if(done) {
-                break;
+            if (done) {
+                /** return if iterator exhausted */
+                return undefined;
+            }
+
+            const { desc, cb } = value;
+
+            if (this.error) {
+                /** skip next step, if any previous steps generated error */
+                this.summary.logSkip(desc);
             }
             else {
-                const { desc, cb } = value;
-                this.error
-                    ? this.summary.logSkip(desc)
-                    : await this.executeStep(desc, cb);
+                /** execute step */
+                await this.executeStep(desc, cb);
             }
-        }
+
+            /** execute next step recursively */
+            return next();
+        };
+
+        /** execute first step */
+        await next();
 
         return {
             ...this.summary.getSummary(),
@@ -30,16 +43,17 @@ export class StepExecutor {
     }
 
     async executeStep(desc, cb) {
-        const stop =executionTime();
+        const stop = executionTime();
         try {
             await cb();
         }
-        catch(error) {
+        catch (error) {
             this.error = error;
         }
         const totalTime = stop();
-        this.error
-            ? this.summary.logFail(desc, totalTime)
-            : this.summary.logPass(desc, totalTime);
+        const logFn = this.error
+            ? this.summary.logFail.bind(this.summary)
+            : this.summary.logPass.bind(this.summary);
+        logFn(desc, totalTime);
     }
 }

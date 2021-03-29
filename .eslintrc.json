@@ -1,4 +1,5 @@
 {
+    "parser": "babel-eslint",
     "env": {
         "commonjs": true,
         "es2021": true,
@@ -17,7 +18,10 @@
             "allowSingleLine": true 
         }],
         "import/no-extraneous-dependencies": ["error", {
-            "devDependencies": ["**/*.test.js", "e2e", "**/testUtils/*"]
+            "devDependencies": ["**/*.test.js", "/e2e/**", "**/testUtils/*"]
+        }],
+        "lines-between-class-members": ["error", "always", { 
+            "exceptAfterSingleLine": true 
         }]
     }
 }

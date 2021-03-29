@@ -1,1 +1,5 @@
-console.log('Demo-pkg lib file');
+/**
+ * demo-pkg lib.js
+ */
+
+export const add = (a, b) => a + b;
