@@ -1,6 +1,7 @@
 import StackUtils from 'stack-utils';
 import { codeFrameColumns } from '@babel/code-frame';
 import { readFileSync } from 'fs';
+import { cwd } from 'process';
 import { resolve } from 'path';
 import chalk from 'chalk';
 import indentString from 'indent-string';
@@ -10,7 +11,7 @@ import { log } from '../logger';
 
 const formatStack = (stack) => {
     const stackUtils = new StackUtils({
-        cwd: process.cwd(),
+        cwd: cwd(),
         internals: stackTraceFilter,
     });
     const traceLineRegEx = /(^\s*at .*?\(?)([^()]+)(:[0-9]+:[0-9]+\)?.*$)/;
@@ -27,7 +28,7 @@ const formatStack = (stack) => {
 };
 
 const getCodeFrame = ({ file, line, column }) => {
-    const fileFullPath = resolve(process.cwd(), file);
+    const fileFullPath = resolve(cwd(), file);
     const fileContent = readFileSync(fileFullPath, 'utf8');
     return codeFrameColumns(fileContent,
         { start: { line, column } },

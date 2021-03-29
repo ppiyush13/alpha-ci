@@ -1,7 +1,7 @@
 import mockedEnv from 'mocked-env';
 import { mockShell } from '../testUtils/mockShell';
 import { mockFetchDistTags } from '../testUtils/mockFetchDistTags';
-import { release } from '../release';
+import { executeAlpha } from '..';
 
 describe('testing branching strategy', () => {
     it.each([
@@ -154,7 +154,7 @@ describe('testing branching strategy', () => {
         });
 
         /** trigger release */
-        await release();
+        await executeAlpha();
 
         /** assert exact commands executed with sequence  */
         expect(getCommandStack()).toEqual(commands);

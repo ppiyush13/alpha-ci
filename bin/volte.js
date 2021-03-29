@@ -3,6 +3,7 @@
 const { program } = require('commander');
 const pkgDir = require('pkg-dir');
 const path = require('path');
+const { argv } = require('process');
 const { version, main: entryPath } = require('../package.json');
 
 /** derive absolute path of package entry */
@@ -16,4 +17,4 @@ const { executeAlpha } = require(alphaEntryPath);
 program
     .version(version, '-v, --version', 'version')
     .action(() => executeAlpha())
-    .parse(process.argv);
+    .parse(argv);

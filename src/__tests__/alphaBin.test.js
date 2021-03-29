@@ -1,65 +1,33 @@
-/*
-    eslint-disable import/no-dynamic-require, global-require
-*/
-
 import { getBinPathSync } from 'get-bin-path';
-import { mockProcessExit } from 'jest-mock-process';
-import nextTick from 'tick-promise';
 import { mockArgv } from '../testUtils/mockArgv';
-import { release as releaseMock } from '../release';
-import { error as logErrorMock } from '../logger';
+import { executeAlpha as executeAlphaMock } from '..';
 
 /** mock release module */
-jest.mock('../release');
+jest.mock('..');
 
 describe('testing alpha bin scripts', () => {
     const binPath = getBinPathSync();
 
-    it('should execute executeAlpha function of index.js', async () => {
+    it('should exercise bin module', async () => {
         /** mocks */
+        const mockFn = jest.fn();
         const argvMockRestore = mockArgv();
-        const exitMock = mockProcessExit();
-        releaseMock.mockResolvedValueOnce(5);
 
-        /** require bin module in isolation */
-        jest.isolateModules(() => {
-            require(binPath);
+        /** mock executeAlpha function */
+        executeAlphaMock.mockImplementation(() => {
+            mockFn('This is mocked and return from alpha/src/index.js');
         });
 
-        /** wait for next tick */
-        await nextTick();
+        /** require bin module */
+        await jest.isolateModules(() => import(binPath));
 
-        /** assert */
-        expect(exitMock).toHaveBeenCalledTimes(1);
-        expect(exitMock).toHaveBeenCalledWith(0);
+        /**
+         * assert that mockFn is called.
+         * This ensures that bin is indeed calling executeAlpha function /src/index.js
+         * */
+        expect(mockFn).toHaveBeenCalledWith('This is mocked and return from alpha/src/index.js');
 
-        /** restore mock */
+        /** restore mocks */
         argvMockRestore();
-        exitMock.mockRestore();
-    });
-
-    it('should throw error, if executeAlpha throws', async () => {
-        /** mocks */
-        const argvMockRestore = mockArgv();
-        const exitMock = mockProcessExit();
-        const err = new Error('Release error');
-        releaseMock.mockRejectedValue(err);
-
-        /** require bin module in isolation */
-        jest.isolateModules(() => {
-            require(binPath);
-        });
-
-        /** wait for next tick */
-        await nextTick();
-
-        /** assert */
-        expect(exitMock).toHaveBeenCalledTimes(1);
-        expect(exitMock).toHaveBeenCalledWith(1);
-        expect(logErrorMock).toHaveBeenCalledWith(new Error('Release error'));
-
-        /** restore mock */
-        argvMockRestore();
-        exitMock.mockRestore();
     });
 });

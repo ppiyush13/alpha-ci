@@ -1,5 +1,9 @@
 {
     "parser": "babel-eslint",
+    "parserOptions": {
+        "sourceType": "module",
+        "allowImportExportEverywhere": true
+    },
     "env": {
         "commonjs": true,
         "es2021": true,
@@ -7,7 +11,8 @@
         "jest": true
     },
     "extends": [
-        "airbnb-base"
+        "airbnb-base",
+        "plugin:node/recommended"
     ],
     "rules": {
         "indent": ["error", 4],
@@ -22,6 +27,17 @@
         }],
         "lines-between-class-members": ["error", "always", { 
             "exceptAfterSingleLine": true 
-        }]
+        }],
+        "node/no-unsupported-features/es-syntax": ["error", {
+            "ignores": [
+                "modules",
+                "dynamicImport"
+            ]
+        }],
+        "node/prefer-global/buffer": ["error", "never"],
+        "node/prefer-global/console": ["error", "never"],
+        "node/prefer-global/process": ["error", "never"],
+        "node/prefer-global/url-search-params": ["error", "never"],
+        "node/prefer-global/url": ["error", "never"]
     }
 }

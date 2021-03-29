@@ -1,8 +1,9 @@
 import { exec } from '../execShell';
 import { TagAlreadyExistsError } from '../constants';
+import { getConfigs } from '../config';
 
 export const npmVersion = () => {
-    const tagName = process.env.TAG_NAME;
+    const { tagName } = getConfigs();
     try {
         exec(`npm version ${tagName}`);
     }

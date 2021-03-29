@@ -3,9 +3,11 @@ import { npmVersion, npmPublish, npmDistTags } from './steps';
 import { resolveTagNames } from './resolveTagNames';
 import { fetchDistTags } from './dist-tags';
 import { readPackageContent, getPackageMetadata } from './packageMetadata';
+import { initConfigs } from './config';
 
 export const release = async () => {
     /** initializers */
+    initConfigs();
     await readPackageContent();
 
     /** perform steps */

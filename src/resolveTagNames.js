@@ -3,6 +3,7 @@ import semverClean from 'semver/functions/clean';
 import semverMajor from 'semver/functions/major';
 import { Branch, Tag } from './constants';
 import { getDistTagVersion } from './dist-tags';
+import { getConfigs } from './config';
 
 const getLegacyTag = (version) => {
     const majorVersion = semverMajor(version);
@@ -13,8 +14,7 @@ const getLegacyTag = (version) => {
 };
 
 export const resolveTagNames = () => {
-    const branchName = process.env.BRANCH_NAME.toLocaleLowerCase();
-    const tagName = process.env.TAG_NAME.toLocaleLowerCase();
+    const { branchName, tagName } = getConfigs();
     const pkgVersion = semverClean(tagName);
     const tags = [];
 

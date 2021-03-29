@@ -2,10 +2,10 @@ import { assertMainVersion } from './assertion.main';
 import { assertNextVersion } from './assertion.next';
 import { assertLegacyVersion } from './assertion.legacy';
 import { Branch, LegacyBranch } from '../constants';
+import { getConfigs } from '../config';
 
 export const assertBranchingStrategy = () => {
-    const branchName = process.env.BRANCH_NAME.toLocaleLowerCase();
-    const tagName = process.env.TAG_NAME.toLocaleLowerCase();
+    const { branchName, tagName } = getConfigs();
 
     if ([ Branch.main, Branch.master ].includes(branchName)) {
         return assertMainVersion({ branchName, tagName });

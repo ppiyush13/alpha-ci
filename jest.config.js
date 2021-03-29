@@ -10,7 +10,7 @@ module.exports = {
         'src/**/*.{js,ts}',
         '!<rootDir>/node_modules/',
         '!<rootDir>/src/setupTests.js',
-        '!<rootDir>/src/testUtils',
+        '!<rootDir>/src/testUtils/*',
     ],
     setupFiles: [
         '<rootDir>/src/setupTests.js',
