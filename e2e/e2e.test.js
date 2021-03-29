@@ -13,21 +13,35 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
     let registry, testDirPath;
     shell.config.silent = true;
 
+    /** setup verdaccio and register npm registry */
     setup(async () => {
         const allotedPort = await setupVerdaccio();
         registry = `http://localhost:${allotedPort}`;
         console.log('Npm registry:', registry);
         shell.env['npm_config_registry'] = registry;
+    });
 
+    /** setup test dir */
+    setup(() => {
         testDirPath = setupTestDir();
         console.log('Test directory:', testDirPath);
     });
 
+    /** teardown verdaccio */
     tear(async () => {
         await teardownVerdaccio();
+    });
+
+    /** teardown test dir */
+    tear(() => {
         shell.cd(rootPath);
         shell.rm('-rf', testDirPath);
     });
+
+
+    /**
+     * test steps
+     */
 
     step('set npm _auth config', async () => {
         shell.env['npm_config__auth'] = getTestUserAuthToken();
@@ -36,24 +50,21 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
             `${registry}/`,
         );
         expect(shell.exec('npm config ls')).toMatchShellOutput(
-            `; "env" config from environment
-             _auth = (protected)
+            `
+                ; "env" config from environment
+                _auth = (protected)
             `
         );
     });
 
-    step('cd to rootDir', () => {
+    step('build volte and publish to npm', () => {
         shell.cd(rootPath);
-    });
- 
-    step('build volte',() => {
         shell.exec('npm run build');
-    });
-
-    step('publish volte', () => {
-        expect(shell.exec(`npm publish --registry ${registry}`)).toMatchShellOutput(
-            `npm notice === Tarball Details ===
-             npm notice name: volte`
+        expect(shell.exec(`npm publish`)).toMatchShellOutput(
+            `
+                npm notice === Tarball Details ===
+                npm notice name: volte
+            `
         );
     });
 

@@ -1,18 +1,23 @@
 import chalk from 'chalk';
-import { collectHooks } from './collect-hooks';
+import { TestLifeCycle } from './test-life-cycle';
 import { StepExecutor } from './step-executor/step-executor';
 import { log } from './logger';
 import { formatError } from './format-error/format-error';
 import { executionTime } from './util';
 
 export const executeTest = async (desc, testCallback) => {
-    const { steps, setup, tear } = collectHooks(testCallback);
+    const testLifeCycle = new TestLifeCycle(testCallback);
     try {
-        await setup();
+        /** execute setup hooks */
+        await testLifeCycle.executeSetup();
+        
+        /** init steps executor */
+        const steps = testLifeCycle.getSteps();
         const stepExecutor = new StepExecutor(steps);
 
         log(`\n${desc}`);
 
+        /** execute all steps */
         const stop = executionTime();
         const { total, pass, skip, error } = await stepExecutor.execute();
         const totalExecTime = stop();
@@ -27,6 +32,6 @@ export const executeTest = async (desc, testCallback) => {
         };
     }
     finally {
-        await tear();
+        await testLifeCycle.executeTear();
     }
 };
