@@ -15,7 +15,9 @@
         "verdaccio:e2e": "verdaccio --config ./verdaccio-configs/e2e.config.json",
         "build": "run-s build:*",
         "build:clean": "rimraf dist",
-        "build:bundle": "microbundle --no-compress --format cjs --target node --no-sourcemap"
+        "build:bundle": "microbundle --no-compress --format cjs --target node --no-sourcemap",
+        "lint": "run-s lint:*",
+        "lint:code": "eslint . --fix"
     },
     "bin": {
         "volte": "bin/volte.js"
