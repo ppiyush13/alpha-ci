@@ -10,8 +10,11 @@ import test from './test-runner';
 
 test('Testing alpha end-2-end', ({ step, setup, tear}) => {
 
-    let registry, testDirPath;
+    /** silent all shelljs logs */
     shell.config.silent = true;
+
+    /** vars across steps */
+    let registry, testDirPath;
 
     /** setup verdaccio and register npm registry */
     setup(async () => {
@@ -25,6 +28,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
     setup(() => {
         testDirPath = setupTestDir();
         console.log('Test directory:', testDirPath);
+        shell.cp('-r', './e2e/__fixtures__/demo-pkg/*', testDirPath);
     });
 
     /** teardown verdaccio */
@@ -37,7 +41,6 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         shell.cd(rootPath);
         shell.rm('-rf', testDirPath);
     });
-
 
     /**
      * test steps
@@ -68,16 +71,9 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         );
     });
 
-    step('create demo-pkg', () => {
-        shell.cp('-r', './e2e/__fixtures__/demo-pkg/*', testDirPath);
-    });
-
-    step('cd to demo-pkg', () => {
+    step('install volte in test demo-pkg', () => {
         shell.cd(testDirPath); 
-    });
-
-    step('install volte', () => {
-        shell.exec('npm i volte ');
+        shell.exec('npm i volte');
     });
 
     step('exec dist-tag, should return package not found error',  () => {
@@ -115,9 +111,11 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         });
 
         expect(shell.exec('npx volte')).toMatchShellOutput(
-            `npm notice name:          demo-pkg
-             npm notice version:       1.0.0
-             npm notice filename:      demo-pkg-1.0.0.tgz`
+            `
+                npm notice name:          demo-pkg
+                npm notice version:       1.0.0
+                npm notice filename:      demo-pkg-1.0.0.tgz
+            `
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -135,9 +133,11 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         });
 
         expect(shell.exec('npx volte')).toMatchShellOutput(
-            `npm notice name:          demo-pkg
-             npm notice version:       1.0.1
-             npm notice filename:      demo-pkg-1.0.1.tgz`
+            `
+                npm notice name:          demo-pkg
+                npm notice version:       1.0.1
+                npm notice filename:      demo-pkg-1.0.1.tgz
+            `
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -156,9 +156,11 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         });
 
         expect(shell.exec('npx volte')).toMatchShellOutput(
-            `npm notice name:          demo-pkg
-             npm notice version:       1.1.0
-             npm notice filename:      demo-pkg-1.1.0.tgz`
+            `
+                npm notice name:          demo-pkg
+                npm notice version:       1.1.0
+                npm notice filename:      demo-pkg-1.1.0.tgz
+            `
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -189,9 +191,11 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         });
 
         expect(shell.exec('npx volte')).toMatchShellOutput(
-            `npm notice name:          demo-pkg
-             npm notice version:       2.0.0-rc.0
-             npm notice filename:      demo-pkg-2.0.0-rc.0.tgz`
+            `
+                npm notice name:          demo-pkg
+                npm notice version:       2.0.0-rc.0
+                npm notice filename:      demo-pkg-2.0.0-rc.0.tgz
+            `
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -209,9 +213,11 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         });
 
         expect(shell.exec('npx volte')).toMatchShellOutput(
-            `npm notice name:          demo-pkg
-             npm notice version:       1.2.0
-             npm notice filename:      demo-pkg-1.2.0.tgz`
+            `
+                npm notice name:          demo-pkg
+                npm notice version:       1.2.0
+                npm notice filename:      demo-pkg-1.2.0.tgz
+            `
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -241,9 +247,11 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         });
 
         expect(shell.exec('npx volte')).toMatchShellOutput(
-            `npm notice name:          demo-pkg
-             npm notice version:       2.0.0
-             npm notice filename:      demo-pkg-2.0.0.tgz`
+            `
+                npm notice name:          demo-pkg
+                npm notice version:       2.0.0
+                npm notice filename:      demo-pkg-2.0.0.tgz
+            `
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -262,9 +270,11 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         });
 
         expect(shell.exec('npx volte')).toMatchShellOutput(
-            `npm notice name:          demo-pkg
-             npm notice version:       2.0.1
-             npm notice filename:      demo-pkg-2.0.1.tgz`
+            `
+                npm notice name:          demo-pkg
+                npm notice version:       2.0.1
+                npm notice filename:      demo-pkg-2.0.1.tg
+            `
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -283,9 +293,11 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         });
 
         expect(shell.exec('npx volte')).toMatchShellOutput(
-            `npm notice name:          demo-pkg
-             npm notice version:       1.3.0
-             npm notice filename:      demo-pkg-1.3.0.tgz`
+            `
+                npm notice name:          demo-pkg
+                npm notice version:       1.3.0
+                npm notice filename:      demo-pkg-1.3.0.tgz
+            `
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -304,9 +316,11 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         });
 
         expect(shell.exec('npx volte')).toMatchShellOutput(
-            `npm notice name:          demo-pkg
-             npm notice version:       2.1.0
-             npm notice filename:      demo-pkg-2.1.0.tgz`
+            `
+                npm notice name:          demo-pkg
+                npm notice version:       2.1.0
+                npm notice filename:      demo-pkg-2.1.0.tgz
+            `
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -325,9 +339,11 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         });
 
         expect(shell.exec('npx volte')).toMatchShellOutput(
-            `npm notice name:          demo-pkg
-             npm notice version:       2.2.0
-             npm notice filename:      demo-pkg-2.2.0.tgz`
+            `
+                npm notice name:          demo-pkg
+                npm notice version:       2.2.0
+                npm notice filename:      demo-pkg-2.2.0.tgz
+            `
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -357,9 +373,11 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         });
 
         expect(shell.exec('npx volte')).toMatchShellOutput(
-            `npm notice name:          demo-pkg
-             npm notice version:       3.0.0
-             npm notice filename:      demo-pkg-3.0.0.tgz`
+            `
+                npm notice name:          demo-pkg
+                npm notice version:       3.0.0
+                npm notice filename:      demo-pkg-3.0.0.tgz
+            `
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -379,9 +397,11 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         });
 
         expect(shell.exec('npx volte')).toMatchShellOutput(
-            `npm notice name:          demo-pkg
-             npm notice version:       2.3.0
-             npm notice filename:      demo-pkg-2.3.0.tgz`
+            `
+                npm notice name:          demo-pkg
+                npm notice version:       2.3.0
+                npm notice filename:      demo-pkg-2.3.0.tgz
+            `
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -401,9 +421,11 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         });
 
         expect(shell.exec('npx volte')).toMatchShellOutput(
-            `npm notice name:          demo-pkg
-             npm notice version:       1.4.0
-             npm notice filename:      demo-pkg-1.4.0.tgz`
+            `
+                npm notice name:          demo-pkg
+                npm notice version:       1.4.0
+                npm notice filename:      demo-pkg-1.4.0.tgz
+            `
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -423,9 +445,11 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         });
 
         expect(shell.exec('npx volte')).toMatchShellOutput(
-            `npm notice name:          demo-pkg
-             npm notice version:       3.0.1
-             npm notice filename:      demo-pkg-3.0.1.tgz`
+            `
+                npm notice name:          demo-pkg
+                npm notice version:       3.0.1
+                npm notice filename:      demo-pkg-3.0.1.tgz
+            `
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
