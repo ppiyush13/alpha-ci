@@ -8,7 +8,7 @@ import alphaPackage from '../../package.json';
 
 describe('testing pkgMetadata module', () => {
     /** require actual module */
-    const { readPackageContent, getPackageMetadata } = jest.requireActual('../packageMetadata');
+    const { readPackageContent, getPackageMetadata } = jest.requireActual('../package-metadata');
 
     it('should return root package.json file', async () => {
         /** read package content */

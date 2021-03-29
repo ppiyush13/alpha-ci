@@ -1,5 +1,12 @@
 {
     "parser": "babel-eslint",
+    "extends": [
+        "airbnb-base"
+    ],
+    "plugins": [
+        "node",
+        "filenames"
+    ],
     "parserOptions": {
         "sourceType": "module",
         "allowImportExportEverywhere": true
@@ -10,19 +17,20 @@
         "node": true,
         "jest": true
     },
-    "extends": [
-        "airbnb-base",
-        "plugin:node/recommended"
-    ],
     "rules": {
         "indent": ["error", 4],
         "import/prefer-default-export": "off",
         "array-bracket-spacing": ["error", "always"],
+        "node/prefer-global/buffer": ["error", "never"],
+        "node/prefer-global/console": ["error", "never"],
+        "node/prefer-global/process": ["error", "never"],
+        "node/prefer-global/url-search-params": ["error", "never"],
+        "node/prefer-global/url": ["error", "never"],
         "brace-style": ["error", "stroustrup", { 
             "allowSingleLine": true 
         }],
         "import/no-extraneous-dependencies": ["error", {
-            "devDependencies": ["**/*.test.js", "/e2e/**", "**/testUtils/*"]
+            "devDependencies": ["**/*.test.js", "/e2e/**", "**/test-utils/*"]
         }],
         "lines-between-class-members": ["error", "always", { 
             "exceptAfterSingleLine": true 
@@ -33,10 +41,8 @@
                 "dynamicImport"
             ]
         }],
-        "node/prefer-global/buffer": ["error", "never"],
-        "node/prefer-global/console": ["error", "never"],
-        "node/prefer-global/process": ["error", "never"],
-        "node/prefer-global/url-search-params": ["error", "never"],
-        "node/prefer-global/url": ["error", "never"]
+        "filenames/match-regex": "off",
+        "filenames/match-exported": "off",
+        "filenames/no-index": "off"
     }
 }

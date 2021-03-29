@@ -1,5 +1,5 @@
-import { exec } from '../execShell';
-import { getPackageMetadata } from '../packageMetadata';
+import { exec } from '../exec-shell';
+import { getPackageMetadata } from '../package-metadata';
 import { error } from '../logger';
 
 export const npmDistTags = (distTags) => {

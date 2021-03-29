@@ -1,4 +1,4 @@
-import { exec } from '../execShell';
+import { exec } from '../exec-shell';
 import { TagAlreadyExistsError } from '../constants';
 import { getConfigs } from '../config';
 

@@ -1,0 +1,17 @@
+ls:
+  .js: kebab-case
+  .json: kebab-case
+  .test.js: kebab-case
+  .dir: kebab-case
+
+ignore:
+  - .git
+  - .vscode
+  - node_modules
+  - dist
+  - coverage
+  - src/__tests__
+  - e2e/__fixtures__
+  - .babelrc.json
+  - .eslintrc.json
+  - jest.config.js

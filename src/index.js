@@ -1,5 +1,5 @@
 import { release } from './release';
-import { handleGlobalException } from './globalException';
+import { handleGlobalException } from './global-exception';
 
 export const executeAlpha = async () => {
     try {

@@ -1,8 +1,8 @@
-import { assertBranchingStrategy } from './assert/assertBranchingStrategy';
+import { assertBranchingStrategy } from './assert/assert-branching-strategy';
 import { npmVersion, npmPublish, npmDistTags } from './steps';
-import { resolveTagNames } from './resolveTagNames';
+import { resolveTagNames } from './resolve-tag-names';
 import { fetchDistTags } from './dist-tags';
-import { readPackageContent, getPackageMetadata } from './packageMetadata';
+import { readPackageContent, getPackageMetadata } from './package-metadata';
 import { initConfigs } from './config';
 
 export const release = async () => {

@@ -1,5 +1,5 @@
 import { getBinPathSync } from 'get-bin-path';
-import { mockArgv } from '../testUtils/mockArgv';
+import { mockArgv } from '../test-utils/mock-argv';
 import { executeAlpha as executeAlphaMock } from '..';
 
 /** mock release module */

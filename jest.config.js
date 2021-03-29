@@ -9,10 +9,10 @@ module.exports = {
     collectCoverageFrom: [
         'src/**/*.{js,ts}',
         '!<rootDir>/node_modules/',
-        '!<rootDir>/src/setupTests.js',
-        '!<rootDir>/src/testUtils/*',
+        '!<rootDir>/src/setup-tests.js',
+        '!<rootDir>/src/test-utils/*',
     ],
     setupFiles: [
-        '<rootDir>/src/setupTests.js',
+        '<rootDir>/src/setup-tests.js',
     ],
 };

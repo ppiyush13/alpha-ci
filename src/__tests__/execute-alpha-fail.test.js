@@ -1,6 +1,6 @@
 import mockedEnv from 'mocked-env';
-import { mockShell } from '../testUtils/mockShell';
-import { mockFetchDistTags } from '../testUtils/mockFetchDistTags';
+import { mockShell } from '../test-utils/mock-shell';
+import { mockFetchDistTags } from '../test-utils/mock-fetch-dist-tags';
 import { executeAlpha } from '..';
 
 describe('testing branching and tag strategy', () => {

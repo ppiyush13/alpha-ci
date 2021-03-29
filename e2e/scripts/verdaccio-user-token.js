@@ -1,5 +1,5 @@
 import { Buffer } from 'buffer';
-import verdaccioE2eConfig from '../../verdaccio-configs/e2e.config.json';
+import verdaccioE2eConfig from '../../verdaccio-configs/config-e2e.json';
 
 /** get test user auth token using legacy token format */
 export const getTestUserAuthToken = () => {

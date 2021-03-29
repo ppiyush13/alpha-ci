@@ -1,6 +1,6 @@
-import { assertMainVersion } from './assertion.main';
-import { assertNextVersion } from './assertion.next';
-import { assertLegacyVersion } from './assertion.legacy';
+import { assertMainVersion } from './assertion-main';
+import { assertNextVersion } from './assertion-next';
+import { assertLegacyVersion } from './assertion-legacy';
 import { Branch, LegacyBranch } from '../constants';
 import { getConfigs } from '../config';
 

@@ -1,5 +1,5 @@
 /** auto-mock not working as expected, so mocked pkgMetadata here */
-jest.mock('./packageMetadata', () => ({
+jest.mock('./package-metadata', () => ({
     readPackageContent: () => {},
     getPackageMetadata: () => ({ name: 'demo-package' }),
 }));
