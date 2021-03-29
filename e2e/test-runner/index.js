@@ -6,7 +6,7 @@ export default async (...args) => {
         await executeTest(...args);
         process.exit(0);
     }
-    catch(ex) {
+    catch (ex) {
         const exMsg = ex.cleanTrace || ex;
         log(exMsg);
         process.exit(1);

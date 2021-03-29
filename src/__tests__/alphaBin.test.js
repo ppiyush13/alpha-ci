@@ -9,21 +9,19 @@ import { release as releaseMock } from '../release';
 jest.mock('../release');
 
 describe('testing alpha bin scripts', () => {
-
     const binPath = getBinPathSync();
 
     it('should execute executeAlpha function of index.js', async () => {
-        
         /** mocks */
         const argvMockRestore = mockArgv();
         const exitMock = mockProcessExit();
         releaseMock.mockResolvedValueOnce(5);
-        
+
         /** require bin module in isolation */
         jest.isolateModules(() => {
             require(binPath);
         });
-        
+
         /** wait for next tick */
         await nextTick();
 
@@ -37,14 +35,13 @@ describe('testing alpha bin scripts', () => {
     });
 
     it('should throw error, if executeAlpha throws', async () => {
-
         /** mocks */
         const argvMockRestore = mockArgv();
         const exitMock = mockProcessExit();
         const restoreConsole = mockConsole();
         const err = new Error('Release error');
         releaseMock.mockRejectedValue(err);
-        
+
         /** require bin module in isolation */
         jest.isolateModules(() => {
             require(binPath);
@@ -63,5 +60,4 @@ describe('testing alpha bin scripts', () => {
         exitMock.mockRestore();
         restoreConsole();
     });
-
 });

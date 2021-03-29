@@ -1,5 +1,4 @@
-
-export const handleGlobalException = ex => {
+export const handleGlobalException = (ex) => {
     console.error('Global exception');
     console.error(ex);
     process.exit(1);

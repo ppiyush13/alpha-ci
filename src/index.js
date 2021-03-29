@@ -6,7 +6,7 @@ export const executeAlpha = async () => {
         await release();
         process.exit(0);
     }
-    catch(ex) {
+    catch (ex) {
         /** log error and exit */
         handleGlobalException(ex);
     }

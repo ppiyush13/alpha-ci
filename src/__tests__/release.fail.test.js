@@ -1,11 +1,10 @@
 import mockedEnv from 'mocked-env';
-import mockConsole from "jest-mock-console";
+import mockConsole from 'jest-mock-console';
 import { mockShell } from '../testUtils/mockShell';
 import { mockFetchDistTags } from '../testUtils/mockFetchDistTags';
 import { release } from '../release';
 
 describe('testing branching and tag strategy', () => {
-    
     it.each([
         {
             branch: 'v1',
@@ -30,8 +29,8 @@ describe('testing branching and tag strategy', () => {
             tag: 'v1.0.0',
             previousDistTags: {
                 latest: '1.0.4',
-                next: '1.0.4'
-            }, 
+                next: '1.0.4',
+            },
             error: 'main/master branch tag v1.0.0 should be greater than published package latest version 1.0.4',
         },
         {
@@ -39,8 +38,8 @@ describe('testing branching and tag strategy', () => {
             tag: 'v2.0.0',
             previousDistTags: {
                 latest: '1.0.4',
-                next: '1.0.4'
-            }, 
+                next: '1.0.4',
+            },
             error: 'next branch can only have tags in format vx.x.x-rc.x but found tag v2.0.0',
         },
         {
@@ -55,7 +54,7 @@ describe('testing branching and tag strategy', () => {
         {
             branch: 'v3',
             tag: 'v3.1.5-rc.4',
-            previousDistTags: null, 
+            previousDistTags: null,
             error: 'Legacy branch can only have tags in format vx.x.x but found tag v3.1.5-rc.4',
         },
         {
@@ -63,20 +62,20 @@ describe('testing branching and tag strategy', () => {
             tag: 'v4.1.5',
             previousDistTags: {
                 latest: '4.1.4',
-                next: '4.1.4'
-            }, 
+                next: '4.1.4',
+            },
             error: 'Legacy branch v3 cannot have tags with version v4.1.5',
         },
         {
             branch: 'feature-branch',
             tag: 'v4.1.5',
-            previousDistTags: null, 
+            previousDistTags: null,
             error: 'Branch feature-branch does not meet any branching format',
         },
         {
             branch: 'main-pseudo',
             tag: 'v4.1.5',
-            previousDistTags: null, 
+            previousDistTags: null,
             error: 'Branch main-pseudo does not meet any branching format',
         },
         {
@@ -135,7 +134,7 @@ describe('testing branching and tag strategy', () => {
             tag: 'v9.0.1',
             previousDistTags: {
                 latest: '4.2.9',
-                next: '5.0.0-rc.4'
+                next: '5.0.0-rc.4',
             },
             error: 'Legacy branch tag v9.0.1 should be lesser than published latest package version 4.2.9',
         },
@@ -164,8 +163,9 @@ describe('testing branching and tag strategy', () => {
             },
             error: 'Legacy branch v1 should be tracking versions lesser than current latest version 1.3.0',
         },
-    ])('must throw error for %p', async ({ branch, tag, previousDistTags, error }) => {
-
+    ])('must throw error for %p', async ({
+        branch, tag, previousDistTags, error,
+    }) => {
         /** mocks */
         mockFetchDistTags(previousDistTags);
         const restoreConsole = mockConsole();
@@ -174,10 +174,10 @@ describe('testing branching and tag strategy', () => {
             BRANCH_NAME: branch,
             TAG_NAME: tag,
         });
-        
+
         /** trigger release */
         await expect(release()).rejects.toThrow(error);
-        
+
         /** assert exact commands executed with sequence  */
         expect(getCommandStack()).toEqual([]);
 

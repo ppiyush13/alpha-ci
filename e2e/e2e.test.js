@@ -8,20 +8,20 @@ import { setupTestDir } from './scripts/setup-test-dir';
 import './jest-matchers/match-shell';
 import test from './test-runner';
 
-test('Testing alpha end-2-end', ({ step, setup, tear}) => {
-
+test('Testing alpha end-2-end', ({ step, setup, tear }) => {
     /** silent all shelljs logs */
     shell.config.silent = true;
 
     /** vars across steps */
-    let registry, testDirPath;
+    let registry;
+    let testDirPath;
 
     /** setup verdaccio and register npm registry */
     setup(async () => {
         const allotedPort = await setupVerdaccio();
         registry = `http://localhost:${allotedPort}`;
         console.log('Npm registry:', registry);
-        shell.env['npm_config_registry'] = registry;
+        shell.env.npm_config_registry = registry;
     });
 
     /** setup test dir */
@@ -47,7 +47,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
      */
 
     step('set npm _auth config', async () => {
-        shell.env['npm_config__auth'] = getTestUserAuthToken();
+        shell.env.npm_config__auth = getTestUserAuthToken();
 
         expect(shell.exec('npm config get registry')).toEqualShellOutput(
             `${registry}/`,
@@ -56,29 +56,29 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
             `
                 ; "env" config from environment
                 _auth = (protected)
-            `
+            `,
         );
     });
 
     step('build volte and publish to npm', () => {
         shell.cd(rootPath);
         shell.exec('npm run build');
-        expect(shell.exec(`npm publish`)).toMatchShellOutput(
+        expect(shell.exec('npm publish')).toMatchShellOutput(
             `
                 npm notice === Tarball Details ===
                 npm notice name: volte
-            `
+            `,
         );
     });
 
     step('install volte in test demo-pkg', () => {
-        shell.cd(testDirPath); 
+        shell.cd(testDirPath);
         shell.exec('npm i volte');
     });
 
-    step('exec dist-tag, should return package not found error',  () => {
+    step('exec dist-tag, should return package not found error', () => {
         expect(shell.exec('npm dist-tag demo-pkg')).toMatchShellError(
-            `npm ERR! 404 Not Found - GET ${registry}/-/package/demo-pkg/dist-tags - no such package available`
+            `npm ERR! 404 Not Found - GET ${registry}/-/package/demo-pkg/dist-tags - no such package available`,
         );
     });
 
@@ -89,7 +89,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         });
 
         expect(shell.exec('npx volte')).toMatchShellError(
-            `First release must be published from main/master branch, but found branch next`
+            'First release must be published from main/master branch, but found branch next',
         );
     });
 
@@ -100,7 +100,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         });
 
         expect(shell.exec('npx volte')).toMatchShellError(
-            `First release must be published from main/master branch, but found legacy branch v1`
+            'First release must be published from main/master branch, but found legacy branch v1',
         );
     });
 
@@ -115,14 +115,14 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 npm notice name:          demo-pkg
                 npm notice version:       1.0.0
                 npm notice filename:      demo-pkg-1.0.0.tgz
-            `
+            `,
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
             `
                 latest: 1.0.0
                 next: 1.0.0
-            `
+            `,
         );
     });
 
@@ -137,16 +137,15 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 npm notice name:          demo-pkg
                 npm notice version:       1.0.1
                 npm notice filename:      demo-pkg-1.0.1.tgz
-            `
+            `,
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
             `
                 latest: 1.0.1
                 next: 1.0.1
-            `
+            `,
         );
-
     });
 
     step('publish v1.1.0 from main branch', () => {
@@ -160,16 +159,15 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 npm notice name:          demo-pkg
                 npm notice version:       1.1.0
                 npm notice filename:      demo-pkg-1.1.0.tgz
-            `
+            `,
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
             `
                 latest: 1.1.0
                 next: 1.1.0
-            `
+            `,
         );
-
     });
 
     step('publish v2.0.0-rc.0 from main branch, should throw error', () => {
@@ -179,9 +177,8 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         });
 
         expect(shell.exec('npx volte')).toMatchShellError(
-            `main/master branch can only have tags in format vx.x.x but found tag v2.0.0-rc.0`
+            'main/master branch can only have tags in format vx.x.x but found tag v2.0.0-rc.0',
         );
-
     });
 
     step('publish v2.0.0-rc.0 from next branch', () => {
@@ -195,14 +192,14 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 npm notice name:          demo-pkg
                 npm notice version:       2.0.0-rc.0
                 npm notice filename:      demo-pkg-2.0.0-rc.0.tgz
-            `
+            `,
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
             `
                 latest: 1.1.0
                 next: 2.0.0-rc.0
-            `
+            `,
         );
     });
 
@@ -217,14 +214,14 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 npm notice name:          demo-pkg
                 npm notice version:       1.2.0
                 npm notice filename:      demo-pkg-1.2.0.tgz
-            `
+            `,
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
             `
                 latest: 1.2.0
                 next: 2.0.0-rc.0
-            `
+            `,
         );
     });
 
@@ -235,9 +232,8 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         });
 
         expect(shell.exec('npx volte')).toMatchShellError(
-            `main/master branch tag v1.1.5 should be greater than published package latest version 1.2.0`
+            'main/master branch tag v1.1.5 should be greater than published package latest version 1.2.0',
         );
-
     });
 
     step('publish v2.0.0 from main branch', () => {
@@ -251,7 +247,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 npm notice name:          demo-pkg
                 npm notice version:       2.0.0
                 npm notice filename:      demo-pkg-2.0.0.tgz
-            `
+            `,
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -259,7 +255,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 latest-1: 1.2.0
                 latest: 2.0.0
                 next: 2.0.0
-            `
+            `,
         );
     });
 
@@ -274,7 +270,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 npm notice name:          demo-pkg
                 npm notice version:       2.0.1
                 npm notice filename:      demo-pkg-2.0.1.tg
-            `
+            `,
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -282,7 +278,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 latest-1: 1.2.0
                 latest: 2.0.1
                 next: 2.0.1
-            `
+            `,
         );
     });
 
@@ -297,7 +293,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 npm notice name:          demo-pkg
                 npm notice version:       1.3.0
                 npm notice filename:      demo-pkg-1.3.0.tgz
-            `
+            `,
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -305,7 +301,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 latest-1: 1.3.0
                 latest: 2.0.1
                 next: 2.0.1
-            `
+            `,
         );
     });
 
@@ -320,7 +316,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 npm notice name:          demo-pkg
                 npm notice version:       2.1.0
                 npm notice filename:      demo-pkg-2.1.0.tgz
-            `
+            `,
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -328,7 +324,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 latest-1: 1.3.0
                 latest: 2.1.0
                 next: 2.1.0
-            `
+            `,
         );
     });
 
@@ -343,7 +339,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 npm notice name:          demo-pkg
                 npm notice version:       2.2.0
                 npm notice filename:      demo-pkg-2.2.0.tgz
-            `
+            `,
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -351,7 +347,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 latest-1: 1.3.0
                 latest: 2.2.0
                 next: 2.2.0
-            `
+            `,
         );
     });
 
@@ -362,7 +358,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         });
 
         expect(shell.exec('npx volte')).toMatchShellError(
-            `Legacy branch tag v3.3.0 should be lesser than published latest package version 2.2.0`,
+            'Legacy branch tag v3.3.0 should be lesser than published latest package version 2.2.0',
         );
     });
 
@@ -377,7 +373,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 npm notice name:          demo-pkg
                 npm notice version:       3.0.0
                 npm notice filename:      demo-pkg-3.0.0.tgz
-            `
+            `,
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -386,7 +382,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 latest-2: 2.2.0
                 latest: 3.0.0
                 next: 3.0.0
-            `
+            `,
         );
     });
 
@@ -401,7 +397,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 npm notice name:          demo-pkg
                 npm notice version:       2.3.0
                 npm notice filename:      demo-pkg-2.3.0.tgz
-            `
+            `,
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -410,7 +406,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 latest-2: 2.3.0
                 latest: 3.0.0
                 next: 3.0.0
-            `
+            `,
         );
     });
 
@@ -425,7 +421,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 npm notice name:          demo-pkg
                 npm notice version:       1.4.0
                 npm notice filename:      demo-pkg-1.4.0.tgz
-            `
+            `,
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -434,7 +430,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 latest-2: 2.3.0
                 latest: 3.0.0
                 next: 3.0.0
-            `
+            `,
         );
     });
 
@@ -449,7 +445,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 npm notice name:          demo-pkg
                 npm notice version:       3.0.1
                 npm notice filename:      demo-pkg-3.0.1.tgz
-            `
+            `,
         );
 
         expect(shell.exec('npm dist-tag')).toEqualShellOutput(
@@ -458,7 +454,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
                 latest-2: 2.3.0
                 latest: 3.0.1
                 next: 3.0.1
-            `
+            `,
         );
     });
 
@@ -469,8 +465,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear}) => {
         });
 
         expect(shell.exec('npx volte')).toMatchShellError(
-            `For next branch, major version after latest release 3.0.1 should be incremented by 1, but found v3.0.2-rc.4`,
+            'For next branch, major version after latest release 3.0.1 should be incremented by 1, but found v3.0.2-rc.4',
         );
     });
-
 });

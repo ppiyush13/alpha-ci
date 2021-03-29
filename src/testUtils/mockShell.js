@@ -7,11 +7,7 @@ const execMock = shell.exec = jest.fn();
 afterEach(() => execMock.mockClear());
 
 export const mockShell = (mocks = {}) => {
-    execMock.mockImplementation((command) => {
-        return mocks[command] || '';
-    });
+    execMock.mockImplementation((command) => mocks[command] || '');
     /** getCommandStack function */
-    return () => {
-        return execMock.mock.calls.map(args => args[0]);
-    };
+    return () => execMock.mock.calls.map((args) => args[0]);
 };

@@ -6,7 +6,6 @@ import alphaPackage from '../../package.json';
  */
 
 describe('testing pkgMetadata module', () => {
-
     /** require actual module */
     const { readPackageContent, getPackageMetadata } = jest.requireActual('../packageMetadata');
 
@@ -18,5 +17,4 @@ describe('testing pkgMetadata module', () => {
         expect(getPackageMetadata()).toEqual(alphaPackage);
         expect(getPackageMetadata().name).toEqual('volte');
     });
-
 });

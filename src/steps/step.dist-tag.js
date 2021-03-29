@@ -1,9 +1,9 @@
 import { exec } from '../execShell';
 import { getPackageMetadata } from '../packageMetadata';
 
-export const npmDistTags = distTags => {
-    if(distTags.length === 0) return;
-    
+export const npmDistTags = (distTags) => {
+    if (distTags.length === 0) return;
+
     const { name: packageName } = getPackageMetadata();
 
     try {
@@ -13,7 +13,7 @@ export const npmDistTags = distTags => {
             exec(command);
         });
     }
-    catch(ex) {
+    catch (ex) {
         console.error('Dist-tagging failed, please consider doing it manually');
     }
 };

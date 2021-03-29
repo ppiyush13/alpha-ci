@@ -1,19 +1,18 @@
-
 module.exports = {
-    "coverageReporters": [
-        "html", 
-        "text"
+    coverageReporters: [
+        'html',
+        'text',
     ],
-    "testMatch": [
-        "**/src/__tests__/*.test.js",
+    testMatch: [
+        '**/src/__tests__/*.test.js',
     ],
-    "collectCoverageFrom": [
-        "src/**/*.{js,ts}",
-        "!<rootDir>/node_modules/",
-        "!<rootDir>/src/setupTests.js",
-        "!<rootDir>/src/testUtils",
+    collectCoverageFrom: [
+        'src/**/*.{js,ts}',
+        '!<rootDir>/node_modules/',
+        '!<rootDir>/src/setupTests.js',
+        '!<rootDir>/src/testUtils',
     ],
-    "setupFiles": [
-        "<rootDir>/src/setupTests.js"
-    ]
+    setupFiles: [
+        '<rootDir>/src/setupTests.js',
+    ],
 };

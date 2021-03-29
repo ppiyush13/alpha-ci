@@ -10,13 +10,12 @@ export const resolveTagNames = () => {
     const pkgVersion = semverClean(tagName);
     const tags = [];
 
-    if([Branch.main, Branch.master].includes(branchName)) {
-
+    if ([ Branch.main, Branch.master ].includes(branchName)) {
         /** main/master branch */
-        const distTagOfLatest =  getDistTagVersion(Tag.latest);
+        const distTagOfLatest = getDistTagVersion(Tag.latest);
         const distTagOfNext = getDistTagVersion(Tag.next);
 
-        if(
+        if (
             distTagOfLatest === distTagOfNext
             || distTagOfLatest && !distTagOfNext
             || semverGt(tagName, distTagOfNext)
@@ -37,12 +36,11 @@ export const resolveTagNames = () => {
             });
         }
 
-        if(distTagOfLatest && semverMajor(pkgVersion) === semverMajor(distTagOfLatest) + 1) {
+        if (distTagOfLatest && semverMajor(pkgVersion) === semverMajor(distTagOfLatest) + 1) {
             tags.push(getLegacyTag(distTagOfLatest));
         }
     }
-    else if(branchName === Branch.next) {
-
+    else if (branchName === Branch.next) {
         /** next branch */
         tags.push({
             tag: Tag.next,
@@ -55,12 +53,12 @@ export const resolveTagNames = () => {
     }
 
     return tags;
-}
+};
 
-const getLegacyTag = version => {
+const getLegacyTag = (version) => {
     const majorVersion = semverMajor(version);
     return {
         tag: `${Tag.latest}-${majorVersion}`,
-        version: version,
+        version,
     };
 };

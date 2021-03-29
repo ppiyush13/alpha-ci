@@ -1,7 +1,7 @@
 import expect from 'expect';
 import escapeStringRegex from 'escape-string-regexp';
 
-const normalizeStr = str => str.replace(/\s/g, '').toLowerCase();
+const normalizeStr = (str) => str.replace(/\s/g, '').toLowerCase();
 
 const isSimilar = (str1, str2) => {
     const got = normalizeStr(str1);
@@ -11,9 +11,9 @@ const isSimilar = (str1, str2) => {
 };
 
 const toMatchShellOutput = (shellOutput, expected) => {
-    const {stdout, stderr, code} = shellOutput; 
+    const { stdout, stderr, code } = shellOutput;
 
-    if(code !== 0) {
+    if (code !== 0) {
         throw new Error(stderr);
     }
     const received = stderr + stdout;
@@ -24,9 +24,9 @@ const toMatchShellOutput = (shellOutput, expected) => {
 };
 
 const toEqualShellOutput = (shellOutput, expected) => {
-    const {stdout, stderr, code} = shellOutput; 
+    const { stdout, stderr, code } = shellOutput;
 
-    if(code !== 0) {
+    if (code !== 0) {
         throw new Error(stderr);
     }
     const received = stdout;
@@ -34,12 +34,11 @@ const toEqualShellOutput = (shellOutput, expected) => {
     return normalizeStr(stdout) === normalizeStr(expected)
         ? { pass: true, message: () => `Expected ${expected} to not be equal to ${received}` }
         : { pass: false, message: () => `Expected ${expected} to be equal to ${received}` };
-
 };
 
 const toMatchShellError = (shellOutput, expected = '') => {
-    const {stdout, stderr, code} = shellOutput;
-    if(code === 0) {
+    const { stdout, stderr, code } = shellOutput;
+    if (code === 0) {
         return {
             pass: false,
             message: () => `Expected shell command to throw but passed with outcome:\n${stdout}`,
@@ -49,7 +48,6 @@ const toMatchShellError = (shellOutput, expected = '') => {
     return isSimilar(stderr, expected)
         ? { pass: true, message: () => `Expected ${expected} to not be similar to error ${stdout}` }
         : { pass: false, message: () => `Expected ${expected} to be similar to error ${stdout}` };
-
 };
 
 expect.extend({

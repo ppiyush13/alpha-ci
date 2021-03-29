@@ -10,7 +10,7 @@ export const executeTest = async (desc, testCallback) => {
     try {
         /** execute setup hooks */
         await testLifeCycle.executeSetup();
-        
+
         /** init steps executor */
         const steps = testLifeCycle.getSteps();
         const stepExecutor = new StepExecutor(steps);
@@ -19,17 +19,19 @@ export const executeTest = async (desc, testCallback) => {
 
         /** execute all steps */
         const stop = executionTime();
-        const { total, pass, skip, error } = await stepExecutor.execute();
+        const {
+            total, pass, skip, error,
+        } = await stepExecutor.execute();
         const totalExecTime = stop();
 
         log(`\nTests: ${chalk.bold.green(`${pass} passed`)}, ${chalk.bold.yellow(`${skip} skipped`)}, ${total} total`);
         log(`Time:  ${totalExecTime}`);
 
-        if(error) {
+        if (error) {
             log('\nTest execution halted because of below error:');
             error.cleanTrace = formatError(error);
             throw error;
-        };
+        }
     }
     finally {
         await testLifeCycle.executeTear();

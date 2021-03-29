@@ -8,13 +8,13 @@ export const assertMainVersion = ({ tagName }) => {
     const latestVersion = getDistTagVersion(Tag.latest);
 
     assert.isTrue(
-        MatchTag.isLatest(tagName), 
+        MatchTag.isLatest(tagName),
         `main/master branch can only have tags in format vx.x.x but found tag ${tagName}`,
     );
 
-    if(latestVersion) {
+    if (latestVersion) {
         assert.oneOf(
-            semverMajor(tagName), [semverMajor(latestVersion), semverMajor(latestVersion) + 1] ,
+            semverMajor(tagName), [ semverMajor(latestVersion), semverMajor(latestVersion) + 1 ],
             `main/master branch tag ${tagName} should have major version equal or greater than one of published package latest version ${latestVersion}`,
         );
 

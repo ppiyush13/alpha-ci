@@ -6,9 +6,9 @@ export const npmVersion = () => {
     try {
         exec(`npm version ${tagName}`);
     }
-    catch(ex) {
-        if(TagAlreadyExistsError(tagName, ex.message)) {
-            return ;
+    catch (ex) {
+        if (TagAlreadyExistsError(tagName, ex.message)) {
+
         }
         else {
             throw ex;

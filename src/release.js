@@ -16,7 +16,7 @@ export const release = async () => {
     assertBranchingStrategy();
 
     /** generate all npm dist-tags for current release */
-    const [publishDistTag, ...otherDistTags] = resolveTagNames();
+    const [ publishDistTag, ...otherDistTags ] = resolveTagNames();
 
     /** run: npm version */
     npmVersion();

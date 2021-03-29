@@ -4,6 +4,6 @@ export const executionTime = () => {
     const start = Date.now();
     return () => {
         const totalTime = Date.now() - start;
-        return prettyMs(totalTime, { secondsDecimalDigits: 3 })
+        return prettyMs(totalTime, { secondsDecimalDigits: 3 });
     };
 };

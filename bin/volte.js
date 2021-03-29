@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 const { program } = require('commander');
-const { version, main: entryPath } = require('../package.json');
-const pkgDir = require('pkg-dir'); 
+const pkgDir = require('pkg-dir');
 const path = require('path');
+const { version, main: entryPath } = require('../package.json');
 
 /** derive absolute path of package entry */
 const alphaEntryPath = path.resolve(pkgDir.sync(__dirname), entryPath);

@@ -9,16 +9,15 @@ getRegistryUrlMock.mockReturnValue('http://npm-registry-url');
 nock.disableNetConnect();
 
 /** clear nock mocks after every test case */
-afterEach(() => nock.cleanAll()); 
+afterEach(() => nock.cleanAll());
 
-export const mockFetchDistTags = previousDistTags => {
-
+export const mockFetchDistTags = (previousDistTags) => {
     /** if dist-tags exists resolve with 200 and dist-tags otherwise resolve with 404 */
     const response = previousDistTags
-        ? [ 200, { ...previousDistTags }]
-        : [ 404, { "error": "Not found" } ];
+        ? [ 200, { ...previousDistTags } ]
+        : [ 404, { error: 'Not found' } ];
 
     nock('http://npm-registry-url/-/')
         .get('/package/demo-package/dist-tags')
-        .reply(...response); 
+        .reply(...response);
 };
