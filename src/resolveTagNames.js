@@ -4,6 +4,14 @@ import semverMajor from 'semver/functions/major';
 import { Branch, Tag } from './constants';
 import { getDistTagVersion } from './dist-tags';
 
+const getLegacyTag = (version) => {
+    const majorVersion = semverMajor(version);
+    return {
+        tag: `${Tag.latest}-${majorVersion}`,
+        version,
+    };
+};
+
 export const resolveTagNames = () => {
     const branchName = process.env.BRANCH_NAME.toLocaleLowerCase();
     const tagName = process.env.TAG_NAME.toLocaleLowerCase();
@@ -17,7 +25,7 @@ export const resolveTagNames = () => {
 
         if (
             distTagOfLatest === distTagOfNext
-            || distTagOfLatest && !distTagOfNext
+            || (distTagOfLatest && !distTagOfNext)
             || semverGt(tagName, distTagOfNext)
         ) {
             tags.push({
@@ -53,12 +61,4 @@ export const resolveTagNames = () => {
     }
 
     return tags;
-};
-
-const getLegacyTag = (version) => {
-    const majorVersion = semverMajor(version);
-    return {
-        tag: `${Tag.latest}-${majorVersion}`,
-        version,
-    };
 };

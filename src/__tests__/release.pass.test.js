@@ -1,5 +1,4 @@
 import mockedEnv from 'mocked-env';
-import mockConsole from 'jest-mock-console';
 import { mockShell } from '../testUtils/mockShell';
 import { mockFetchDistTags } from '../testUtils/mockFetchDistTags';
 import { release } from '../release';
@@ -148,7 +147,6 @@ describe('testing branching strategy', () => {
     }) => {
         /** mock */
         mockFetchDistTags(previousDistTags);
-        const restoreConsole = mockConsole();
         const getCommandStack = mockShell();
         const restoreEnv = mockedEnv({
             BRANCH_NAME: branch,
@@ -162,7 +160,6 @@ describe('testing branching strategy', () => {
         expect(getCommandStack()).toEqual(commands);
 
         /** restore mocks */
-        restoreConsole();
         restoreEnv();
     });
 });

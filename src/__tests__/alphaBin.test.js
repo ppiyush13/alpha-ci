@@ -4,11 +4,10 @@
 
 import { getBinPathSync } from 'get-bin-path';
 import { mockProcessExit } from 'jest-mock-process';
-import mockConsole from 'jest-mock-console';
-import console from 'console';
 import nextTick from 'tick-promise';
 import { mockArgv } from '../testUtils/mockArgv';
 import { release as releaseMock } from '../release';
+import { error as logErrorMock } from '../logger';
 
 /** mock release module */
 jest.mock('../release');
@@ -43,7 +42,6 @@ describe('testing alpha bin scripts', () => {
         /** mocks */
         const argvMockRestore = mockArgv();
         const exitMock = mockProcessExit();
-        const restoreConsole = mockConsole();
         const err = new Error('Release error');
         releaseMock.mockRejectedValue(err);
 
@@ -58,11 +56,10 @@ describe('testing alpha bin scripts', () => {
         /** assert */
         expect(exitMock).toHaveBeenCalledTimes(1);
         expect(exitMock).toHaveBeenCalledWith(1);
-        expect(console.error).toHaveBeenCalledWith(new Error('Release error'));
+        expect(logErrorMock).toHaveBeenCalledWith(new Error('Release error'));
 
         /** restore mock */
         argvMockRestore();
         exitMock.mockRestore();
-        restoreConsole();
     });
 });

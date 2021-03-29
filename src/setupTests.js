@@ -9,3 +9,6 @@ jest.mock('../package.json', () => ({
     ...jest.requireActual('../package.json'),
     main: 'src/index.js',
 }));
+
+/** mock logger module */
+jest.mock('./logger');
