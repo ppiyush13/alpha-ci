@@ -8,11 +8,10 @@ export const setupTestDir = () => {
         unsafeCleanup: true, 
         discardDescriptor: true 
     });
-    debugger
+
     exitHook(() => {
-        //shell.cd('..');
+        shell.cd('/');
         removeCallback();
-        //shell.rm('-rf', name);
     });
 
     return name;
