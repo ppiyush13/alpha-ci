@@ -41,23 +41,23 @@
     },
     "dependencies": {
         "chai": "^4.3.4",
-        "commander": "^7.1.0",
-        "escape-string-regexp": "^1.0.5",
+        "commander": "^7.2.0",
+        "escape-string-regexp": "^4.0.0",
         "got": "^11.8.2",
-        "pkg-dir": "^4.2.0",
+        "pkg-dir": "^5.0.0",
         "registry-url": "^5.1.0",
-        "semver": "^7.3.4",
+        "semver": "^7.3.5",
         "shelljs": "^0.8.4"
     },
     "devDependencies": {
         "@babel/code-frame": "^7.12.13",
         "@babel/plugin-proposal-class-properties": "^7.13.0",
         "@babel/preset-env": "^7.13.12",
-        "@babel/register": "^7.13.8",
+        "@babel/register": "^7.13.14",
         "@ls-lint/ls-lint": "^1.9.2",
         "app-root-path": "^3.0.0",
         "babel-eslint": "^10.1.0",
-        "chalk": "^2.4.2",
+        "chalk": "^4.1.0",
         "cross-env": "^7.0.3",
         "eslint": "^7.23.0",
         "eslint-config-airbnb-base": "^14.2.1",
@@ -78,9 +78,9 @@
         "sort-package-json": "^1.49.0",
         "stack-utils": "^2.0.3",
         "tmp": "^0.2.1",
-        "verdaccio": "^4.11.3",
-        "verdaccio-auth-memory": "^9.7.2",
-        "verdaccio-memory": "^9.7.2"
+        "verdaccio": "^4.12.0",
+        "verdaccio-auth-memory": "^10.0.0",
+        "verdaccio-memory": "^10.0.0"
     },
     "engines": {
         "node": ">=8.0.0"
