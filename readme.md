@@ -1,4 +1,4 @@
-# volte
+# alpha
 
 Robust, simple replacement for `npm publish`
 

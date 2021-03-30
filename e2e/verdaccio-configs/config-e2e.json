@@ -1,11 +1,10 @@
-
 {
     "auth": {
         "auth-memory": {
             "users": {
-                "volte": {
-                    "name": "volte",
-                    "password": "pass1234"
+                "alpha": {
+                    "name": "alpha",
+                    "password": "Alpha1234"
                 }
             }
         }
@@ -28,7 +27,7 @@
         }
     ],
     "packages": {
-        "volte": {
+        "alpha": {
             "publish": "$authenticated",
             "access": "$authenticated"
         },

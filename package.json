@@ -1,23 +1,23 @@
 {
-    "name": "volte",
+    "name": "alpha",
     "version": "0.0.0",
     "description": "Robust, simple replacement for npm publish",
     "bugs": {
-        "url": "https://github.com/ppiyush13/volte/issues"
+        "url": "https://github.com/ppiyush13/alpha/issues"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/ppiyush13/volte.git"
+        "url": "https://github.com/ppiyush13/alpha.git"
     },
     "license": "MIT",
     "author": {
         "name": "Piyush Lodaya",
         "email": "ppiyush13@gmail.com"
     },
-    "main": "dist/volte.js",
+    "main": "dist/alpha.js",
     "source": "src/index.js",
     "bin": {
-        "volte": "bin/volte.js"
+        "alpha": "bin/alpha.js"
     },
     "files": [
         "dist",

@@ -61,20 +61,20 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
         );
     });
 
-    step('build volte and publish to npm', () => {
+    step('build alpha and publish to npm', () => {
         shell.cd(rootPath);
         shell.exec('npm run build');
         expect(shell.exec('npm publish')).toMatchShellOutput(
             `
                 npm notice === Tarball Details ===
-                npm notice name: volte
+                npm notice name: alpha
             `,
         );
     });
 
-    step('install volte in test demo-pkg', () => {
+    step('install alpha in test demo-pkg', () => {
         shell.cd(testDirPath);
-        shell.exec('npm i volte');
+        shell.exec('npm i alpha');
     });
 
     step('exec dist-tag, should return package not found error', () => {
@@ -89,7 +89,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
             TAG_NAME: 'v1.0.0-rc.0',
         });
 
-        expect(shell.exec('npx volte')).toMatchShellError(
+        expect(shell.exec('npx alpha')).toMatchShellError(
             'First release must be published from main/master branch, but found branch next',
         );
     });
@@ -100,7 +100,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
             TAG_NAME: 'v1.0.0',
         });
 
-        expect(shell.exec('npx volte')).toMatchShellError(
+        expect(shell.exec('npx alpha')).toMatchShellError(
             'First release must be published from main/master branch, but found legacy branch v1',
         );
     });
@@ -111,7 +111,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
             TAG_NAME: 'v1.0.0',
         });
 
-        expect(shell.exec('npx volte')).toMatchShellOutput(
+        expect(shell.exec('npx alpha')).toMatchShellOutput(
             `
                 npm notice name:          demo-pkg
                 npm notice version:       1.0.0
@@ -133,7 +133,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
             TAG_NAME: 'v1.0.1',
         });
 
-        expect(shell.exec('npx volte')).toMatchShellOutput(
+        expect(shell.exec('npx alpha')).toMatchShellOutput(
             `
                 npm notice name:          demo-pkg
                 npm notice version:       1.0.1
@@ -155,7 +155,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
             TAG_NAME: 'v1.1.0',
         });
 
-        expect(shell.exec('npx volte')).toMatchShellOutput(
+        expect(shell.exec('npx alpha')).toMatchShellOutput(
             `
                 npm notice name:          demo-pkg
                 npm notice version:       1.1.0
@@ -177,7 +177,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
             TAG_NAME: 'v2.0.0-rc.0',
         });
 
-        expect(shell.exec('npx volte')).toMatchShellError(
+        expect(shell.exec('npx alpha')).toMatchShellError(
             'main/master branch can only have tags in format vx.x.x but found tag v2.0.0-rc.0',
         );
     });
@@ -188,7 +188,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
             TAG_NAME: 'v2.0.0-rc.0',
         });
 
-        expect(shell.exec('npx volte')).toMatchShellOutput(
+        expect(shell.exec('npx alpha')).toMatchShellOutput(
             `
                 npm notice name:          demo-pkg
                 npm notice version:       2.0.0-rc.0
@@ -210,7 +210,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
             TAG_NAME: 'v1.2.0',
         });
 
-        expect(shell.exec('npx volte')).toMatchShellOutput(
+        expect(shell.exec('npx alpha')).toMatchShellOutput(
             `
                 npm notice name:          demo-pkg
                 npm notice version:       1.2.0
@@ -232,7 +232,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
             TAG_NAME: 'v1.1.5',
         });
 
-        expect(shell.exec('npx volte')).toMatchShellError(
+        expect(shell.exec('npx alpha')).toMatchShellError(
             'main/master branch tag v1.1.5 should be greater than published package latest version 1.2.0',
         );
     });
@@ -243,7 +243,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
             TAG_NAME: 'v2.0.0',
         });
 
-        expect(shell.exec('npx volte')).toMatchShellOutput(
+        expect(shell.exec('npx alpha')).toMatchShellOutput(
             `
                 npm notice name:          demo-pkg
                 npm notice version:       2.0.0
@@ -266,7 +266,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
             TAG_NAME: 'v2.0.1',
         });
 
-        expect(shell.exec('npx volte')).toMatchShellOutput(
+        expect(shell.exec('npx alpha')).toMatchShellOutput(
             `
                 npm notice name:          demo-pkg
                 npm notice version:       2.0.1
@@ -289,7 +289,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
             TAG_NAME: 'v1.3.0',
         });
 
-        expect(shell.exec('npx volte')).toMatchShellOutput(
+        expect(shell.exec('npx alpha')).toMatchShellOutput(
             `
                 npm notice name:          demo-pkg
                 npm notice version:       1.3.0
@@ -312,7 +312,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
             TAG_NAME: 'v2.1.0',
         });
 
-        expect(shell.exec('npx volte')).toMatchShellOutput(
+        expect(shell.exec('npx alpha')).toMatchShellOutput(
             `
                 npm notice name:          demo-pkg
                 npm notice version:       2.1.0
@@ -335,7 +335,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
             TAG_NAME: 'v2.2.0',
         });
 
-        expect(shell.exec('npx volte')).toMatchShellOutput(
+        expect(shell.exec('npx alpha')).toMatchShellOutput(
             `
                 npm notice name:          demo-pkg
                 npm notice version:       2.2.0
@@ -358,7 +358,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
             TAG_NAME: 'v3.3.0',
         });
 
-        expect(shell.exec('npx volte')).toMatchShellError(
+        expect(shell.exec('npx alpha')).toMatchShellError(
             'Legacy branch tag v3.3.0 should be lesser than published latest package version 2.2.0',
         );
     });
@@ -369,7 +369,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
             TAG_NAME: 'v3.0.0',
         });
 
-        expect(shell.exec('npx volte')).toMatchShellOutput(
+        expect(shell.exec('npx alpha')).toMatchShellOutput(
             `
                 npm notice name:          demo-pkg
                 npm notice version:       3.0.0
@@ -393,7 +393,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
             TAG_NAME: 'v2.3.0',
         });
 
-        expect(shell.exec('npx volte')).toMatchShellOutput(
+        expect(shell.exec('npx alpha')).toMatchShellOutput(
             `
                 npm notice name:          demo-pkg
                 npm notice version:       2.3.0
@@ -417,7 +417,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
             TAG_NAME: 'v1.4.0',
         });
 
-        expect(shell.exec('npx volte')).toMatchShellOutput(
+        expect(shell.exec('npx alpha')).toMatchShellOutput(
             `
                 npm notice name:          demo-pkg
                 npm notice version:       1.4.0
@@ -441,7 +441,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
             TAG_NAME: 'v3.0.1',
         });
 
-        expect(shell.exec('npx volte')).toMatchShellOutput(
+        expect(shell.exec('npx alpha')).toMatchShellOutput(
             `
                 npm notice name:          demo-pkg
                 npm notice version:       3.0.1
@@ -465,7 +465,7 @@ test('Testing alpha end-2-end', ({ step, setup, tear }) => {
             TAG_NAME: 'v3.0.2-rc.4',
         });
 
-        expect(shell.exec('npx volte')).toMatchShellError(
+        expect(shell.exec('npx alpha')).toMatchShellError(
             'For next branch, major version after latest release 3.0.1 should be incremented by 1, but found v3.0.2-rc.4',
         );
     });
