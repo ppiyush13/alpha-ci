@@ -1,5 +1,5 @@
 {
-    "name": "alpha",
+    "name": "alpha-ci",
     "version": "0.0.0",
     "description": "Robust, simple replacement for npm publish",
     "bugs": {
