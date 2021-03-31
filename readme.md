@@ -2,6 +2,5 @@
 
 Robust, simple replacement for `npm publish`
 
-## Stay tuned
-
-We are working.
+## About
+Simple tool to overcome
